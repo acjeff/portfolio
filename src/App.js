@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import './App.scss';
+import Menu from "./Components/Menu";
+import SiteSettings from "./Components/SiteSettings";
+import {ThemeProvider, createTheme, CssBaseline} from "@mui/material";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            themeColor: 'dark',
+            themeFont: 'M PLUS Code Latin, sans-serif'
+        }
+    }
+
+    render() {
+
+        const theme = createTheme({
+            palette: {
+                mode: this.state.themeColor
+            },
+            typography: {
+                fontFamily: this.state.themeFont
+            }
+        });
+
+        return (
+            <ThemeProvider theme={theme}>
+                <CssBaseline className={"Main"}>
+                    <Menu/>
+                    <SiteSettings
+                        font={this.state.themeFont}
+                        theme={this.state.themeColor}
+                        changeThemeFont={(font) => this.setState({themeFont: font})}
+                        changeThemeColor={() => this.setState({themeColor: this.state.themeColor === 'light' ? 'dark' : 'light'})}/>
+                </CssBaseline>
+            </ThemeProvider>
+        );
+    }
 }
 
 export default App;
