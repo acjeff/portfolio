@@ -1,5 +1,15 @@
 @import '_variables.scss';
 
+#root {
+  display: flex;
+  height: 100%;
+  overflow: hidden;
+}
+
+.row {
+  display: flex;
+}
+
 body {
   position: fixed;
   width: 100%;

@@ -1,5 +1,13 @@
 .Menu {
+  padding: 30px;
+  height: 100%;
+  min-width: 325px;
+  overflow: auto !important;
   .me-container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-bottom: 20px;
     .pic {
       width: 50px;
       height: 50px;
@@ -7,9 +15,10 @@
       background-size: cover;
       overflow: hidden;
       border-radius: 100%;
+      margin-right: 20px;
     }
     .name {
-
+      font-weight: 700;
     }
   }
 }
