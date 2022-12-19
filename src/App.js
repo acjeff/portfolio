@@ -2,7 +2,17 @@ import React from "react";
 import './App.scss';
 import Menu from "./Components/Menu";
 import SiteSettings from "./Components/SiteSettings";
-import {ThemeProvider, createTheme, CssBaseline} from "@mui/material";
+import {
+    ThemeProvider,
+    createTheme,
+    CssBaseline,
+    Card,
+    CardHeader,
+    Container,
+    CardContent,
+    CardActions, IconButton
+} from "@mui/material";
+import {ViewInArOutlined} from "@mui/icons-material";
 
 class App extends React.Component {
 
@@ -35,6 +45,15 @@ class App extends React.Component {
                         changeThemeFont={(font) => this.setState({themeFont: font})}
                         changeThemeColor={() => this.setState({themeColor: this.state.themeColor === 'light' ? 'dark' : 'light'})}/>
                 </CssBaseline>
+                <Container>
+                    <Card>
+                        <CardHeader>GridDuck</CardHeader>
+                        <CardContent>
+                            <p>Test</p>
+                        </CardContent>
+                        <CardActions><IconButton><ViewInArOutlined/></IconButton></CardActions>
+                    </Card>
+                </Container>
             </ThemeProvider>
         );
     }

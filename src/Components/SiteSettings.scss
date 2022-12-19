@@ -1,3 +1,12 @@
+
+.Site-Settings {
+  .me-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+  }
+}
+
 .font-menu-item {
   &.Poppins {
     font-family: 'Poppins', sans-serif !important;
