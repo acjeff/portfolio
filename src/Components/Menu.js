@@ -1,9 +1,9 @@
 import React from "react";
 import './Menu.scss';
-import {Step, Stepper, StepLabel, Typography, Card, IconButton, StepContent} from "@mui/material";
+import {Step, Stepper, StepLabel, Typography, Card, IconButton, StepContent, Tooltip} from "@mui/material";
 import TreeView from '@mui/lab/TreeView';
 import TreeItem from '@mui/lab/TreeItem';
-import {LinkedIn, MusicNote, ExpandMore, ChevronRight, Email} from "@mui/icons-material";
+import {LinkedIn, MusicNote, ExpandMore, ChevronRight, Email, GitHub} from "@mui/icons-material";
 
 class Menu extends React.Component {
     constructor(props) {
@@ -20,9 +20,10 @@ class Menu extends React.Component {
                     <div className={'pic'}/>
                     <div className={'name'}>
                         <h3 style={{margin: 0}}>Alex Jefferies</h3>
-                        <IconButton color={'primary'}><Email/></IconButton>
-                        <IconButton color={'primary'}><LinkedIn/></IconButton>
-                        <IconButton color={'primary'}><MusicNote/></IconButton>
+                        <Tooltip title={'Email'}><IconButton color={'primary'}><Email/></IconButton></Tooltip>
+                        <Tooltip title={'LinkedIn'}><IconButton color={'primary'}><LinkedIn/></IconButton></Tooltip>
+                        <Tooltip title={'Github'}><IconButton color={'primary'}><GitHub/></IconButton></Tooltip>
+                        <Tooltip title={'Spotify'}><IconButton color={'primary'}><MusicNote/></IconButton></Tooltip>
                     </div>
                 </div>
                 <Stepper nonLinear activeStep={this.props.project} orientation="vertical">

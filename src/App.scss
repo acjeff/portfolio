@@ -4,6 +4,37 @@
   display: flex;
   height: 100%;
   overflow: hidden;
+  .logo {
+    width: 300px;
+    height: 80px;
+    background-size: contain;
+    background-position: 0 50%;
+    background-repeat: no-repeat;
+  }
+}
+
+body {
+  font-size: 0.9rem !important;
+}
+
+.MuiDivider-root {
+  margin: 30px 0 !important;
+}
+
+video {
+  border-radius: 5px;
+  box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.24);
+  margin-left: 10%;
+  width: 110%;
+}
+
+.MuiStepLabel-label {
+  cursor: pointer;
+}
+.MuiStepLabel-labelContainer:hover {
+  .MuiStepLabel-label:not(.Mui-active), .MuiTypography-root {
+    opacity: 0.7;
+  }
 }
 
 .Content {
@@ -12,11 +43,24 @@
   display: flex !important;
   flex: 1 1;
   flex-direction: column;
+  .header-video {
+    position: relative;
+    width: 100%;
+    border-radius: 10px;
+  }
+  .card-icon {
+    display: grid;
+    height: 100px;
+    justify-content: center;
+    align-content: center;
+    overflow: hidden;
+    position: relative;
+  }
   .Content-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 10px 20px;
   }
   .Content-body {
     display: flex;

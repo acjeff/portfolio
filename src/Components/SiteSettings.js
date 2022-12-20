@@ -4,7 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import './SiteSettings.scss';
-import {IconButton, ButtonGroup} from "@mui/material";
+import {IconButton, ButtonGroup, Tooltip} from "@mui/material";
 import {Colorize} from "@mui/icons-material";
 
 // const fonts = ['Poppins, sans-serif', 'M PLUS Code Latin, sans-serif'];
@@ -25,9 +25,10 @@ class SiteSettings extends React.Component {
             <div className="Site-Settings">
                 <div className={'me-container'}>
                     <ButtonGroup variant="contained" aria-label="outlined primary button group">
-                        <IconButton color={'primary'}
-                                    onClick={this.props.changethemeTod}>{this.props.theme === 'light' ?
-                            <DarkModeIcon/> : <LightModeIcon/>}</IconButton>
+                        <Tooltip title={(this.props.theme === 'light' ? 'Dark' : 'Light') + ' Mode'}><IconButton
+                            color={'primary'}
+                            onClick={this.props.changeThemeTod}>{this.props.theme === 'light' ?
+                            <DarkModeIcon/> : <LightModeIcon/>}</IconButton></Tooltip>
                         {/*<IconButton color={'primary'} ref={this.fontRef}*/}
                         {/*            onClick={() => this.setState({showFonts: true})}><TextFormatIcon/></IconButton>*/}
                         {/*<Menu*/}
@@ -48,8 +49,9 @@ class SiteSettings extends React.Component {
                         {/*                                                                     this.props.changeThemeFont(f);*/}
                         {/*                                                                 }}>A</MenuItem>)}*/}
                         {/*</Menu>*/}
-                        <IconButton color={'primary'} ref={this.colorRef}
-                                    onClick={() => this.setState({showColors: true})}><Colorize/></IconButton>
+                        <Tooltip title={'Change Colour'}><IconButton
+                            color={'primary'} ref={this.colorRef}
+                            onClick={() => this.setState({showColors: true})}><Colorize/></IconButton></Tooltip>
                         <Menu
                             id="account-menu"
                             anchorEl={this.colorRef.current}
