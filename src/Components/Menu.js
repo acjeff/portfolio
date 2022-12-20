@@ -20,29 +20,35 @@ class Menu extends React.Component {
                     <div className={'pic'}/>
                     <div className={'name'}>
                         <h3 style={{margin: 0}}>Alex Jefferies</h3>
-                        <IconButton><Email/></IconButton>
-                        <IconButton><LinkedIn/></IconButton>
-                        <IconButton><MusicNote/></IconButton>
+                        <IconButton color={'primary'}><Email/></IconButton>
+                        <IconButton color={'primary'}><LinkedIn/></IconButton>
+                        <IconButton color={'primary'}><MusicNote/></IconButton>
                     </div>
                 </div>
-                <Stepper nonLinear activeStep={this.props.activeProject} orientation="vertical">
+                <Stepper nonLinear activeStep={this.props.project} orientation="vertical">
                     {this.props.projects.map((step, index) => (
-                        <Step key={step.label} onClick={() => this.props.selectProject(index)}>
+                        <Step key={step.label} onClick={() => {
+                            this.props.selectProject('section', '0');
+                            this.props.selectProject('project', index);
+                        }}>
                             <StepLabel
-                                optional={
-                                    <Typography variant="caption">{step.timeline}</Typography>
-                                }
-                            >
+                                optional={<Typography variant="caption">{step.timeline}</Typography>}>
                                 {step.label}
                             </StepLabel>
                             <StepContent>
                                 <TreeView
+                                    selected={[this.props.section]}
                                     aria-label="file system navigator"
                                     defaultCollapseIcon={<ExpandMore/>}
                                     defaultExpandIcon={<ChevronRight/>}
                                     sx={{height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto'}}>
                                     {step.breakdown.map((b, i) => {
-                                        return <TreeItem key={i} nodeId={i + ''} label={b.title}/>
+                                        return <TreeItem onClick={(e) => {
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                            this.props.selectSection('section', i + '');
+                                        }}
+                                                         key={i} nodeId={i + ''} label={b.title}/>
                                     })}
                                 </TreeView>
                             </StepContent>

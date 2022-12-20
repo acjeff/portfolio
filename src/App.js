@@ -7,8 +7,14 @@ import {
     createTheme,
     CssBaseline,
     Container,
-    IconButton
+    IconButton,
+    Card, CardHeader, CardContent
 } from "@mui/material";
+import blue from '@mui/material/colors/blue';
+import orange from '@mui/material/colors/orange';
+import green from '@mui/material/colors/green';
+import purple from '@mui/material/colors/purple';
+import pink from '@mui/material/colors/pink';
 import {LinkOutlined} from "@mui/icons-material";
 
 const Projects = [
@@ -21,7 +27,7 @@ const Projects = [
         breakdown: [
             {
                 title: 'Overview',
-                summary: <span>When I joined there were two people who had just landed a small 6 month government grant to develop DSR Energy Technology.<br/><br/>6 Years later and we have built a full scale energy management system capable of complex monitoring and control, installed in hundreds of sites.<br/><br/>My role has encompassed the full spectrum of disciplines, as is often the case being an start up co-founder, but my main responsibilities were mainly:</span>,
+                summary: <span>When I joined there were two people who had just landed a small 6 month government grant to develop DSR Energy Technology.<br/><br/>6 Years later and we have built a full scale energy management system capable of complex monitoring and control, installed in hundreds of sites.<br/><br/>My role has encompassed the full spectrum of disciplines, but my main responsibilities were mainly that of:</span>,
                 video: '',
                 cards: [
                     {
@@ -44,19 +50,19 @@ const Projects = [
                 ]
             },
             {
-                title: 'UI/UX Designer',
+                title: 'UI/UX',
                 summary: <span></span>,
                 video: '',
                 cards: []
             },
             {
-                title: 'Full Stack Developer',
+                title: 'Development',
                 summary: <span></span>,
                 video: '',
                 cards: []
             },
             {
-                title: 'Brand Designer',
+                title: 'Brand Design',
                 summary: <span></span>,
                 video: '',
                 cards: []
@@ -76,19 +82,13 @@ const Projects = [
                 cards: []
             },
             {
-                title: 'UI/UX Designer',
+                title: 'Design',
                 summary: <span></span>,
                 video: '',
                 cards: []
             },
             {
-                title: 'Full Stack Developer',
-                summary: <span></span>,
-                video: '',
-                cards: []
-            },
-            {
-                title: 'Brand Designer',
+                title: 'Development',
                 summary: <span></span>,
                 video: '',
                 cards: []
@@ -194,48 +194,112 @@ const Projects = [
         ]
     }
 ];
+let colours = [pink, purple, blue, orange, green];
 
 class App extends React.Component {
 
     constructor(props) {
         super(props);
+
+        const queryString = window.location.search;
+        this.urlParams = new URLSearchParams(queryString);
+        const project = this.urlParams.get('project');
+        const section = this.urlParams.get('section');
+        const themeTod = this.urlParams.get('themeTod');
+        const colour = this.urlParams.get('colour');
+        console.log(project, ' : project');
+        console.log(section, ' : section');
+        console.log(colour, ' : colour');
+
         this.state = {
-            themeColor: 'dark',
+            themeTod: themeTod || 'dark',
             themeFont: 'Poppins, sans-serif',
-            activeProject: 0
+            project: parseInt(project) || 0,
+            section: section || '0',
+            colour: colour || 0
         }
+        this.updateParam = this.updateParam.bind(this);
+    }
+
+    updateQueryStringParameter(uri, key, value) {
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+        if (uri.match(re)) {
+            return uri.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+            return uri + separator + key + "=" + value;
+        }
+    }
+
+    updateParam(param, newValue) {
+        let updateObj = {};
+        window.history.pushState(null, null, this.updateQueryStringParameter(window.location.search, param, newValue + ''));
+        updateObj[param] = newValue;
+        this.setState(updateObj);
     }
 
     render() {
 
         const theme = createTheme({
             palette: {
-                mode: this.state.themeColor
+                mode: this.state.themeTod,
+                primary: colours[this.state.colour]
             },
             typography: {
                 fontFamily: this.state.themeFont
             }
         });
-
-        let activeProject = Projects[this.state.activeProject];
+        let section;
+        let project = Projects[this.state.project];
+        if (project) {
+            section = project.breakdown[parseInt(this.state.section)];
+        }
+        console.log(section, ' : section');
 
         return (
             <ThemeProvider theme={theme}>
                 <CssBaseline className={"Main"}>
-                    <Menu activeProject={this.state.activeProject} projects={Projects}
-                          selectProject={(project) => this.setState({activeProject: project})}/>
-                    <SiteSettings
-                        font={this.state.themeFont}
-                        theme={this.state.themeColor}
-                        changeThemeFont={(font) => this.setState({themeFont: font})}
-                        changeThemeColor={() => this.setState({themeColor: this.state.themeColor === 'light' ? 'dark' : 'light'})}/>
+                    <Menu section={this.state.section} project={this.state.project}
+                          projects={Projects}
+                          selectProject={this.updateParam}
+                          selectSection={this.updateParam}/>
+
                 </CssBaseline>
-                <Container>
-                    <h1>{activeProject.name}{activeProject.link ? <IconButton
-                        onClick={() => window.open(activeProject.link, '_blank')}><LinkOutlined/></IconButton> : null}</h1>
-                    <h2>{activeProject.description}</h2>
-                    <p>{activeProject.overview}</p>
-                </Container>
+                <div className={'Content'}>
+                    <div className={'Content-header'}>
+                        <h1>{project.link ? <IconButton
+                            onClick={() => window.open(project.link, '_blank')}><LinkOutlined/></IconButton> : null} {project.name} > {section.title}</h1>
+                        <SiteSettings
+                            font={this.state.themeFont}
+                            colours={colours}
+                            colour={this.state.colour}
+                            theme={this.state.themeTod}
+                            changeColour={(c) => {
+                                console.log(c, ' : colour');
+                                this.updateParam('colour', c);
+                            }}
+                            changeThemeFont={(font) => this.setState({themeFont: font})}
+                            changethemeTod={() => {
+                                let theme = this.state.themeTod === 'light' ? 'dark' : 'light';
+                                this.updateParam('themeTod', theme);
+                            }}/>
+                    </div>
+                    <div className={'Content-body'}>
+                        <Container>
+                            <div className={'column'}>
+                                <p>{section.summary}</p>
+                                {section.cards ? section.cards.map((c) => {
+                                    return <Card key={c.title}>
+                                        <CardHeader title={c.title}/>
+                                        <CardContent>
+                                            {c.body}
+                                        </CardContent>
+                                    </Card>
+                                }) : null}
+                            </div>
+                        </Container>
+                    </div>
+                </div>
             </ThemeProvider>
         );
     }
