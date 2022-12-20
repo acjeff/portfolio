@@ -1,26 +1,26 @@
-.css-11ugdyo-MuiStepIcon-text, .css-m8a1uf-MuiSvgIcon-root-MuiStepIcon-root, .css-vnkopk-MuiStepLabel-iconContainer {
+.MuiStepIcon-text, .MuiSvgIcon-root-MuiStepIcon-root, .MuiStepLabel-iconContainer {
   display: none !important;
 }
-.css-i3a0ch-MuiStepLabel-labelContainer {
+.MuiStepLabel-labelContainer {
   cursor: pointer;
   &:hover {
-    .css-i3a0ch-MuiStepLabel-labelContainer {
+    .MuiStepLabel-labelContainer {
       opacity: 0.7;
     }
   }
 }
 
-.css-16d9uqe-MuiTreeItem-content .MuiTreeItem-iconContainer, .css-lk6bkx-MuiTreeItem-content .MuiTreeItem-iconContainer {
+.MuiTreeItem-iconContainer, .MuiTreeItem-iconContainer {
   width: 0 !important;
 }
 
-.css-16d9uqe-MuiTreeItem-content .MuiTreeItem-label, .css-lk6bkx-MuiTreeItem-content .MuiTreeItem-label {
+.MuiTreeItem-label, {
   padding-left: 0 !important;
   font-size: 0.85rem !important;
   line-height: 2 !important;
 }
 
-.css-2cq9xd-MuiTreeView-root {
+.MuiTreeView-root {
   height: auto !important;
 }
 .Menu {
