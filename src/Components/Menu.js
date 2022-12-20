@@ -1,7 +1,9 @@
 import React from "react";
 import './Menu.scss';
-import {Step, Stepper, StepLabel, Typography, Card, IconButton} from "@mui/material";
-import {LinkedIn, MusicNote} from "@mui/icons-material";
+import {Step, Stepper, StepLabel, Typography, Card, IconButton, StepContent} from "@mui/material";
+import TreeView from '@mui/lab/TreeView';
+import TreeItem from '@mui/lab/TreeItem';
+import {LinkedIn, MusicNote, ExpandMore, ChevronRight, Email} from "@mui/icons-material";
 
 class Menu extends React.Component {
     constructor(props) {
@@ -18,6 +20,7 @@ class Menu extends React.Component {
                     <div className={'pic'}/>
                     <div className={'name'}>
                         <h3 style={{margin: 0}}>Alex Jefferies</h3>
+                        <IconButton><Email/></IconButton>
                         <IconButton><LinkedIn/></IconButton>
                         <IconButton><MusicNote/></IconButton>
                     </div>
@@ -32,6 +35,17 @@ class Menu extends React.Component {
                             >
                                 {step.label}
                             </StepLabel>
+                            <StepContent>
+                                <TreeView
+                                    aria-label="file system navigator"
+                                    defaultCollapseIcon={<ExpandMore/>}
+                                    defaultExpandIcon={<ChevronRight/>}
+                                    sx={{height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto'}}>
+                                    {step.breakdown.map((b, i) => {
+                                        return <TreeItem key={i} nodeId={i + ''} label={b.title}/>
+                                    })}
+                                </TreeView>
+                            </StepContent>
                         </Step>
                     ))}
                 </Stepper>
