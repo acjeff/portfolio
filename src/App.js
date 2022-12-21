@@ -22,7 +22,8 @@ import {
     LocalPoliceTwoTone
 } from "@mui/icons-material";
 import GridDuckLogo from './Images/gridduck.png';
-import GridDuckMonitoring from './Images/GD-DASH.mov';
+import GridDuckMonitoringMP4 from './Images/GD-DASH.mov';
+// import GridDuckMonitoringWEBM from './Images/GD-DASH.webm';
 // import GridDuckHeader from './Images/GridDuck-Header.png';
 
 let colours = [blue, pink, purple, orange, green];
@@ -43,7 +44,7 @@ class App extends React.Component {
         console.log(colour, ' : colour');
 
         this.state = {
-            themeTod: themeTod || 'dark',
+            themeTod: themeTod || 'light',
             themeFont: 'Poppins, sans-serif',
             project: parseInt(project) || 0,
             section: section || '0',
@@ -69,6 +70,11 @@ class App extends React.Component {
         this.setState(updateObj);
     }
 
+    goToPage(page) {
+        this.updateParam('project', page.project);
+        this.updateParam('section', page.section + '');
+    }
+
     render() {
 
         const Projects = [
@@ -83,7 +89,7 @@ class App extends React.Component {
                     {
                         title: 'Overview',
                         summary: <Grid container spacing={2}>
-                            <Grid item lg={4} md={12} sm={12} xs={12} style={{paddingTop: '30px'}}>
+                            <Grid item lg={4} md={12} sm={12} xs={12} style={{paddingTop: '40px'}}>
                                 <div className={'row'} style={{alignItems: 'center', marginBottom: '20px'}}>
                                     <AutoStoriesTwoTone style={{fontSize: '30px'}} color={'primary'}/>
                                     <h2 style={{
@@ -93,44 +99,60 @@ class App extends React.Component {
                                     }}>Overview</h2>
                                 </div>
                                 <p>
-                            GridDuck is an Energy Management System that provides businesses with the ability to monitor and control their energy usage.
-                            <br/><br/>
-                            When I joined there were two people who had just landed a small 6 month government grant to develop DSR Energy Technology.<br/><br/>
-                            Years later and we have built a full scale energy management system capable of complex monitoring and control, installed in hundreds of sites.
-                            <br/><br/>
-                            My role has encompassed the full spectrum of disciplines, but my main responsibilities can be described best as below.
-                        </p>
+                                    GridDuck is an Energy Management System that provides businesses with the ability to
+                                    monitor and control their energy usage.
+                                    <br/><br/>
+                                    When I joined there were two people who had just landed a small 6 month government
+                                    grant to develop DSR Energy Technology.<br/><br/>
+                                    Years later and we have built a full scale energy management system capable of
+                                    complex monitoring and control, installed in hundreds of sites.
+                                    <br/><br/>
+                                    My role has encompassed the full spectrum of disciplines, but my main
+                                    responsibilities can be described best as below.
+                                </p>
                             </Grid>
                             <Grid item lg={8} md={12} sm={12} xs={12}>
-                                <video autoPlay src={GridDuckMonitoring}/>
+                                <video autoPlay>
+                                    <source src={GridDuckMonitoringMP4} type="video/mp4"/>
+                                    {/*<source src={GridDuckMonitoringWEBM} type="video/webm"/>*/}
+                                </video>
                             </Grid>
 
 
                         </Grid>,
-                        video: GridDuckMonitoring,
                         cards: [
                             {
                                 title: 'Chief Product Officer',
                                 'body': <span>Talking to clients about their experience and then translating that into actionable improvements or features.<br/><br/>Then creating and managing the pipeline (Spec > Design > Build > Release)</span>,
-                                icon: <LocalPoliceTwoTone color={'primary'} style={{fontSize: '30px'}}/>
+                                icon: <LocalPoliceTwoTone color={'primary'} style={{fontSize: '30px'}}/>,
+                                linkOut: {project: 0, section: 1}
                             },
                             {
                                 title: 'UI/UX Designer',
                                 'body':
                                     <span>Designing the Dashboard, Installer App, Mobile Webapp and all accompanying tools.</span>,
-                                icon: <FormatPaintTwoTone color={'primary'} style={{fontSize: '30px'}}/>
+                                icon: <FormatPaintTwoTone color={'primary'} style={{fontSize: '30px'}}/>,
+                                linkOut: {project: 0, section: 2}
                             },
                             {
                                 title: 'Full Stack Developer',
                                 'body': <span>Developing everything from the front to the back. (React JS, React Native, Node JS, PostgreSQL). Also assisting in managing the entire range of the AWS suite.</span>,
-                                icon: <IntegrationInstructionsTwoTone color={'primary'} style={{fontSize: '30px'}}/>
+                                icon: <IntegrationInstructionsTwoTone color={'primary'} style={{fontSize: '30px'}}/>,
+                                linkOut: {project: 0, section: 3}
                             },
                             {
                                 title: 'Brand Designer',
                                 'body': <span>Designing the logo and branding, brochures, flyers, business cards, conference banners & the front-of-house website content.</span>,
-                                icon: <DesignServicesTwoTone color={'primary'} style={{fontSize: '30px'}}/>
+                                icon: <DesignServicesTwoTone color={'primary'} style={{fontSize: '30px'}}/>,
+                                linkOut: {project: 0, section: 4}
                             }
                         ]
+                    },
+                    {
+                        title: 'Chief Product Officer',
+                        summary: <span></span>,
+                        video: '',
+                        cards: []
                     },
                     {
                         title: 'UI/UX Design',
@@ -348,7 +370,9 @@ class App extends React.Component {
                                                             {c.body}
                                                         </p>
                                                         <div className={'row'}>
-                                                            <Button variant={'outlined'}>More</Button>
+                                                            {c.linkOut ?
+                                                                <Button onClick={() => this.goToPage(c.linkOut)}
+                                                                        variant={'outlined'}>More</Button> : null}
                                                         </div>
                                                     </div>
                                                 </div>
