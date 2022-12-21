@@ -4,12 +4,20 @@
   display: flex;
   height: 100%;
   overflow: hidden;
+  &.mobile {
+    padding-bottom: 100px;
+  }
+
   .logo {
     width: 300px;
     height: 80px;
     background-size: contain;
     background-position: 0 50%;
     background-repeat: no-repeat;
+
+    &.mobile {
+      width: 200px;
+    }
   }
 }
 
@@ -40,6 +48,7 @@ video {
 .MuiStepLabel-label {
   cursor: pointer;
 }
+
 .MuiStepLabel-labelContainer:hover {
   .MuiStepLabel-label:not(.Mui-active), .MuiTypography-root {
     opacity: 0.7;
@@ -52,11 +61,13 @@ video {
   display: flex !important;
   flex: 1 1;
   flex-direction: column;
+
   .header-video {
     position: relative;
     width: 100%;
     border-radius: 10px;
   }
+
   .card-icon {
     display: grid;
     height: 100px;
@@ -65,16 +76,27 @@ video {
     overflow: hidden;
     position: relative;
   }
+
   .Content-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 10px 20px;
+
+    &.mobile {
+      border-bottom: 1px solid #ececec;
+
+      &.dark {
+        border-bottom: 1px solid #333333;
+      }
+    }
   }
+
   .Content-body {
     display: flex;
     flex: 1 1;
     overflow: auto;
+    overflow-x: hidden;
   }
 }
 
@@ -97,4 +119,41 @@ body {
   //font-family: var(--font-family);
   //background: var(--background-color);
   //color: var(--text-color);
+}
+.puller {
+  position: absolute;
+  top: -130px;
+  width: 100%;
+  height: 130px;
+  visibility: visible;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
+  border: 1px solid #ececec;
+  border-bottom: none;
+  background: white;
+  box-shadow: 0px -3px 17px 0px #8888883b;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &.dark {
+    border: 1px solid #333333;
+    border-bottom: none;
+    background: #121212;
+  }
+}
+.MuiDrawer-root > .MuiPaper-root {
+  overflow: visible;
+  height: calc(100% - 200px);
+}
+.dragger {
+  margin: 0;
+  font-size: 11px;
+  text-align: center;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  color: rgba(125, 125, 125, 0.4);
+  border-bottom: 1px dashed rgba(125, 125, 125, 0.4);
+  svg {
+    font-size: 11px;
+  }
 }

@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {isMobile} from "react-device-detect";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+if (isMobile) {
+    document.getElementById('root').classList.add("mobile")
+}
 root.render(
   <React.StrictMode>
     <App />

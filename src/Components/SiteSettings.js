@@ -24,7 +24,7 @@ class SiteSettings extends React.Component {
         return (
             <div className="Site-Settings">
                 <div className={'me-container'}>
-                    <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                    <ButtonGroup variant="outlined" aria-label="outlined primary button group">
                         <Tooltip title={(this.props.theme === 'light' ? 'Dark' : 'Light') + ' Mode'}><IconButton
                             color={'primary'}
                             onClick={this.props.changeThemeTod}>{this.props.theme === 'light' ?

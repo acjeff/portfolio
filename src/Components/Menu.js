@@ -15,8 +15,8 @@ class Menu extends React.Component {
 
     render() {
         return (
-            <Card className="Menu">
-                <div className={'me-container'}>
+            <Card className={"Menu " + (this.props.mobile ? 'mobile' : '') + (this.props.theme === 'dark' ? ' dark' : '')}>
+                {!this.props.mobile ? <div className={'me-container'}>
                     <div className={'pic'}/>
                     <div className={'name'}>
                         <h3 style={{margin: 0}}>Alex Jefferies</h3>
@@ -25,7 +25,7 @@ class Menu extends React.Component {
                         <Tooltip title={'Github'}><IconButton color={'primary'}><GitHub/></IconButton></Tooltip>
                         <Tooltip title={'Spotify'}><IconButton color={'primary'}><MusicNote/></IconButton></Tooltip>
                     </div>
-                </div>
+                </div> : null}
                 <Stepper nonLinear activeStep={this.props.project} orientation="vertical">
                     {this.props.projects.map((step, index) => (
                         <Step key={step.label} onClick={() => {

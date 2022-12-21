@@ -2,12 +2,14 @@ import React from "react";
 import './App.scss';
 import Menu from "./Components/Menu";
 import SiteSettings from "./Components/SiteSettings";
+import {isMobile} from 'react-device-detect';
+
 import {
     ThemeProvider,
     createTheme,
     CssBaseline,
     Container,
-    Grid, Box, Button, Divider
+    Grid, Box, Button, Divider, SwipeableDrawer, Tooltip, IconButton
 } from "@mui/material";
 import blue from '@mui/material/colors/blue';
 import orange from '@mui/material/colors/orange';
@@ -15,11 +17,13 @@ import green from '@mui/material/colors/green';
 import purple from '@mui/material/colors/purple';
 import pink from '@mui/material/colors/pink';
 import {
+    ArrowDownward,
+    ArrowUpward,
     AutoStoriesTwoTone,
-    DesignServicesTwoTone,
-    FormatPaintTwoTone,
-    IntegrationInstructionsTwoTone,
-    LocalPoliceTwoTone
+    DesignServicesTwoTone, Email,
+    FormatPaintTwoTone, GitHub,
+    IntegrationInstructionsTwoTone, LinkedIn,
+    LocalPoliceTwoTone, MusicNote
 } from "@mui/icons-material";
 import GridDuckLogo from './Images/gridduck.png';
 import GridDuckMonitoringMP4 from './Images/GD-DASH.mp4';
@@ -36,6 +40,7 @@ class App extends React.Component {
         window.location.lasthash = [];
         const self = this;
         this.state = this.breakdownURLParams(window.location.hash);
+        this.state.mobileMenuOpen = false;
         this.updateParam = this.updateParam.bind(this);
 
         window.onhashchange = function (loc) {
@@ -331,18 +336,59 @@ class App extends React.Component {
         return (
             <ThemeProvider theme={theme}>
                 <CssBaseline className={"Main"}>
-                    <Menu section={this.state.section} project={this.state.project}
-                          projects={Projects}
-                          selectProject={this.updateParam}
-                          selectSection={this.updateParam}/>
+                    {!isMobile ? <Menu section={this.state.section} project={this.state.project}
+                                       projects={Projects}
+                                       selectProject={this.updateParam}
+                                       selectSection={this.updateParam}/> : <SwipeableDrawer
+                        // container={window.document.body}
+                        anchor="bottom"
+                        open={this.state.mobileMenuOpen}
+                        onClose={() => this.setState({mobileMenuOpen: false})}
+                        onOpen={() => this.setState({mobileMenuOpen: true})}
+                        swipeAreaWidth={130}
+                        disableSwipeToOpen={false}
+                        ModalProps={{
+                            keepMounted: true,
+                        }}>
+
+                        <Box className={'puller ' + (this.state.themeTod === 'dark' ? ' dark' : '')}>
+                            {!this.state.mobileMenuOpen ? <p className={'dragger'}><ArrowUpward/> Drag up for menu <ArrowUpward/></p>  : <p className={'dragger'}><ArrowDownward/> Drag down to close <ArrowDownward/></p>}
+                            <div className={'me-container'}>
+                                <div className={'pic'}/>
+                                <div className={'name'}>
+                                    <h3 style={{margin: 0}}>Alex Jefferies</h3>
+                                    <Tooltip title={'Email'}><IconButton
+                                        color={'primary'}><Email/></IconButton></Tooltip>
+                                    <Tooltip title={'LinkedIn'}><IconButton
+                                        color={'primary'}><LinkedIn/></IconButton></Tooltip>
+                                    <Tooltip title={'Github'}><IconButton
+                                        color={'primary'}><GitHub/></IconButton></Tooltip>
+                                    <Tooltip title={'Spotify'}><IconButton
+                                        color={'primary'}><MusicNote/></IconButton></Tooltip>
+                                </div>
+                            </div>
+                            {/*<MenuTwoTone onClick={(e) => {*/}
+                            {/*    e.preventDefault();*/}
+                            {/*    e.stopPropagation();*/}
+                            {/*    this.setState({mobileMenuOpen: true});*/}
+                            {/*}} color={'primary'} style={{fontSize: '40px'}}/>*/}
+                        </Box>
+                        <Menu mobile={isMobile} section={this.state.section} project={this.state.project}
+                              projects={Projects}
+                              theme={this.state.themeTod}
+                              selectProject={this.updateParam}
+                              selectSection={this.updateParam}/>
+                    </SwipeableDrawer>}
 
                 </CssBaseline>
                 <div className={'Content'}>
-                    <div className={'Content-header'}>
+                    <div
+                        className={'Content-header ' + (isMobile ? ' mobile' : '') + (this.state.themeTod === 'dark' ? ' dark' : '')}>
                         <div className={'row'}>
                             {/*{project.link ? <IconButton*/}
                             {/*    onClick={() => window.open(project.link, '_blank')}><LinkOutlined/></IconButton> : null}*/}
-                            <div style={{backgroundImage: 'url("' + project.logoURL + '")'}} className={'logo'}/>
+                            <div style={{backgroundImage: 'url("' + project.logoURL + '")'}}
+                                 className={'logo ' + (isMobile ? ' mobile' : '')}/>
                         </div>
                         <SiteSettings
                             font={this.state.themeFont}
