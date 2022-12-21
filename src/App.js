@@ -35,7 +35,7 @@ class App extends React.Component {
 
         window.location.lasthash = [];
         const self = this;
-        this.state = this.breakdownURLParams(window.location.search);
+        this.state = this.breakdownURLParams(window.location.hash);
         this.updateParam = this.updateParam.bind(this);
 
         window.onhashchange = function (loc) {
@@ -46,16 +46,22 @@ class App extends React.Component {
 
     }
 
+    extractUrlValue(key, url) {
+        if (typeof (url) === 'undefined')
+            url = window.location.href;
+        let match = url.match('[?&]' + key + '=([^&]+)');
+        return match ? match[1] : null;
+    }
+
     breakdownURLParams(url) {
-        this.urlParams = new URLSearchParams(url);
-        console.log(this.urlParams.get('section'), ' : this.urlParams.get(\'section\')');
+        url = url.replace("/#", "");
 
         return {
-            themeTod: this.urlParams.get('themeTod') || 'light',
+            themeTod: this.extractUrlValue('theme', url) || 'light',
             themeFont: 'Poppins, sans-serif',
-            project: parseInt(this.urlParams.get('project')) || 0,
-            section: this.urlParams.get('section') || '0',
-            colour: this.urlParams.get('colour') || 0
+            project: parseInt(this.extractUrlValue('project', url)) || 0,
+            section: this.extractUrlValue('section', url) || '0',
+            colour: this.extractUrlValue('colour', url) || 0
         }
 
     }
@@ -66,15 +72,15 @@ class App extends React.Component {
         if (uri.match(re)) {
             return uri.replace(re, '$1' + key + "=" + value + '$2');
         } else {
-            return uri + separator + key + "=" + value;
+            return (uri + separator + key + "=" + value);
         }
     }
 
     updateParam(param, newValue) {
         // let updateObj = {};
-        window.location.lasthash.push(window.location.search);
-        window.location.search = this.updateQueryStringParameter(window.location.search, param, newValue + '');
-        // window.history.pushState(null, null, this.updateQueryStringParameter(window.location.search, param, newValue + ''));
+        window.location.lasthash.push(window.location.hash);
+        window.location.hash = this.updateQueryStringParameter(window.location.hash, param, newValue + '');
+        // window.history.pushState(null, null, this.updateQueryStringParameter(window.location.hash, param, newValue + ''));
         // updateObj[param] = newValue;
         // this.setState(updateObj);
     }
