@@ -22,7 +22,7 @@ import {
     LocalPoliceTwoTone
 } from "@mui/icons-material";
 import GridDuckLogo from './Images/gridduck.png';
-import GridDuckMonitoringMP4 from './Images/GD-DASH.mov';
+import GridDuckMonitoringMP4 from './Images/GD-DASH.mp4';
 // import GridDuckMonitoringWEBM from './Images/GD-DASH.webm';
 // import GridDuckHeader from './Images/GridDuck-Header.png';
 
