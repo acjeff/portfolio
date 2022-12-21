@@ -82,6 +82,7 @@ class App extends React.Component {
     }
 
     updateParam(param, newValue) {
+        this.setState({mobileMenuOpen: false});
         // let updateObj = {};
         window.location.lasthash.push(window.location.hash);
         window.location.hash = this.updateQueryStringParameter(window.location.hash, param, newValue + '');
@@ -91,6 +92,7 @@ class App extends React.Component {
     }
 
     goToPage(page) {
+        console.log('Go to page');
         this.updateParam('project', page.project);
         this.updateParam('section', page.section + '');
     }
@@ -352,7 +354,9 @@ class App extends React.Component {
                         }}>
 
                         <Box className={'puller ' + (this.state.themeTod === 'dark' ? ' dark' : '')}>
-                            {!this.state.mobileMenuOpen ? <p className={'dragger'}><ArrowUpward/> Drag up for menu <ArrowUpward/></p>  : <p className={'dragger'}><ArrowDownward/> Drag down to close <ArrowDownward/></p>}
+                            {!this.state.mobileMenuOpen ?
+                                <p className={'dragger'}><ArrowUpward/> Drag up for menu <ArrowUpward/></p> :
+                                <p className={'dragger'}><ArrowDownward/> Drag down to close <ArrowDownward/></p>}
                             <div className={'me-container'}>
                                 <div className={'pic'}/>
                                 <div className={'name'}>
@@ -373,7 +377,9 @@ class App extends React.Component {
                             {/*    this.setState({mobileMenuOpen: true});*/}
                             {/*}} color={'primary'} style={{fontSize: '40px'}}/>*/}
                         </Box>
-                        <Menu mobile={isMobile} section={this.state.section} project={this.state.project}
+                        <Menu mobile={isMobile}
+                              section={this.state.section}
+                              project={this.state.project}
                               projects={Projects}
                               theme={this.state.themeTod}
                               selectProject={this.updateParam}
@@ -429,7 +435,7 @@ class App extends React.Component {
                                                         </p>
                                                         <div className={'row'}>
                                                             {c.linkOut ?
-                                                                <Button onClick={() => this.goToPage(c.linkOut)}
+                                                                <Button onClick={(e) => this.goToPage(c.linkOut)}
                                                                         variant={'outlined'}>More</Button> : null}
                                                         </div>
                                                     </div>
