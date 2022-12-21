@@ -51,6 +51,11 @@ class App extends React.Component {
             colour: colour || 0
         }
         this.updateParam = this.updateParam.bind(this);
+
+        history.listen(() => {
+            console.log('Update history');
+        });
+
     }
 
     updateQueryStringParameter(uri, key, value) {
