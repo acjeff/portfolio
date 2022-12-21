@@ -33,28 +33,30 @@ class App extends React.Component {
     constructor(props) {
         super(props);
 
-        const queryString = window.location.search;
-        this.urlParams = new URLSearchParams(queryString);
-        const project = this.urlParams.get('project');
-        const section = this.urlParams.get('section');
-        const themeTod = this.urlParams.get('themeTod');
-        const colour = this.urlParams.get('colour');
-        console.log(project, ' : project');
-        console.log(section, ' : section');
-        console.log(colour, ' : colour');
-
-        this.state = {
-            themeTod: themeTod || 'light',
-            themeFont: 'Poppins, sans-serif',
-            project: parseInt(project) || 0,
-            section: section || '0',
-            colour: colour || 0
-        }
+        window.location.lasthash = [];
+        const self = this;
+        this.state = this.breakdownURLParams(window.location.search);
         this.updateParam = this.updateParam.bind(this);
 
-        history.listen(() => {
-            console.log('Update history');
-        });
+        window.onhashchange = function (loc) {
+            console.log('Window changed: ', loc);
+            console.log(self.breakdownURLParams(loc.newURL), ' : self.breakdownURLParams()');
+            self.setState(self.breakdownURLParams(loc.newURL));
+        }
+
+    }
+
+    breakdownURLParams(url) {
+        this.urlParams = new URLSearchParams(url);
+        console.log(this.urlParams.get('section'), ' : this.urlParams.get(\'section\')');
+
+        return {
+            themeTod: this.urlParams.get('themeTod') || 'light',
+            themeFont: 'Poppins, sans-serif',
+            project: parseInt(this.urlParams.get('project')) || 0,
+            section: this.urlParams.get('section') || '0',
+            colour: this.urlParams.get('colour') || 0
+        }
 
     }
 
@@ -69,10 +71,12 @@ class App extends React.Component {
     }
 
     updateParam(param, newValue) {
-        let updateObj = {};
-        window.history.pushState(null, null, this.updateQueryStringParameter(window.location.search, param, newValue + ''));
-        updateObj[param] = newValue;
-        this.setState(updateObj);
+        // let updateObj = {};
+        window.location.lasthash.push(window.location.search);
+        window.location.search = this.updateQueryStringParameter(window.location.search, param, newValue + '');
+        // window.history.pushState(null, null, this.updateQueryStringParameter(window.location.search, param, newValue + ''));
+        // updateObj[param] = newValue;
+        // this.setState(updateObj);
     }
 
     goToPage(page) {
@@ -346,7 +350,7 @@ class App extends React.Component {
                                 console.log(c, ' : colour');
                                 this.updateParam('colour', c);
                             }}
-                            changeThemeFont={(font) => this.setState({themeFont: font})}
+                            // changeThemeFont={(font) => this.setState({themeFont: font})}
                             changeThemeTod={() => {
                                 let theme = this.state.themeTod === 'light' ? 'dark' : 'light';
                                 this.updateParam('themeTod', theme);
