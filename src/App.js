@@ -121,10 +121,7 @@ class App extends React.Component {
                                 </p>
                             </Grid>
                             <Grid item lg={8} md={12} sm={12} xs={12}>
-                                <video loop autoPlay>
-                                    <source src={GridDuckMonitoringMP4} type="video/mp4"/>
-                                    {/*<source src={GridDuckMonitoringWEBM} type="video/webm"/>*/}
-                                </video>
+                                <video muted loop autoPlay disablePictureInPicture src={GridDuckMonitoringMP4}/>
                             </Grid>
 
 

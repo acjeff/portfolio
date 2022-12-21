@@ -21,6 +21,14 @@ body {
   margin: 30px 0 !important;
 }
 
+.video-wrapper {
+  padding-bottom: 62.5%;
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  width: 100%;
+}
+
 video {
   border-radius: 5px;
   box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.24);
