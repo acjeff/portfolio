@@ -57,7 +57,7 @@ class App extends React.Component {
         url = url.replace("/#", "");
 
         return {
-            themeTod: this.extractUrlValue('theme', url) || 'light',
+            themeTod: this.extractUrlValue('themeTod', url) || 'light',
             themeFont: 'Poppins, sans-serif',
             project: parseInt(this.extractUrlValue('project', url)) || 0,
             section: this.extractUrlValue('section', url) || '0',
