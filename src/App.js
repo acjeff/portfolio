@@ -22,7 +22,7 @@ import {
     LocalPoliceTwoTone
 } from "@mui/icons-material";
 import GridDuckLogo from './Images/gridduck.png';
-import GridDuckMonitoring from './Images/gridduck-monitoring.mp4';
+import GridDuckMonitoring from './Images/GD-DASH.mov';
 // import GridDuckHeader from './Images/GridDuck-Header.png';
 
 let colours = [blue, pink, purple, orange, green];
