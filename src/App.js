@@ -118,6 +118,7 @@ class App extends React.Component {
                 name: 'GridDuck',
                 link: 'https://gridduck.com',
                 label: 'GridDuck - CPO / Co-Founder',
+                role: 'CPO / Co-Founder',
                 description: 'The Intelligent Energy Management System',
                 timeline: `Sep 2017 - Present`,
                 logoURL: GridDuckLogo,
@@ -127,6 +128,10 @@ class App extends React.Component {
                         banner: <div className={'banner gridduck'}>
                             <Grid container spacing={2}>
                                 <Grid item lg={6} md={10} sm={10} xs={10} style={{paddingTop: '40px'}}>
+                                    <a href={'https://gridduck.com'} rel="noreferrer" target='_blank'>
+                                        <div style={{backgroundImage: 'url("' + GridDuckLogo + '")'}}
+                                             className={'logo ' + (isMobile ? ' mobile' : '')}/>
+                                    </a>
                                     <h1 style={{
                                         color: colours[this.state.colour][500],
                                         fontSize: '40px'
@@ -135,7 +140,8 @@ class App extends React.Component {
                                     <h3 style={{
                                         color: colours[this.state.colour][500]
                                     }}>Helping you save money and reduce your carbon emissions.</h3>
-                                    <Typography className={'section-body'} variant="body2" color="text.secondary">GridDuck is an Energy Management System that provides businesses with the ability
+                                    <Typography className={'section-body'} variant="body2" color="text.secondary">GridDuck
+                                        is an Energy Management System that provides businesses with the ability
                                         to
                                         monitor and control their energy usage.</Typography>
                                 </Grid>
@@ -156,7 +162,7 @@ class App extends React.Component {
                                         color: colours[this.state.colour][500],
                                         paddingLeft: '15px',
                                         margin: 0
-                                    }}>Overview</h2>
+                                    }}>The Story</h2>
                                 </div>
                                 <Typography className={'section-body'} variant="body2" color="text.secondary">
                                     When I joined there were two people who had just landed a small 6 month government
@@ -193,7 +199,8 @@ class App extends React.Component {
                                 title: 'Full Stack Developer',
                                 imageURL: GdCode,
                                 'body': <span>Developing everything from the front to the back. (React JS, React Native, Node JS, PostgreSQL). Also assisting in managing the entire range of the AWS suite.</span>,
-                                icon: <IntegrationInstructionsTwoTone color={'primary'} className={'card-header-icon'}/>,
+                                icon: <IntegrationInstructionsTwoTone color={'primary'}
+                                                                      className={'card-header-icon'}/>,
                                 linkOut: {project: 0, section: 3}
                             },
                             {
@@ -385,7 +392,7 @@ class App extends React.Component {
                         open={this.state.mobileMenuOpen}
                         onClose={() => this.setState({mobileMenuOpen: false})}
                         onOpen={() => this.setState({mobileMenuOpen: true})}
-                        swipeAreaWidth={130}
+                        swipeAreaWidth={116}
                         disableSwipeToOpen={false}
                         ModalProps={{
                             keepMounted: true,
@@ -400,14 +407,16 @@ class App extends React.Component {
                                 <div className={'pic'}/>
                                 <div className={'name'}>
                                     <h3 style={{margin: 0}}>Alex Jefferies</h3>
-                                    <Tooltip title={'Email'}><IconButton
-                                        color={'primary'}><Email/></IconButton></Tooltip>
-                                    <Tooltip title={'LinkedIn'}><IconButton
-                                        color={'primary'}><LinkedIn/></IconButton></Tooltip>
-                                    <Tooltip title={'Github'}><IconButton
-                                        color={'primary'}><GitHub/></IconButton></Tooltip>
-                                    <Tooltip title={'Spotify'}><IconButton
-                                        color={'primary'}><MusicNote/></IconButton></Tooltip>
+                                    {!this.state.mobileMenuOpen ? <Typography fontStyle={{margin: '0 !important'}} className={'section-body'}
+                                                variant="body2" color="text.secondary">Portfolio</Typography> : null}
+                                    {this.state.mobileMenuOpen ? <Tooltip title={'Email'}><IconButton
+                                        color={'primary'}><Email/></IconButton></Tooltip> : null}
+                                    {this.state.mobileMenuOpen ? <Tooltip title={'LinkedIn'}><IconButton
+                                        color={'primary'}><LinkedIn/></IconButton></Tooltip> : null}
+                                    {this.state.mobileMenuOpen ? <Tooltip title={'Github'}><IconButton
+                                        color={'primary'}><GitHub/></IconButton></Tooltip> : null}
+                                    {this.state.mobileMenuOpen ? <Tooltip title={'Spotify'}><IconButton
+                                        color={'primary'}><MusicNote/></IconButton></Tooltip> : null}
                                 </div>
                             </div>
                             {/*<MenuTwoTone onClick={(e) => {*/}
@@ -429,13 +438,14 @@ class App extends React.Component {
                 <div className={'Content'}>
                     <div
                         className={'Content-header ' + (isMobile ? ' mobile' : '') + (this.state.themeTod === 'dark' ? ' dark' : '')}>
-                        <div className={'row'}>
-                            {/*{project.link ? <IconButton*/}
-                            {/*    onClick={() => window.open(project.link, '_blank')}><LinkOutlined/></IconButton> : null}*/}
-                            <a href={project.link} rel="noreferrer" target='_blank'>
-                                <div style={{backgroundImage: 'url("' + project.logoURL + '")'}}
-                                     className={'logo ' + (isMobile ? ' mobile' : '')}/>
-                            </a>
+                        <div className={'row'} style={{alignItems: 'center'}}>
+                            <div className={'column'}>
+                                <div className={'row'}>
+                                    <h3 style={{margin: '0'}}>{project.name}</h3>
+                                </div>
+                                <Typography fontStyle={{margin: '0 !important'}} className={'section-body'}
+                                            variant="body2" color="text.secondary">{project.role}</Typography>
+                            </div>
                         </div>
                         <SiteSettings
                             font={this.state.themeFont}
@@ -452,6 +462,12 @@ class App extends React.Component {
                                 this.updateParam('themeTod', theme);
                             }}/>
                     </div>
+                    {isMobile ? <div className={'breadcrumbs'}
+                                     style={{backgroundColor: colours[this.state.colour][500]}}>
+                        <div className={'row'}>
+                            <h4 style={{margin: '0', color: 'white'}}>{section.title}</h4>
+                        </div>
+                    </div> : null}
                     <div className={'Content-body'}>
                         <Container>
                             <div className={'column'} style={{padding: isMobile ? '0' : '50px 0'}}>
@@ -467,39 +483,45 @@ class App extends React.Component {
                                         margin: 0
                                     }}>{section.cardsTitle}</h2>
                                 </div>
-                                <Typography className={'section-body'} variant="body2" color="text.secondary">{section.cardsSubTitle}</Typography>
+                                <Typography className={'section-body'} variant="body2"
+                                            color="text.secondary">{section.cardsSubTitle}</Typography>
                                 <Masonry container columns={isMobile ? 1 : 2} spacing={2}>
 
                                     {section.cards ? section.cards.map((c) => {
                                         return <div className={'column'}>
-                                            <Card style={{backgroundColor: 'rgba(200,200,200,0.05)'}} variant={"outlined"}>
-                                                    <CardMedia
-                                                        component="img"
-                                                        height="200"
-                                                        image={c.imageURL}
-                                                        style={{objectPosition: '0 0'}}
-                                                        alt={c.title}
-                                                    />
-                                                    {/*<div style={{backgroundImage: 'url("' + c.imageURL + '")'}}*/}
-                                                    {/*     className={'card-image'}/>*/}
-                                                    <CardContent>
+                                            <Card style={{backgroundColor: 'rgba(200,200,200,0.05)'}}
+                                                  variant={"outlined"}>
+                                                <CardMedia
+                                                    component="img"
+                                                    height="200"
+                                                    image={c.imageURL}
+                                                    style={{objectPosition: '0 0'}}
+                                                    alt={c.title}
+                                                />
+                                                {/*<div style={{backgroundImage: 'url("' + c.imageURL + '")'}}*/}
+                                                {/*     className={'card-image'}/>*/}
+                                                <CardContent>
 
-                                                        <div className={'row'}
-                                                             style={{alignItems: 'center', marginBottom: '10px'}}>
-                                                            {c.icon}
-                                                            <Typography fontStyle={{fontWeight: 700, paddingLeft: '10px', fontSize: '20px'}} variant="h6" color="primary">{c.title}</Typography>
-                                                        </div>
-                                                        {/*<div style={{height: '150px', overflow: 'auto'}}>*/}
-                                                        <Typography variant="body2" color="text.secondary">
-                                                            {c.body}
-                                                        </Typography>
-                                                        {/*</div>*/}
-                                                        <div className={'row'} style={{marginTop: '20px'}}>
-                                                            {c.linkOut ?
-                                                                <Button onClick={(e) => this.goToPage(c.linkOut)}
-                                                                        variant={'outlined'}>More</Button> : null}
-                                                        </div>
-                                                    </CardContent>
+                                                    <div className={'row'}
+                                                         style={{alignItems: 'center', marginBottom: '10px'}}>
+                                                        {c.icon}
+                                                        <Typography fontStyle={{
+                                                            fontWeight: 700,
+                                                            paddingLeft: '10px',
+                                                            fontSize: '20px'
+                                                        }} variant="h6" color="primary">{c.title}</Typography>
+                                                    </div>
+                                                    {/*<div style={{height: '150px', overflow: 'auto'}}>*/}
+                                                    <Typography variant="body2" color="text.secondary">
+                                                        {c.body}
+                                                    </Typography>
+                                                    {/*</div>*/}
+                                                    <div className={'row'} style={{marginTop: '20px'}}>
+                                                        {c.linkOut ?
+                                                            <Button onClick={(e) => this.goToPage(c.linkOut)}
+                                                                    variant={'outlined'}>More</Button> : null}
+                                                    </div>
+                                                </CardContent>
 
                                             </Card>
                                         </div>
