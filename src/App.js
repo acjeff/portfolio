@@ -353,7 +353,7 @@ class App extends React.Component {
                             keepMounted: true,
                         }}>
 
-                        <Box className={'puller ' + (this.state.themeTod === 'dark' ? ' dark' : '')}>
+                        <Box className={'puller ' + (this.state.themeTod === 'dark' ? ' dark' : '') + (this.state.mobileMenuOpen ? ' open' : '')}>
                             {!this.state.mobileMenuOpen ?
                                 <p className={'dragger'}><ArrowUpward/> Drag up for menu <ArrowUpward/></p> :
                                 <p className={'dragger'}><ArrowDownward/> Drag down to close <ArrowDownward/></p>}

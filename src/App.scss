@@ -127,7 +127,7 @@ body {
   height: 130px;
   visibility: visible;
   padding: 20px;
-  border-radius: 20px 20px 0 0;
+  border-radius: 30px 30px 0 0;
   border: 1px solid #ececec;
   background-color: white;
   box-shadow: 0px -3px 17px 0px rgba(91, 91, 91, 0.23);
@@ -139,10 +139,15 @@ body {
     background-color: #121212;
     background-image: linear-gradient(rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05));
   }
+  &.open {
+    position: relative;
+    top: 0;
+  }
 }
 .MuiDrawer-root > .MuiPaper-root {
   overflow: visible;
-  height: calc(100% - 200px);
+  height: 80%;
+  border-radius: 30px 30px 0 0;
 }
 .dragger {
   margin: 0;
