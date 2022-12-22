@@ -9,8 +9,19 @@ import {
     createTheme,
     CssBaseline,
     Container,
-    Grid, Box, Button, Divider, SwipeableDrawer, Tooltip, IconButton
+    Grid,
+    Box,
+    Divider,
+    SwipeableDrawer,
+    Tooltip,
+    IconButton,
+    Button,
+    Card,
+    Typography,
+    CardContent,
+    CardMedia
 } from "@mui/material";
+import Masonry from '@mui/lab/Masonry';
 import blue from '@mui/material/colors/blue';
 import orange from '@mui/material/colors/orange';
 import green from '@mui/material/colors/green';
@@ -23,12 +34,15 @@ import {
     DesignServicesTwoTone, Email,
     FormatPaintTwoTone, GitHub,
     IntegrationInstructionsTwoTone, LinkedIn,
-    LocalPoliceTwoTone, MusicNote
+    LocalPoliceTwoTone, MusicNote, WorkTwoTone
 } from "@mui/icons-material";
 import GridDuckLogo from './Images/gridduck.png';
 import GridDuckMonitoringMP4 from './Images/GD-DASH.mp4';
-// import GridDuckMonitoringWEBM from './Images/GD-DASH.webm';
-// import GridDuckHeader from './Images/GridDuck-Header.png';
+import GridDuckHeader from './Images/GridDuck-Header.png';
+import GridDuckPM from './Images/gd-project-management.png';
+import UXDesignSketch from './Images/ux-design-sketch.png';
+import GdCode from './Images/gd-code.png';
+import GdBranding from './Images/gd-branding.jpeg';
 
 let colours = [blue, pink, purple, orange, green];
 
@@ -110,28 +124,46 @@ class App extends React.Component {
                 breakdown: [
                     {
                         title: 'Overview',
+                        banner: <div className={'banner gridduck'}>
+                            <Grid container spacing={2}>
+                                <Grid item lg={6} md={10} sm={10} xs={10} style={{paddingTop: '40px'}}>
+                                    <h1 style={{
+                                        color: colours[this.state.colour][500],
+                                        fontSize: '40px'
+                                    }}>The Intelligent<br/>
+                                        <span style={{fontStyle: 'underlined'}}>Energy Saving System</span></h1>
+                                    <h3 style={{
+                                        color: colours[this.state.colour][500]
+                                    }}>Helping you save money and reduce your carbon emissions.</h3>
+                                    <Typography className={'section-body'} variant="body2" color="text.secondary">GridDuck is an Energy Management System that provides businesses with the ability
+                                        to
+                                        monitor and control their energy usage.</Typography>
+                                </Grid>
+                                <Grid item lg={1} md={2} sm={2} xs={2}/>
+                                <Grid style={{display: !isMobile ? 'none' : 'auto'}} item md={1} sm={1} xs={1}/>
+                                <Grid item lg={5} md={10} sm={10} xs={10} style={{paddingTop: '40px'}}>
+                                    <img className={'header'} alt={'GridDuck'} src={GridDuckHeader}
+                                         style={{width: '100%'}}/>
+                                </Grid>
+                            </Grid>
+                            <Divider/>
+                        </div>,
                         summary: <Grid container spacing={2}>
                             <Grid item lg={4} md={12} sm={12} xs={12} style={{paddingTop: '40px'}}>
                                 <div className={'row'} style={{alignItems: 'center', marginBottom: '20px'}}>
-                                    <AutoStoriesTwoTone style={{fontSize: '30px'}} color={'primary'}/>
+                                    <AutoStoriesTwoTone style={{fontSize: '35px'}} color={'primary'}/>
                                     <h2 style={{
                                         color: colours[this.state.colour][500],
                                         paddingLeft: '15px',
                                         margin: 0
                                     }}>Overview</h2>
                                 </div>
-                                <p>
-                                    GridDuck is an Energy Management System that provides businesses with the ability to
-                                    monitor and control their energy usage.
-                                    <br/><br/>
+                                <Typography className={'section-body'} variant="body2" color="text.secondary">
                                     When I joined there were two people who had just landed a small 6 month government
                                     grant to develop DSR Energy Technology.<br/><br/>
-                                    Years later and we have built a full scale energy management system capable of
+                                    Now six years on and we have built a full scale energy management system capable of
                                     complex monitoring and control, installed in hundreds of sites.
-                                    <br/><br/>
-                                    My role has encompassed the full spectrum of disciplines, but my main
-                                    responsibilities can be described best as below.
-                                </p>
+                                </Typography>
                             </Grid>
                             <Grid item lg={8} md={12} sm={12} xs={12}>
                                 <video muted loop autoPlay disablePictureInPicture src={GridDuckMonitoringMP4}/>
@@ -139,30 +171,36 @@ class App extends React.Component {
 
 
                         </Grid>,
+                        cardsTitle: 'My Roles',
+                        cardsSubTitle: 'My role has encompassed a wide range of disciplines, but my primary responsibilities are listed below.',
+                        cardsTitleIcon: <WorkTwoTone style={{fontSize: '35px'}} color={'primary'}/>,
                         cards: [
                             {
                                 title: 'Chief Product Officer',
-                                'body': <span>Talking to clients about their experience and then translating that into actionable improvements or features.<br/><br/>Then creating and managing the pipeline (Spec > Design > Build > Release)</span>,
-                                icon: <LocalPoliceTwoTone color={'primary'} style={{fontSize: '30px'}}/>,
+                                imageURL: GridDuckPM,
+                                'body': <span>Talking to clients about their experience and then translating that into actionable improvements or features.</span>,
+                                icon: <LocalPoliceTwoTone color={'primary'} className={'card-header-icon'}/>,
                                 linkOut: {project: 0, section: 1}
                             },
                             {
                                 title: 'UI/UX Designer',
-                                'body':
-                                    <span>Designing the Dashboard, Installer App, Mobile Webapp and all accompanying tools.</span>,
-                                icon: <FormatPaintTwoTone color={'primary'} style={{fontSize: '30px'}}/>,
+                                imageURL: UXDesignSketch,
+                                'body': <span>Designing the Dashboard, Installer App, Mobile Webapp and all accompanying tools.</span>,
+                                icon: <FormatPaintTwoTone color={'primary'} className={'card-header-icon'}/>,
                                 linkOut: {project: 0, section: 2}
                             },
                             {
                                 title: 'Full Stack Developer',
+                                imageURL: GdCode,
                                 'body': <span>Developing everything from the front to the back. (React JS, React Native, Node JS, PostgreSQL). Also assisting in managing the entire range of the AWS suite.</span>,
-                                icon: <IntegrationInstructionsTwoTone color={'primary'} style={{fontSize: '30px'}}/>,
+                                icon: <IntegrationInstructionsTwoTone color={'primary'} className={'card-header-icon'}/>,
                                 linkOut: {project: 0, section: 3}
                             },
                             {
                                 title: 'Brand Designer',
+                                imageURL: GdBranding,
                                 'body': <span>Designing the logo and branding, brochures, flyers, business cards, conference banners & the front-of-house website content.</span>,
-                                icon: <DesignServicesTwoTone color={'primary'} style={{fontSize: '30px'}}/>,
+                                icon: <DesignServicesTwoTone color={'primary'} className={'card-header-icon'}/>,
                                 linkOut: {project: 0, section: 4}
                             }
                         ]
@@ -353,7 +391,8 @@ class App extends React.Component {
                             keepMounted: true,
                         }}>
 
-                        <Box className={'puller ' + (this.state.themeTod === 'dark' ? ' dark' : '') + (this.state.mobileMenuOpen ? ' open' : '')}>
+                        <Box
+                            className={'puller ' + (this.state.themeTod === 'dark' ? ' dark' : '') + (this.state.mobileMenuOpen ? ' open' : '')}>
                             {!this.state.mobileMenuOpen ?
                                 <p className={'dragger'}><ArrowUpward/> Drag up for menu <ArrowUpward/></p> :
                                 <p className={'dragger'}><ArrowDownward/> Drag down to close <ArrowDownward/></p>}
@@ -393,8 +432,10 @@ class App extends React.Component {
                         <div className={'row'}>
                             {/*{project.link ? <IconButton*/}
                             {/*    onClick={() => window.open(project.link, '_blank')}><LinkOutlined/></IconButton> : null}*/}
-                            <div style={{backgroundImage: 'url("' + project.logoURL + '")'}}
-                                 className={'logo ' + (isMobile ? ' mobile' : '')}/>
+                            <a href={project.link} rel="noreferrer" target='_blank'>
+                                <div style={{backgroundImage: 'url("' + project.logoURL + '")'}}
+                                     className={'logo ' + (isMobile ? ' mobile' : '')}/>
+                            </a>
                         </div>
                         <SiteSettings
                             font={this.state.themeFont}
@@ -413,37 +454,58 @@ class App extends React.Component {
                     </div>
                     <div className={'Content-body'}>
                         <Container>
-                            <div className={'column'} style={{paddingBottom: '50px'}}>
+                            <div className={'column'} style={{padding: isMobile ? '0' : '50px 0'}}>
                                 {/*<video className={'header-video'} autoPlay src={section.video}/>*/}
+                                {section.banner}
                                 {section.summary}
                                 <Divider/>
-                                <Grid container spacing={6}>
+                                <div className={'row'} style={{alignItems: 'center', marginBottom: 0}}>
+                                    {section.cardsTitleIcon}
+                                    <h2 style={{
+                                        color: colours[this.state.colour][500],
+                                        paddingLeft: '15px',
+                                        margin: 0
+                                    }}>{section.cardsTitle}</h2>
+                                </div>
+                                <Typography className={'section-body'} variant="body2" color="text.secondary">{section.cardsSubTitle}</Typography>
+                                <Masonry container columns={isMobile ? 1 : 2} spacing={2}>
+
                                     {section.cards ? section.cards.map((c) => {
-                                        return <Grid item lg={6} md={6} xs={12} key={c.title}>
-                                            <Box>
-                                                <div className={'column'}>
-                                                    <div>
-                                                        <div className={'row'} style={{alignItems: 'center'}}>
+                                        return <div className={'column'}>
+                                            <Card style={{backgroundColor: 'rgba(200,200,200,0.05)'}} variant={"outlined"}>
+                                                    <CardMedia
+                                                        component="img"
+                                                        height="200"
+                                                        image={c.imageURL}
+                                                        style={{objectPosition: '0 0'}}
+                                                        alt={c.title}
+                                                    />
+                                                    {/*<div style={{backgroundImage: 'url("' + c.imageURL + '")'}}*/}
+                                                    {/*     className={'card-image'}/>*/}
+                                                    <CardContent>
+
+                                                        <div className={'row'}
+                                                             style={{alignItems: 'center', marginBottom: '10px'}}>
                                                             {c.icon}
-                                                            <h3 style={{
-                                                                color: colours[this.state.colour][500],
-                                                                paddingLeft: '15px'
-                                                            }}>{c.title}</h3>
+                                                            <Typography fontStyle={{fontWeight: 700, paddingLeft: '10px', fontSize: '20px'}} variant="h6" color="primary">{c.title}</Typography>
                                                         </div>
-                                                        <p>
+                                                        {/*<div style={{height: '150px', overflow: 'auto'}}>*/}
+                                                        <Typography variant="body2" color="text.secondary">
                                                             {c.body}
-                                                        </p>
-                                                        <div className={'row'}>
+                                                        </Typography>
+                                                        {/*</div>*/}
+                                                        <div className={'row'} style={{marginTop: '20px'}}>
                                                             {c.linkOut ?
                                                                 <Button onClick={(e) => this.goToPage(c.linkOut)}
                                                                         variant={'outlined'}>More</Button> : null}
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </Box>
-                                        </Grid>
+                                                    </CardContent>
+
+                                            </Card>
+                                        </div>
+
                                     }) : null}
-                                </Grid>
+                                </Masonry>
                             </div>
                         </Container>
                     </div>
