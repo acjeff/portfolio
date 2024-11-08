@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import '../Styles/MovingDoodleBackground.scss';
-
+const id = Math.random().toString(36).substr(2);
 const MovingDoodleBackground = () => {
     const containerRef = useRef(null);
-    const id = Math.random().toString(36).substr(2);
 
     useEffect(() => {
         const container = containerRef.current as HTMLDivElement | null;
@@ -35,7 +34,7 @@ const MovingDoodleBackground = () => {
                 doodles.forEach(doodle => container.removeChild(doodle));
             }
         };
-    }, []);
+    }, [id]);
 
     return (
         <div ref={containerRef} className="doodle-background">
