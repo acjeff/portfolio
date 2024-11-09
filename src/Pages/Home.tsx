@@ -47,8 +47,10 @@ function Home() {
     };
 
     useEffect(() => {
-        if (projectsRef.current) {
-            projectsRef.current.addEventListener('mousemove', handleMouseMove);
+        const projectsElement = projectsRef.current; // Store ref value in a local variable
+
+        if (projectsElement) {
+            projectsElement.addEventListener('mousemove', handleMouseMove);
         }
 
         const animateWidth = () => {
@@ -56,7 +58,7 @@ function Home() {
             const target = parseFloat(targetWidth);
             const difference = target - currentWidth;
 
-            // Smooth damping towards target, with slight random jitter only if mouse is moving
+            // Smooth damping towards target
             const newWidth = currentWidth + difference * 0.1;
 
             setWidth(newWidth.toFixed(2) + '%');
@@ -66,8 +68,8 @@ function Home() {
         animationRef.current = requestAnimationFrame(animateWidth);
 
         return () => {
-            if (projectsRef.current) {
-                projectsRef.current.removeEventListener('mousemove', handleMouseMove);
+            if (projectsElement) {
+                projectsElement.removeEventListener('mousemove', handleMouseMove);
             }
             if (animationRef.current) cancelAnimationFrame(animationRef.current);
             if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
