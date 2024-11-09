@@ -34,7 +34,7 @@ const MovingDoodleBackground = () => {
                 doodles.forEach(doodle => container.removeChild(doodle));
             }
         };
-    }, [id]);
+    }, []);
 
     return (
         <div ref={containerRef} className="doodle-background">
