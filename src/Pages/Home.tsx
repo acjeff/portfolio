@@ -36,10 +36,8 @@ function Home() {
             setTargetWidth(newTargetWidth + '%');
             mouseMoving.current = true;
 
-            // Reset stop timer on every mouse move
             if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
 
-            // Set a timeout to mark the mouse as stopped if no movement happens for 200ms
             stopTimeoutRef.current = setTimeout(() => {
                 mouseMoving.current = false;
             }, 200);
@@ -47,7 +45,7 @@ function Home() {
     };
 
     useEffect(() => {
-        const projectsElement = projectsRef.current; // Store ref value in a local variable
+        const projectsElement = projectsRef.current;
 
         if (projectsElement) {
             projectsElement.addEventListener('mousemove', handleMouseMove);
