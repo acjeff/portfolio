@@ -99,7 +99,7 @@ function Home() {
                 <HomeLayer width={width} backgroundCol="white" textCol={col}/>
             </div>
             <div className="projects" ref={projectsRef} style={{bottom: showingProject ? 'calc(100% - 120px)' : '0'}}>
-                <p className="p-title" style={colStyle}>projects</p>
+                {showingProject ? <p className="p-title" style={colStyle}><span className={'clickable'} onClick={() => setShowingProject(null)}>{'^ back '}</span></p> : null}
                 <div className="row">
                     {projects.map((project) => (
                         <div className="project" key={project.id} onClick={() => setShowingProject(project)}>
