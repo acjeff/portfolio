@@ -1,17 +1,42 @@
 import React, {useState, useEffect, useRef} from 'react';
 import '../Styles/Home.scss';
 import HomeLayer from "../Components/HomeLayer";
+import gdImage from '../images/gd/gd1.png';
 
 const projects = [
-    {id: 1, name: 'GridDuck', range: '2010 - 2024'},
-    {id: 2, name: 'UTC Hub', range: '2010 - 2024'},
-    {id: 3, name: 'Gigbloc', range: '2010 - 2024'},
-    {id: 4, name: 'WIREWAX', range: '2010 - 2024'}
+    {
+        id: 1, name: 'GridDuck', range: '2010 - 2024', items: [
+            {image: gdImage, description: 'This is an image description'},
+            {image: gdImage, description: 'This is an image description'},
+            {image: gdImage, description: 'This is an image description'},
+            {image: gdImage, description: 'This is an image description'}
+        ]
+    },
+    {
+        id: 2, name: 'UTC Hub', range: '2010 - 2024', items: [
+            {image: gdImage, description: 'This is an image description'}
+        ]
+    },
+    {
+        id: 3, name: 'Gigbloc', range: '2010 - 2024', items: [
+            {image: gdImage, description: 'This is an image description'}
+        ]
+    },
+    {
+        id: 4, name: 'WIREWAX', range: '2010 - 2024', items: [
+            {
+                image: gdImage, description: 'This is an image description'
+            }]
+    }
 ];
 
 function Home() {
     const [width, setWidth] = useState('41%');
     const [targetWidth, setTargetWidth] = useState('41%');
+    const [showingProject, setShowingProject] = useState<{
+        items: Array<{ image: string, description: string }>;
+        id: number, name: string, range: string
+    } | null>(null);
     const projectsRef = useRef<HTMLDivElement | null>(null);
     const animationRef = useRef<number | null>(null);
     const mouseMoving = useRef(false);
@@ -68,24 +93,30 @@ function Home() {
     let colStyle = {color: col};
 
     return (
-        <div style={{position: 'absolute', height: 'calc(100% - 120px)', width: '100%'}}>
+        <div className={'home-wrapper'} style={{top: showingProject ? 'calc(-100% + 120px)' : '0'}}>
             <div>
                 <HomeLayer backgroundCol={col} textCol="white"/>
                 <HomeLayer width={width} backgroundCol="white" textCol={col}/>
             </div>
-            <div className="projects" ref={projectsRef}>
+            <div className="projects" ref={projectsRef} style={{bottom: showingProject ? 'calc(100% - 120px)' : '0'}}>
                 <p className="p-title" style={colStyle}>projects</p>
                 <div className="row">
                     {projects.map((project) => (
-                        <div className="project" key={project.id}>
+                        <div className="project" key={project.id} onClick={() => setShowingProject(project)}>
                             <p style={colStyle}>{project.name}</p>
                             <p className="details" style={colStyle}>{project.range}</p>
                         </div>
                     ))}
                 </div>
-                <div className={'project-contents'}>
-
-                </div>
+            </div>
+            <div className={'project-contents'} style={{top: showingProject ? '120px' : '100%'}}>
+                <h1>{showingProject?.name}</h1>
+                {showingProject && showingProject.items.map((item) => (
+                    <div>
+                        <div style={{backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: '100%', height: '500px', backgroundImage: `url(${item.image})`}}/>
+                        <p>{item.description}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );

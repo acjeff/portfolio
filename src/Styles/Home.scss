@@ -2,6 +2,18 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  //top: 0;
+  //transition: 0.5s all ease-in;
+  //&.showing {
+  //  top: -86%;
+  //}
+}
+
+.home-wrapper {
+  transition: all 0.5s ease-out;
+  position: absolute;
+  height: calc(100% - 120px);
+  width: 100%;
 }
 
 p, div {
@@ -9,7 +21,19 @@ p, div {
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
 
+.project-contents {
+  overflow: auto;
+  padding: 20px 60px;
+  transition: all 0.5s ease-out;
+  border-top: 1px solid #e8e8e8;
+  top: 120px;
+  position: fixed;
+  width: 100%;
+  height: calc(100% - 150px);
+}
+
 .projects {
+  transition: all 0.5s ease-out;
   position: fixed;
   display: flex;
   bottom: 0;
