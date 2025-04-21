@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import '../Styles/Home.scss';
 import HomeLayer from "../Components/HomeLayer";
 
 const projects = [
-    { id: 1, name: 'GridDuck', range: '2010 - 2024' },
-    { id: 2, name: 'UTC Hub', range: '2010 - 2024' },
-    { id: 3, name: 'Gigbloc', range: '2010 - 2024' },
-    { id: 4, name: 'WIREWAX', range: '2010 - 2024' }
+    {id: 1, name: 'GridDuck', range: '2010 - 2024'},
+    {id: 2, name: 'UTC Hub', range: '2010 - 2024'},
+    {id: 3, name: 'Gigbloc', range: '2010 - 2024'},
+    {id: 4, name: 'WIREWAX', range: '2010 - 2024'}
 ];
 
 const colors = [
-    '#1a1a1a',
+    '#fa6f6f',
     '#007bff',
     '#ff6f61',
     '#20c997',
@@ -74,18 +74,18 @@ function Home() {
         };
     }, [width, targetWidth]);
 
-    let colStyle = { color: col };
+    let colStyle = {color: col};
 
     return (
-        <div style={{ position: 'absolute', height: 'calc(100% - 120px)', width: '100%' }}>
-            <div className="colours">
-                {colors.map((color, index) => (
-                    <div className="colour" key={index} style={{ backgroundColor: color }} onClick={() => setCol(color)} />
-                ))}
-            </div>
+        <div style={{position: 'absolute', height: 'calc(100% - 120px)', width: '100%'}}>
+            {/*<div className="colours">*/}
+            {/*    {colors.map((color, index) => (*/}
+            {/*        <div className="colour" key={index} style={{backgroundColor: color}} onClick={() => setCol(color)}/>*/}
+            {/*    ))}*/}
+            {/*</div>*/}
             <div>
-                <HomeLayer backgroundCol={col} textCol="white" />
-                <HomeLayer width={width} backgroundCol="white" textCol={col} />
+                <HomeLayer backgroundCol={col} textCol="white"/>
+                <HomeLayer width={width} backgroundCol="white" textCol={col}/>
             </div>
             <div className="projects" ref={projectsRef}>
                 <p className="p-title" style={colStyle}>projects</p>
@@ -96,6 +96,9 @@ function Home() {
                             <p className="details" style={colStyle}>{project.range}</p>
                         </div>
                     ))}
+                </div>
+                <div className={'project-contents'}>
+
                 </div>
             </div>
         </div>

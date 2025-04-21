@@ -13,12 +13,12 @@ function HomeLayer({backgroundCol, textCol, width}: { backgroundCol: string; tex
                 <p className={'name second'} style={colStyle}>Jefferies</p>
             </div>
 
-            <div className={'description'}>
-                <p className={'text'} style={{backgroundColor: 'white', color: textCol === 'white' ? backgroundCol : textCol, borderColor: textCol}}>Hey, I'm a front-end developer and UI/UX designer who loves building
-                    approachable, thoughtfully designed
-                    digital experiences.</p>
-                {/*<div className={'backing-plate'} style={{borderColor: textCol}}/>*/}
-            </div>
+            {/*<div className={'description'}>*/}
+            {/*    <p className={'text'} style={{backgroundColor: 'white', color: textCol === 'white' ? backgroundCol : textCol, borderColor: textCol}}>Hey, I'm a front-end developer and UI/UX designer who loves building*/}
+            {/*        approachable, thoughtfully designed*/}
+            {/*        digital experiences.</p>*/}
+            {/*    /!*<div className={'backing-plate'} style={{borderColor: textCol}}/>*!/*/}
+            {/*</div>*/}
         </div>
     );
 }
