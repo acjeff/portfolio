@@ -110,13 +110,22 @@ function Home() {
                 </div>
             </div>
             <div className={'project-contents'} style={{top: showingProject ? '120px' : '100%'}}>
-                <h1>{showingProject?.name}</h1>
-                {showingProject && showingProject.items.map((item) => (
-                    <div>
-                        <div style={{backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center', width: '100%', height: '500px', backgroundImage: `url(${item.image})`}}/>
-                        <p>{item.description}</p>
-                    </div>
-                ))}
+                <div className={'project-content-inner'}>
+                    <h1>{showingProject?.name}</h1>
+                    {showingProject && showingProject.items.map((item) => (
+                        <div>
+                            <div style={{
+                                backgroundSize: 'contain',
+                                backgroundRepeat: 'no-repeat',
+                                backgroundPosition: 'center',
+                                width: '100%',
+                                height: '500px',
+                                backgroundImage: `url(${item.image})`
+                            }}/>
+                            <p>{item.description}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );
