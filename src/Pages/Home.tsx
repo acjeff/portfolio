@@ -9,18 +9,8 @@ const projects = [
     {id: 4, name: 'WIREWAX', range: '2010 - 2024'}
 ];
 
-const colors = [
-    '#fa6f6f',
-    '#007bff',
-    '#ff6f61',
-    '#20c997',
-    '#6f42c1',
-    '#ffc107'
-];
-
 function Home() {
     const [width, setWidth] = useState('41%');
-    const [col, setCol] = useState(colors[0]);
     const [targetWidth, setTargetWidth] = useState('41%');
     const projectsRef = useRef<HTMLDivElement | null>(null);
     const animationRef = useRef<number | null>(null);
@@ -74,15 +64,11 @@ function Home() {
         };
     }, [width, targetWidth]);
 
+    const col = '#fa6f6f';
     let colStyle = {color: col};
 
     return (
         <div style={{position: 'absolute', height: 'calc(100% - 120px)', width: '100%'}}>
-            {/*<div className="colours">*/}
-            {/*    {colors.map((color, index) => (*/}
-            {/*        <div className="colour" key={index} style={{backgroundColor: color}} onClick={() => setCol(color)}/>*/}
-            {/*    ))}*/}
-            {/*</div>*/}
             <div>
                 <HomeLayer backgroundCol={col} textCol="white"/>
                 <HomeLayer width={width} backgroundCol="white" textCol={col}/>
