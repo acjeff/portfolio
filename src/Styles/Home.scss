@@ -80,6 +80,9 @@ p, div {
     justify-content: center;
     cursor: pointer;
     text-align: center;
+    //&.selected {
+    //  text-emphasis: dot !important;
+    //}
     &:hover {
       opacity: 0.8;
     }
@@ -88,8 +91,9 @@ p, div {
       margin: 0;
       font-size: 25px;
       font-weight: bold;
-
+      //text-emphasis: dot open;
       &.details {
+        text-emphasis: none !important;
         font-size: 15px;
         font-weight: normal;
       }

@@ -150,9 +150,9 @@ function Home() {
                 {/*<div className="row">*/}
                 <Slider {...projectSliderSettings}>
                     {projects.map((project) => (
-                        <div className="project" key={project.id} onClick={() => setShowingProject(project)}>
-                            <p style={colStyle}>{project.name}</p>
-                            <p className="details" style={colStyle}>{project.range}</p>
+                        <div className={`project ${showingProject?.name === project.name ? 'selected' : ''}`} key={project.id} onClick={() => setShowingProject(project)}>
+                            <p style={{color: showingProject?.name === project.name ? col : 'grey'}}>{project.name}</p>
+                            <p className="details" style={{color: showingProject?.name === project.name ? col : 'grey'}}>{project.range}</p>
                         </div>
                     ))}
                 </Slider>
