@@ -146,7 +146,13 @@ function Home() {
                             {'^ back '}
                         </span>
                     </p>
-                ) : null}
+                ) : (
+                    <p className="p-title" style={colStyle}>
+                        <span className={'clickable'}>
+                            {'my work'}
+                        </span>
+                    </p>
+                )}
                 {/*<div className="row">*/}
                 <Slider {...projectSliderSettings}>
                     {projects.map((project) => (
