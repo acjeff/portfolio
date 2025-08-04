@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import gdImage from '../images/gd/gd1.png';
+import meAndRuby from '../images/me-and-ruby.png';
 
 const projects = [
     {
@@ -133,13 +134,18 @@ function Home() {
     };
 
     return (
-        <div className={'home-wrapper'} style={{top: showingProject ? 'calc(-100% + 120px)' : '0'}}>
+        <div ref={projectsRef} className={'home-wrapper'} style={{top: showingProject ? 'calc(-100% + 120px)' : '0'}}>
+            {/* Floating Circle */}
+            <div className="floating-circle">
+                <img src={meAndRuby} alt="Me and Ruby" />
+            </div>
+            
             <div>
                 <HomeLayer backgroundCol={col} textCol="white"/>
                 <HomeLayer width={width} backgroundCol="white" textCol={col}/>
             </div>
 
-            <div className="projects" ref={projectsRef} style={{bottom: showingProject ? 'calc(100% - 120px)' : '0'}}>
+            <div className="projects" style={{bottom: showingProject ? 'calc(100% - 120px)' : '0'}}>
                 {showingProject ? (
                     <p className="p-title" style={colStyle}>
                         <span className={'clickable'} onClick={() => setShowingProject(null)}>

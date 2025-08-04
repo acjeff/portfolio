@@ -9,6 +9,78 @@
   //}
 }
 
+// Floating Circle Styles
+.floating-circle {
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  width: 150px;
+  height: 150px;
+  // border-radius: 50%;
+  overflow: visible;
+  z-index: 1000;
+  border-bottom: 8px solid #fa6f6f;
+  border-right: 8px solid #fa6f6f;
+  // box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  // animation: float 6s ease-in-out infinite;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    // border-radius: 50%;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
+    // border-radius: 50%;
+    z-index: -1;
+    animation: shimmer 8s ease-in-out infinite;
+    border-bottom: 8px solid #ffffff;
+    border-right: 8px solid #ffffff;
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  25% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+
+  50% {
+    transform: translateY(-4px) rotate(-0.5deg);
+  }
+
+  75% {
+    transform: translateY(-12px) rotate(0.5deg);
+  }
+}
+
+@keyframes shimmer {
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: scale(1.02);
+  }
+}
+
 .slick-initialized .slick-slide {
   justify-content: center;
   align-items: center;
@@ -22,7 +94,8 @@
   width: 100%;
 }
 
-p, div {
+p,
+div {
   user-select: none;
   transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
 }
@@ -33,6 +106,7 @@ p, div {
   font-weight: 400;
   font-size: 0.8em;
   z-index: 999999;
+
   &:hover {
     opacity: 0.7;
   }
@@ -47,18 +121,21 @@ p, div {
   position: fixed;
   width: 100%;
   height: calc(100% - 150px);
+
   .project-content-inner {
     padding: 20px 60px;
   }
 }
 
-.slick-prev, .slick-next {
+.slick-prev,
+.slick-next {
   width: 100px !important;
   height: 100px !important;
   z-index: 999;
 }
 
-.slick-prev:before, .slick-next:before {
+.slick-prev:before,
+.slick-next:before {
   color: #fa6f6f !important;
 }
 
@@ -72,6 +149,7 @@ p, div {
   flex-direction: column;
   flex: 1 1;
   justify-content: center;
+
   .project {
     display: flex;
     flex-direction: column;
@@ -80,6 +158,7 @@ p, div {
     justify-content: center;
     cursor: pointer;
     text-align: center;
+
     //&.selected {
     //  text-emphasis: dot !important;
     //}
@@ -91,6 +170,7 @@ p, div {
       margin: 0;
       font-size: 25px;
       font-weight: bold;
+
       //text-emphasis: dot open;
       &.details {
         text-emphasis: none !important;
@@ -121,6 +201,7 @@ p, div {
   right: 0;
   top: 0;
   z-index: 2;
+
   .colour {
     cursor: pointer;
     width: 30px;
@@ -128,6 +209,7 @@ p, div {
     border-radius: 5px;
     margin: 5px;
     transition: transform 0.2s ease-in-out;
+
     &:hover {
       transform: scale(1.1);
     }
@@ -142,6 +224,7 @@ p, div {
   position: relative;
   overflow: hidden;
   justify-content: space-between;
+
   //transition: width 0.1s ease-in-out;
   &.left {
     width: 80%;
