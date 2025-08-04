@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import '../Styles/Home.scss';
 import HomeLayer from "../Components/HomeLayer";
+import RadialMenu from "../Components/RadialMenu";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
@@ -135,6 +136,9 @@ function Home() {
 
     return (
         <div ref={projectsRef} className={'home-wrapper'} style={{top: showingProject ? 'calc(-100% + 120px)' : '0'}}>
+            {/* Radial Menu */}
+            <RadialMenu />
+            
             {/* Floating Circle */}
             <div className="floating-circle">
                 <img src={meAndRuby} alt="Me and Ruby" />
@@ -145,7 +149,8 @@ function Home() {
                 <HomeLayer width={width} backgroundCol="white" textCol={col}/>
             </div>
 
-            <div className="projects" style={{bottom: showingProject ? 'calc(100% - 120px)' : '0'}}>
+            {/* <div className="projects" style={{bottom: showingProject ? 'calc(100% - 120px)' : '0'}}> */}
+            <div className="projects" style={{bottom: '0'}}>
                 {showingProject ? (
                     <p className="p-title" style={colStyle}>
                         <span className={'clickable'} onClick={() => setShowingProject(null)}>
@@ -171,7 +176,7 @@ function Home() {
                 {/*</div>*/}
             </div>
 
-            <div className={'project-contents'} style={{top: showingProject ? '120px' : '100%'}}>
+            <div className={'project-contents'} style={{top: showingProject ? '0' : '100%'}}>
                 <div className={'project-content-inner'}>
                     <h1>{showingProject?.name}</h1>
                         {/*<Slider {...sliderSettings}>*/}

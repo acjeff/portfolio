@@ -1,0 +1,113 @@
+import React, { useState } from 'react';
+import { FiX, FiExternalLink, FiDownload, FiMusic, FiGithub } from 'react-icons/fi';
+import { FaLink } from 'react-icons/fa';
+import '../Styles/RadialMenu.scss';
+
+interface MenuItem {
+  id: string;
+  icon: any;
+  label: string;
+  href: string;
+  external?: boolean;
+  download?: boolean;
+}
+
+const menuItems: MenuItem[] = [
+  {
+    id: 'github',
+    icon: FiGithub,
+    label: 'GitHub',
+    href: 'https://github.com/acjeff',
+    external: true
+  },
+  {
+    id: 'music',
+    icon: FiMusic,
+    label: 'Music',
+    href: 'https://open.spotify.com/artist/0O0SPhRVzekSaEHDxUvaUB',
+    external: true
+  },
+  {
+    id: 'game',
+    icon: FiExternalLink,
+    label: 'Game Idea',
+    href: 'https://acjeff.github.io/deeper',
+    external: true
+  },
+  {
+    id: 'cv',
+    icon: FiDownload,
+    label: 'CV',
+    href: '/cv.pdf',
+    download: true
+  }
+];
+
+const RadialMenu: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleItemClick = (item: MenuItem) => {
+    if (item.download) {
+      // Create a temporary link for download
+      const link = document.createElement('a');
+      link.href = item.href;
+      link.download = 'alexander-jefferies-cv.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+    setIsOpen(false);
+  };
+
+  return (
+    <div className="radial-menu-container">
+      {/* Menu Button */}
+      <button 
+        className={`radial-menu-button ${isOpen ? 'open' : ''}`}
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+        aria-expanded={isOpen}
+      >
+        {/* @ts-ignore */}
+        {isOpen ? <FiX /> : <FaLink />}
+      </button>
+
+      {/* Radial Menu Items */}
+      <div className={`radial-menu ${isOpen ? 'open' : ''}`}>
+        {menuItems.map((item, index) => (
+          <div
+            key={item.id}
+            className="menu-item"
+            style={{
+              '--item-index': index,
+              '--total-items': menuItems.length
+            } as React.CSSProperties}
+          >
+            <a
+              href={item.href}
+              onClick={(e) => {
+                if (item.download) {
+                  e.preventDefault();
+                  handleItemClick(item);
+                }
+              }}
+              target={item.external ? '_blank' : undefined}
+              rel={item.external ? 'noopener noreferrer' : undefined}
+              className="menu-item-link"
+              title={item.label}
+            >
+              <span className="menu-item-icon">{React.createElement(item.icon, {})}</span>
+              <span className="menu-item-label">{item.label}</span>
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default RadialMenu; 
