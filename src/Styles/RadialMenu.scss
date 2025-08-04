@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
   font-size: 1.8rem;
   z-index: 10000;
   
@@ -60,7 +60,7 @@
   right: 0;
   opacity: 0;
   transform: scale(0.8) translate(0, 0);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
   backdrop-filter: blur(5px);
   .radial-menu.open & {
     opacity: 1;
@@ -83,7 +83,7 @@
   // box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   text-decoration: none;
   color: #333;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
   
   &:hover {
     // background: rgba(255, 255, 255, 1);
@@ -95,7 +95,7 @@
 
 .menu-item-icon {
   font-size: 1.25rem;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
 }
 
 .menu-item-label {
@@ -108,7 +108,7 @@
   opacity: 1;
   display: block;
   transform: translateY(0.5rem);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
   
   .menu-item-link:hover & {
     opacity: 1;
