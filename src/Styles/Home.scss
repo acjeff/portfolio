@@ -47,6 +47,13 @@
   // }
 }
 
+@media (max-width: 768px) {
+  .floating-circle {
+    top: 0;
+    left: 0;
+  }
+}
+
 @keyframes float {
 
   0%,
