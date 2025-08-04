@@ -11,8 +11,7 @@
   border: none;
   background: #fa6f6f;
   color: white;
-  border-left: 8px solid white;
-  border-bottom: 8px solid white;
+  border-radius: 10px;
   position: relative;
   backdrop-filter: blur(10px);
   display: flex;
@@ -38,9 +37,6 @@
   &.open {
     color: #333;
     background: white;
-    border-left: 8px solid #fa6f6f;
-    border-bottom: 8px solid #fa6f6f;
-    
     &:hover {
       background: white;
     }

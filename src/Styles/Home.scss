@@ -12,39 +12,39 @@
 // Floating Circle Styles
 .floating-circle {
   position: absolute;
-  top: 30px;
-  left: 30px;
-  width: 150px;
-  height: 150px;
-  // border-radius: 50%;
+  top: 0;
+  width: 190px;
+  height: 190px;
+  border-radius: 0 0 10px 0;
   overflow: visible;
   z-index: 1000;
-  border-bottom: 8px solid #fa6f6f;
-  border-right: 8px solid #fa6f6f;
+  border-bottom: 8px solid #f98d8d;
+  border-right: 8px solid #faa9a9;
   // box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   // animation: float 6s ease-in-out infinite;
 
   img {
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
+    top: 20%;
+    left: 20%;
+    position: absolute;
     object-fit: cover;
-    // border-radius: 50%;
+    border-radius: 0 0 2px 0;
   }
 
-  // &::before {
-  //   content: '';
-  //   position: absolute;
-  //   top: 8px;
-  //   left: 2px;
-  //   right: 2px;
-  //   bottom: 2px;
-  //   background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
-  //   // border-radius: 50%;
-  //   z-index: -1;
-  //   animation: shimmer 8s ease-in-out infinite;
-  //   border-bottom: 8px solid #ffffff;
-  //   border-right: 8px solid #ffffff;
-  // }
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(239, 42, 42, 0.3), rgba(251, 56, 56, 0.5));
+    // border-radius: 50%;
+    z-index: -1;
+    animation: shimmer 8s ease-in-out infinite;
+  }
 }
 
 @media (max-width: 768px) {
@@ -75,16 +75,17 @@
 }
 
 @keyframes shimmer {
-
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
+  0% {
+    background: rgba(42, 239, 62, 0.4);
   }
-
-  50% {
-    opacity: 0.6;
-    transform: scale(1.02);
+  33% {
+    background: rgba(239, 42, 42, 0.4);
+  }
+  66% {
+    background: rgba(42, 121, 239, 0.4);
+  }
+  100% {
+    background: rgba(42, 239, 62, 0.4);
   }
 }
 
