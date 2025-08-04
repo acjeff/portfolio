@@ -12,38 +12,118 @@
 // Floating Circle Styles
 .floating-circle {
   position: absolute;
-  top: 0;
-  width: 190px;
-  height: 190px;
-  border-radius: 0 0 10px 0;
-  overflow: visible;
+  top: 20px;
+  left: 20px;
+  width: 180px;
+  height: 180px;
   z-index: 1000;
-  border-bottom: 8px solid #f98d8d;
-  border-right: 8px solid #faa9a9;
-  transition: 0.3s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
+  animation: float 8s ease-in-out infinite;
+  
+  // Floating particles background
+  &::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    left: -30px;
+    right: -30px;
+    bottom: -30px;
+    background-image: 
+      radial-gradient(circle, #fa6f6f 2px, transparent 2px),
+      radial-gradient(circle, #ff8a8a 1px, transparent 1px),
+      radial-gradient(circle, white 1px, transparent 1px);
+    background-size: 25px 25px, 15px 15px, 20px 20px;
+    background-position: 
+      10px 10px, 
+      20px 5px, 
+      5px 20px;
+    opacity: 0.8;
+    animation: particleFloat 20s ease-in-out infinite;
+    z-index: -1;
+  }
+  
+  // Main geometric container
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, #fa6f6f, #ff8a8a, #fa6f6f);
+    clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
+    animation: rotate 60s linear infinite;
+    box-shadow: 
+      0 0 30px rgba(250, 111, 111, 0.4),
+      0 0 60px rgba(250, 111, 111, 0.2),
+      0 0 90px rgba(250, 111, 111, 0.1);
+  }
 
   img {
-    width: 80%;
-    height: 80%;
-    top: 20%;
-    left: 20%;
     position: absolute;
+    top: 16px;
+    left: 16px;
+    width: calc(100% - 32px);
+    height: calc(100% - 32px);
     object-fit: cover;
-    border-radius: 0 0 2px 0;
+    clip-path: polygon(30% 10%, 70% 10%, 90% 30%, 90% 70%, 70% 90%, 30% 90%, 10% 70%, 10% 30%);
+    filter: contrast(1.1) brightness(1.05);
+    transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.22);
+    z-index: 2;
   }
+  
   &:hover {
-    transform: scale(1.5);
+    transform: scale(1.1) rotate(5deg);
+    
+    &::after {
+      animation: rotate 15s linear infinite;
+      box-shadow: 
+        0 0 40px rgba(250, 111, 111, 0.6),
+        0 0 80px rgba(250, 111, 111, 0.3),
+        0 0 120px rgba(250, 111, 111, 0.2);
+    }
+    
+    img {
+      filter: contrast(1.2) brightness(1.1) saturate(1.1);
+      transform: scale(1.05);
+    }
   }
+}
 
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes particleFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.8;
+  }
+  25% {
+    transform: translateY(-10px) rotate(90deg);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-5px) rotate(180deg);
+    opacity: 0.6;
+  }
+  75% {
+    transform: translateY(-15px) rotate(270deg);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 768px) {
-  .floating-circle {
-    top: 0;
-    left: 0;
-    width: 120px;
-    height: 120px;
-  }
+  // .floating-circle {
+  //   top: 0;
+  //   left: 0;
+  //   width: 120px;
+  //   height: 120px;
+  // }
 }
 
 @keyframes float {

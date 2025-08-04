@@ -41,6 +41,7 @@ function Home() {
         items: Array<{ image: string, description: string }>;
         id: number, name: string, range: string
     } | null>(null);
+    const [isProjectPanelOpen, setIsProjectPanelOpen] = useState(false);
 
     const projectsRef = useRef<HTMLDivElement | null>(null);
     const animationRef = useRef<number | null>(null);
@@ -155,7 +156,7 @@ function Home() {
     };
 
     return (
-        <div ref={projectsRef} className={'home-wrapper'} style={{top: showingProject ? 'calc(-100% + 120px)' : '0'}}>
+        <div ref={projectsRef} className={'home-wrapper'} style={{top: isProjectPanelOpen ? 'calc(-100% + 120px)' : '0'}}>
             {/* Radial Menu */}
             <RadialMenu />
             
@@ -171,9 +172,9 @@ function Home() {
 
             {/* <div className="projects" style={{bottom: showingProject ? 'calc(100% - 120px)' : '0'}}> */}
             <div className="projects" style={{bottom: '0'}}>
-                {showingProject ? (
+                {isProjectPanelOpen ? (
                     <p className="p-title" style={colStyle}>
-                        <span className={'clickable'} onClick={() => setShowingProject(null)}>
+                        <span className={'clickable'} onClick={() => setIsProjectPanelOpen(false)}>
                             {'^ back '}
                         </span>
                     </p>
@@ -187,7 +188,10 @@ function Home() {
                 {/*<div className="row">*/}
                 <Slider {...projectSliderSettings}>
                     {projects.map((project) => (
-                        <div className={`project ${showingProject?.name === project.name ? 'selected' : ''}`} key={project.id} onClick={() => setShowingProject(project)}>
+                        <div className={`project ${showingProject?.name === project.name ? 'selected' : ''}`} key={project.id} onClick={() => {
+                            setShowingProject(project);
+                            setIsProjectPanelOpen(true);
+                        }}>
                             <p style={{color: showingProject?.name === project.name ? col : 'grey'}}>{project.name}</p>
                             <p className="details" style={{color: showingProject?.name === project.name ? col : 'grey'}}>{project.range}</p>
                         </div>
@@ -196,7 +200,7 @@ function Home() {
                 {/*</div>*/}
             </div>
 
-            <div className={'project-contents'} style={{top: showingProject ? '0' : '100%'}}>
+            <div className={'project-contents'} style={{top: isProjectPanelOpen ? '0' : '100%'}}>
                 <div className={'project-content-inner'}>
                     <h1>{showingProject?.name}</h1>
                         {/*<Slider {...sliderSettings}>*/}
