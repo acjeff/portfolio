@@ -1,38 +1,48 @@
 import React, {useEffect, useRef} from 'react';
 import '../Styles/MovingDoodleBackground.scss';
 
-const id = Math.random().toString(36).substr(2);
-
 const MovingDoodleBackground = () => {
-    const containerRef = useRef(null);
+    const containerRef = useRef<HTMLDivElement | null>(null);
+    const doodlesRef = useRef<HTMLDivElement[]>([]);
 
     useEffect(() => {
-        const container = containerRef.current as HTMLDivElement | null;
+        const container = containerRef.current;
+        if (!container) return;
+
         const doodleCount = 100;
         const doodles: HTMLDivElement[] = [];
+
+        // Clear any existing doodles first
+        doodlesRef.current.forEach(doodle => {
+            if (doodle.parentNode) {
+                doodle.parentNode.removeChild(doodle);
+            }
+        });
+        doodlesRef.current = [];
 
         for (let i = 0; i < doodleCount; i++) {
             const doodle = document.createElement('div') as HTMLDivElement;
             doodle.classList.add('doodle-shape');
             doodle.style.top = `${Math.random() * 100}vh`;
             doodle.style.left = `${Math.random() * 100}vw`;
-            doodle.style.opacity = `${0.3 + Math.random() * 0.7}`; // Opacity between 0.3 and 1
-            doodle.style.animationDelay = `${Math.random() * 5}s`; // Randomize animation start
+            doodle.style.opacity = `${0.3 + Math.random() * 0.7}`;
+            doodle.style.animationDelay = `${Math.random() * 5}s`;
 
-            doodle.setAttribute('key', `${id}-doodle-${i}`);
-
-            if (container) {
-                container.appendChild(doodle);
-                doodles.push(doodle);
-            }
+            container.appendChild(doodle);
+            doodles.push(doodle);
         }
 
+        doodlesRef.current = doodles;
+
         return () => {
-            if (container) {
-                doodles.forEach(doodle => container.removeChild(doodle));
-            }
+            doodles.forEach(doodle => {
+                if (doodle.parentNode) {
+                    doodle.parentNode.removeChild(doodle);
+                }
+            });
+            doodlesRef.current = [];
         };
-    }, []);
+    }, []); // Empty dependency array - only run once on mount
 
     return (
         <div ref={containerRef} className="doodle-background">

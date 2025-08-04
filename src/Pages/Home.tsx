@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import '../Styles/Home.scss';
 import HomeLayer from "../Components/HomeLayer";
 import RadialMenu from "../Components/RadialMenu";
@@ -35,8 +35,8 @@ const projects = [
 ];
 
 function Home() {
-    const [width, setWidth] = useState('41%');
-    const [targetWidth, setTargetWidth] = useState('41%');
+    const [width, setWidth] = useState('15%');
+    const [targetWidth, setTargetWidth] = useState('15%');
     const [showingProject, setShowingProject] = useState<{
         items: Array<{ image: string, description: string }>;
         id: number, name: string, range: string
@@ -47,7 +47,7 @@ function Home() {
     const mouseMoving = useRef(false);
     const stopTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-    const handleMouseMove = (event: MouseEvent) => {
+    const handleMouseMove = useCallback((event: MouseEvent) => {
         if (projectsRef.current) {
             const rect = projectsRef.current.getBoundingClientRect();
             const mouseX = event.clientX - rect.left;
@@ -62,8 +62,9 @@ function Home() {
                 mouseMoving.current = false;
             }, 200);
         }
-    };
+    }, []);
 
+    // Set up mousemove event listener
     useEffect(() => {
         const projectsElement = projectsRef.current;
 
@@ -71,23 +72,42 @@ function Home() {
             projectsElement.addEventListener('mousemove', handleMouseMove);
         }
 
+        return () => {
+            if (projectsElement) {
+                projectsElement.removeEventListener('mousemove', handleMouseMove);
+            }
+            if (stopTimeoutRef.current) {
+                clearTimeout(stopTimeoutRef.current);
+            }
+        };
+    }, [handleMouseMove]);
+
+    // Animation loop - separate from event listener setup
+    useEffect(() => {
         const animateWidth = () => {
             const currentWidth = parseFloat(width);
             const target = parseFloat(targetWidth);
             const difference = target - currentWidth;
-            const newWidth = currentWidth + difference * 0.1;
-            setWidth(newWidth.toFixed(2) + '%');
-            animationRef.current = requestAnimationFrame(animateWidth);
+            
+            // Only continue animation if there's a meaningful difference
+            if (Math.abs(difference) > 0.01) {
+                const newWidth = currentWidth + difference * 0.1;
+                setWidth(newWidth.toFixed(2) + '%');
+                animationRef.current = requestAnimationFrame(animateWidth);
+            } else {
+                // Stop animation when close enough to target
+                setWidth(targetWidth);
+                animationRef.current = null;
+            }
         };
 
         animationRef.current = requestAnimationFrame(animateWidth);
 
         return () => {
-            if (projectsElement) {
-                projectsElement.removeEventListener('mousemove', handleMouseMove);
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+                animationRef.current = null;
             }
-            if (animationRef.current) cancelAnimationFrame(animationRef.current);
-            if (stopTimeoutRef.current) clearTimeout(stopTimeoutRef.current);
         };
     }, [width, targetWidth]);
 
