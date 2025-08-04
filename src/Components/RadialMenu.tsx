@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FiX, FiExternalLink, FiDownload, FiMusic, FiGithub } from 'react-icons/fi';
+import { FiX, FiPlayCircle, FiDownload, FiMusic, FiGithub, FiMail, FiLinkedin } from 'react-icons/fi';
 import { FaLink } from 'react-icons/fa';
 import '../Styles/RadialMenu.scss';
 
@@ -13,6 +13,20 @@ interface MenuItem {
 }
 
 const menuItems: MenuItem[] = [
+  {
+    id: 'email',
+    icon: FiMail,
+    label: 'Email',
+    href: 'mailto:labaia33@gmail.com',
+    external: true
+  },
+  {
+    id: 'linkedin',
+    icon: FiLinkedin,
+    label: 'Linkedin',
+    href: 'https://www.linkedin.com/in/acjefferies',
+    external: true
+  },
   {
     id: 'github',
     icon: FiGithub,
@@ -29,7 +43,7 @@ const menuItems: MenuItem[] = [
   },
   {
     id: 'game',
-    icon: FiExternalLink,
+    icon: FiPlayCircle,
     label: 'Game Idea',
     href: 'https://acjeff.github.io/deeper',
     external: true
