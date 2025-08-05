@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import '../Styles/Home.scss';
 import HomeLayer from "../Components/HomeLayer";
 import RadialMenu from "../Components/RadialMenu";
@@ -202,11 +202,13 @@ function Home() {
     }, [width, targetWidth]);
 
     // Helper to get all images in the current project
-    const allGalleryImages = showingProject
-      ? showingProject.sections.flatMap((section, sectionIdx) =>
-          section.items.map((item, itemIdx) => ({ ...item, sectionIdx, itemIdx, sectionHeader: section.header }))
-        )
-      : [];
+    const allGalleryImages = useMemo(() => 
+      showingProject
+        ? showingProject.sections.flatMap((section, sectionIdx) =>
+            section.items.map((item, itemIdx) => ({ ...item, sectionIdx, itemIdx, sectionHeader: section.header }))
+          )
+        : [], [showingProject]
+    );
 
     const openLightbox = (sectionIdx: number, itemIdx: number) => {
       setLightbox({ sectionIdx, itemIdx });
@@ -217,18 +219,20 @@ function Home() {
           img => img.sectionIdx === lightbox.sectionIdx && img.itemIdx === lightbox.itemIdx
         )
       : -1;
-    const prevLightbox = () => {
+    
+    const prevLightbox = useCallback(() => {
       if (currentLightboxIndex > 0) {
         const prev = allGalleryImages[currentLightboxIndex - 1];
         setLightbox({ sectionIdx: prev.sectionIdx, itemIdx: prev.itemIdx });
       }
-    };
-    const nextLightbox = () => {
+    }, [currentLightboxIndex, allGalleryImages]);
+    
+    const nextLightbox = useCallback(() => {
       if (currentLightboxIndex < allGalleryImages.length - 1) {
         const next = allGalleryImages[currentLightboxIndex + 1];
         setLightbox({ sectionIdx: next.sectionIdx, itemIdx: next.itemIdx });
       }
-    };
+    }, [currentLightboxIndex, allGalleryImages]);
 
     // Lightbox close and navigation on ESC/arrow keys
     useEffect(() => {
@@ -240,7 +244,7 @@ function Home() {
       };
       window.addEventListener('keydown', onKeyDown);
       return () => window.removeEventListener('keydown', onKeyDown);
-    }, [lightbox, allGalleryImages, prevLightbox, nextLightbox]);
+    }, [lightbox, prevLightbox, nextLightbox]);
 
     const col = '#fa6f6f';
     const colStyle = { color: col };
