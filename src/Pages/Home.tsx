@@ -300,7 +300,7 @@ function Home() {
     };
 
     return (
-        <div ref={projectsRef} className={'home-wrapper'} style={{ top: isProjectPanelOpen ? 'calc(-100% + 120px)' : '0' }}>
+        <div ref={projectsRef} className={'home-wrapper ' + (isProjectPanelOpen ? 'showing': '')} style={{ top: isProjectPanelOpen ? 'calc(-100% + 120px)' : '0' }}>
             {/* Radial Menu */}
             <RadialMenu />
 

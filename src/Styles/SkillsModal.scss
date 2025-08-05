@@ -623,10 +623,20 @@
 // Responsive adjustments
 @media (max-width: 768px) {
   .skills-button-container {
-    top: 37rem;
+    transition: 0.8s ease-in-out;
+    top: calc(100% - 288px);
   }
   .radial-menu-container {
-    top: 37rem;
+    transition: 0.8s ease-in-out;
+    top: calc(100% - 288px);
+  }
+  .home-wrapper.showing {
+    .skills-button-container {
+      top: calc(100% - 223px);
+    }
+    .radial-menu-container {
+      top: calc(100% - 223px);
+    } 
   }
   
   .skills-modal {
