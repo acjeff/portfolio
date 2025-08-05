@@ -423,7 +423,7 @@ function Home() {
                       <div className="project-content-layout">
                         <div className="project-content-left">
                           <section>
-                            <h2>About {showingProject.company}</h2>
+                            {/* <h2>About {showingProject.company}</h2> */}
                             <p>{showingProject.companyDescription}</p>
                             <h3>Product</h3>
                             <p>{showingProject.productDescription}</p>
