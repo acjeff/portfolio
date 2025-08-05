@@ -447,11 +447,11 @@ function Home() {
                         </div>
                       </div>
                       
-                      <ProjectSideNavigation 
+                      {/* <ProjectSideNavigation 
                         sections={showingProject.sections}
                         currentSection={currentProjectSection}
                         onSectionChange={setCurrentProjectSection}
-                      />
+                      /> */}
                       {showingProject.sections.map((section, sectionIdx) => (
                         <section key={sectionIdx} id={`section-${sectionIdx}`} className="showcase-section">
                           <div className={`showcase-row ${sectionIdx % 2 === 0 ? 'left-image' : 'right-image'}`}>
