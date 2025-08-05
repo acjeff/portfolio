@@ -78,7 +78,7 @@
     opacity: 1;
     transform: scale(1) translate(
       0,
-      calc(-1 * (var(--item-index) * 4rem + 4rem))
+      calc(var(--item-index) * 4rem + 4rem)
     );
   }
 }
