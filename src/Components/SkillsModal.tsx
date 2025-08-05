@@ -114,7 +114,7 @@ const SkillsModal: React.FC = () => {
               {/* Header */}
               <div className="modal-header">
                 <h1>Skills & Expertise</h1>
-                <p>Full-stack engineer with 13+ years building digital products</p>
+                <p>Full-stack engineer & UI/UX designer with 13 years building digital products</p>
               </div>
 
               {/* Navigation */}
