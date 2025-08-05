@@ -630,6 +630,26 @@
       font-size: 1.2rem;
     }
   }
+  .modal-close-btn {
+    position: absolute;
+    bottom: 1.5rem;
+    top: auto;
+    right: 2.5rem;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 2rem;
+    color: #666;
+    transition: all 0.3s ease;
+    z-index: 10;
+    backdrop-filter: blur(10px);
+  }
   .skills-button-container {
     transition: 0.8s ease-in-out;
     top: calc(100% - 265px);
