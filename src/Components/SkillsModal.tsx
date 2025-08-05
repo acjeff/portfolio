@@ -187,7 +187,7 @@ const SkillsModal: React.FC = () => {
                     </div>
 
                     <div className="skill-highlights">
-                      <h2>Core Competencies</h2>
+                      <h2>Core Skills</h2>
                       <div className="highlights-grid">
                         {skillCategories.map((category) => (
                           <div key={category.id} className="highlight-card" style={{ '--category-color': category.color } as React.CSSProperties}>
