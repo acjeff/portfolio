@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import '../Styles/Home.scss';
 import HomeLayer from "../Components/HomeLayer";
 import RadialMenu from "../Components/RadialMenu";
+// import ProjectSideNavigation from "../Components/ProjectSideNavigation";
 import SkillsModal from "../Components/SkillsModal";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -127,7 +128,7 @@ const projects = [
 function Home() {
     const [width, setWidth] = useState('15%');
     const [targetWidth, setTargetWidth] = useState('15%');
-    const [setCurrentProjectSection] = useState(0);
+    // const [currentProjectSection, setCurrentProjectSection] = useState(0);
     const [showingProject, setShowingProject] = useState<
       | typeof projects[0]
       | null
@@ -227,42 +228,7 @@ function Home() {
         )
       : -1;
 
-    // Handle scroll to update current project section
-    useEffect(() => {
-      let ticking = false;
-      
-      const handleScroll = () => {
-        if (!ticking) {
-          requestAnimationFrame(() => {
-            if (!showingProject) return;
-            
-            const sections = document.querySelectorAll('.showcase-section');
-            const scrollPosition = window.scrollY + window.innerHeight / 3;
-            
-            let activeSection = 0;
-            let minDistance = Infinity;
-            
-            sections.forEach((section, index) => {
-              const rect = section.getBoundingClientRect();
-              const sectionCenter = rect.top + rect.height / 2;
-              const distance = Math.abs(scrollPosition - sectionCenter);
-              
-              if (distance < minDistance) {
-                minDistance = distance;
-                activeSection = index;
-              }
-            });
-            
-            setCurrentProjectSection(activeSection);
-            ticking = false;
-          });
-          ticking = true;
-        }
-      };
 
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-    }, [showingProject]);
     
     const prevLightbox = useCallback(() => {
       if (currentLightboxIndex > 0) {
