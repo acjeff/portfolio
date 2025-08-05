@@ -24,7 +24,7 @@
   justify-content: center;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   z-index: 10000;
 }
 
@@ -622,13 +622,22 @@
 
 // Responsive adjustments
 @media (max-width: 768px) {
+  .skills-button, .radial-menu-button {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.3rem;
+    .skills-icon {
+      font-size: 1.2rem;
+    }
+  }
   .skills-button-container {
     transition: 0.8s ease-in-out;
-    top: calc(100% - 288px);
+    top: calc(100% - 265px);
+    right: 6rem;
   }
   .radial-menu-container {
     transition: 0.8s ease-in-out;
-    top: calc(100% - 288px);
+    top: calc(100% - 265px);
   }
   .home-wrapper.showing {
     .skills-button-container {
@@ -707,6 +716,7 @@
     gap: 0.5rem;
   }
   .radial-menu.open .menu-item {
+    width: 3.5rem;
     transform: scale(1) translate(
       0,
       calc(-1 * (var(--item-index) * 4rem + 4rem))
