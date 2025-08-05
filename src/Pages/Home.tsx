@@ -407,6 +407,7 @@ function Home() {
                           {skillsExpanded && (
                             <div className="skills-grid">
                               <div className="skill-category">
+                                {/* @ts-ignore */}
                                 <h3><FaRocket/> Frontend Development</h3>
                                 <div className="skill-items">
                                   <div className="skill-item">
@@ -436,6 +437,7 @@ function Home() {
                                 </div>
                               </div>
                               <div className="skill-category">
+                                {/* @ts-ignore */}
                                 <h3><FaCogs/> Backend & Infrastructure</h3>
                                 <div className="skill-items">
                                   <div className="skill-item">
@@ -461,6 +463,7 @@ function Home() {
                                 </div>
                               </div>
                               <div className="skill-category">
+                                {/* @ts-ignore */}
                                 <h3><FaPalette/> Design & Creative</h3>
                                 <div className="skill-items">
                                   <div className="skill-item">
@@ -486,6 +489,7 @@ function Home() {
                                 </div>
                               </div>
                               <div className="skill-category">
+                                {/* @ts-ignore */}
                               <h3><FaChartLine/> Product & Management</h3>
                                 <div className="skill-items">
                                   <div className="skill-item">
