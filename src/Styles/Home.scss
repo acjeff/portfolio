@@ -18,7 +18,7 @@
   height: 180px;
   z-index: 1000;
   animation: float 8s ease-in-out infinite;
-  
+
   // Floating particles background
   &::before {
     content: '';
@@ -27,20 +27,20 @@
     left: -30px;
     right: -30px;
     bottom: -30px;
-    background-image: 
+    background-image:
       radial-gradient(circle, #fa6f6f 2px, transparent 2px),
       radial-gradient(circle, #ff8a8a 1px, transparent 1px),
       radial-gradient(circle, white 1px, transparent 1px);
     background-size: 25px 25px, 15px 15px, 20px 20px;
-    background-position: 
-      10px 10px, 
-      20px 5px, 
+    background-position:
+      10px 10px,
+      20px 5px,
       5px 20px;
     opacity: 0.8;
     animation: particleFloat 20s ease-in-out infinite;
     z-index: -1;
   }
-  
+
   // Main geometric container
   &::after {
     content: '';
@@ -52,7 +52,7 @@
     background: linear-gradient(45deg, #fa6f6f, #ff8a8a, #fa6f6f);
     clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
     animation: rotate 60s linear infinite;
-    box-shadow: 
+    box-shadow:
       0 0 30px rgba(250, 111, 111, 0.4),
       0 0 60px rgba(250, 111, 111, 0.2),
       0 0 90px rgba(250, 111, 111, 0.1);
@@ -70,18 +70,18 @@
     transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.22);
     z-index: 2;
   }
-  
+
   &:hover {
     transform: scale(1.1) rotate(5deg);
-    
+
     &::after {
       animation: rotate 15s linear infinite;
-      box-shadow: 
+      box-shadow:
         0 0 40px rgba(250, 111, 111, 0.6),
         0 0 80px rgba(250, 111, 111, 0.3),
         0 0 120px rgba(250, 111, 111, 0.2);
     }
-    
+
     img {
       filter: contrast(1.2) brightness(1.1) saturate(1.1);
       transform: scale(1.05);
@@ -93,24 +93,30 @@
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
 }
 
 @keyframes particleFloat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: translateY(0px) rotate(0deg);
     opacity: 0.8;
   }
+
   25% {
     transform: translateY(-10px) rotate(90deg);
     opacity: 1;
   }
+
   50% {
     transform: translateY(-5px) rotate(180deg);
     opacity: 0.6;
   }
+
   75% {
     transform: translateY(-15px) rotate(270deg);
     opacity: 1;
@@ -218,6 +224,7 @@ div {
   align-items: center;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+
   .project-logo {
     width: 56px;
     height: 56px;
@@ -227,6 +234,7 @@ div {
     box-shadow: none;
     border: 1.5px solid #f0f0f0;
   }
+
   h1 {
     font-size: 2.2rem;
     font-weight: 700;
@@ -237,6 +245,7 @@ div {
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
   .details {
     font-size: 1.1rem;
     color: #888;
@@ -248,12 +257,13 @@ div {
   position: sticky;
   top: 0;
   z-index: 1002;
-  background: rgba(255,255,255,0.97);
+  background: rgba(255, 255, 255, 0.97);
   box-shadow: none;
   padding-top: 1.2rem;
   padding-bottom: 1.2rem;
   margin-bottom: 1.5rem;
 }
+
 .project-header-fixed-placeholder {
   height: 90px; // adjust to match .project-header-fixed height
 }
@@ -262,6 +272,7 @@ div {
   display: flex;
   gap: 1.2rem;
   margin: 2rem 0 1.5rem 0;
+
   a {
     color: var(--brand-colour, #fa6f6f);
     text-decoration: none;
@@ -269,8 +280,9 @@ div {
     font-size: 1.05em;
     padding: 0.2em 0.7em;
     border-radius: 6px;
-    background: rgba(250,111,111,0.07);
+    background: rgba(250, 111, 111, 0.07);
     transition: background 0.2s, color 0.2s;
+
     &:hover {
       background: var(--brand-colour, #fa6f6f);
       color: #fff;
@@ -280,7 +292,9 @@ div {
 
 .project-content-inner section {
   margin-bottom: 2.5rem;
-  h2, h3 {
+
+  h2,
+  h3 {
     font-weight: 700;
     margin-bottom: 0.7rem;
     color: var(--brand-colour, #fa6f6f);
@@ -289,14 +303,17 @@ div {
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
   ul {
     padding-left: 1.5em;
+
     li {
       margin-bottom: 0.5em;
       color: #444;
       font-size: 1.08em;
     }
   }
+
   p {
     color: #555;
     font-size: 1.08em;
@@ -308,6 +325,7 @@ div {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
+
   .gallery-item {
     flex: 1 1 220px;
     min-width: 180px;
@@ -319,12 +337,14 @@ div {
     display: flex;
     flex-direction: column;
     align-items: center;
+
     img {
       width: 100%;
       border-radius: 8px;
       box-shadow: none;
       margin-bottom: 0.5rem;
     }
+
     p {
       text-align: center;
       margin-top: 0.2rem;
@@ -484,9 +504,12 @@ div {
 }
 
 @keyframes particleOscillate {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: rotate(-15deg);
   }
+
   50% {
     transform: rotate(15deg);
   }
@@ -499,7 +522,7 @@ div {
   z-index: 1001;
   max-width: 280px;
   animation: float 8s ease-in-out infinite;
-  
+
   // Floating particles background (matching floating circle but slower)
   &::after {
     content: '';
@@ -508,27 +531,27 @@ div {
     left: -20px;
     right: -20px;
     bottom: -20px;
-    background-image: 
+    background-image:
       radial-gradient(circle, #fa6f6f 2px, transparent 2px),
       radial-gradient(circle, #ff8a8a 1px, transparent 1px),
       radial-gradient(circle, white 1px, transparent 1px);
     background-size: 25px 25px, 15px 15px, 20px 20px;
-    background-position: 
-      10px 10px, 
-      15px 5px, 
+    background-position:
+      10px 10px,
+      15px 5px,
       5px 15px;
     opacity: 0.6;
     animation: particleOscillate 30s ease-in-out infinite; // Oscillating animation
     z-index: -1;
     border-radius: 16px;
   }
-  
+
   .description-text {
     position: relative;
     z-index: 2;
     font-size: 0.9em;
     font-weight: 500;
-    color: rgba(255,255,255,0.95);
+    color: rgba(255, 255, 255, 0.95);
     line-height: 1.4;
     margin: 0;
     // font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -536,7 +559,7 @@ div {
     padding: 1rem 1.8rem;
     border-radius: 8px; // Less rounded
     backdrop-filter: blur(10px);
-    box-shadow: 
+    box-shadow:
       0 0 20px rgba(250, 111, 111, 0.3),
       0 0 40px rgba(250, 111, 111, 0.1);
     animation: fadeInUp 0.8s ease-out 0.3s both;
@@ -549,6 +572,7 @@ div {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -560,7 +584,7 @@ div {
     top: 240px;
     left: 20px;
     max-width: 240px;
-    
+
     .description-text {
       font-size: 1em;
       padding: 0.8rem 1rem;
@@ -579,8 +603,13 @@ div {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .lightbox-modal {
@@ -599,8 +628,15 @@ div {
 }
 
 @keyframes popIn {
-  from { transform: scale(0.96); opacity: 0.7; }
-  to { transform: scale(1); opacity: 1; }
+  from {
+    transform: scale(0.96);
+    opacity: 0.7;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 .lightbox-modal img {
@@ -631,6 +667,7 @@ div {
   transition: color 0.2s;
   line-height: 1;
 }
+
 .lightbox-close:hover {
   color: var(--brand-colour, #fa6f6f);
 }
@@ -642,6 +679,7 @@ div {
   gap: 2.5rem;
   margin-top: 1.2rem;
   font-size: 1.1em;
+
   button {
     background: var(--brand-colour, #fa6f6f);
     color: #fff;
@@ -655,16 +693,19 @@ div {
     box-shadow: none;
     transition: background 0.2s, color 0.2s, opacity 0.2s;
     opacity: 1;
+
     &:hover:not(:disabled) {
       background: #fff;
       color: var(--brand-colour, #fa6f6f);
       border: 1.5px solid var(--brand-colour, #fa6f6f);
     }
+
     &:disabled {
       opacity: 0.4;
       cursor: not-allowed;
     }
   }
+
   span {
     color: #555;
     font-size: 1.1em;
@@ -678,6 +719,7 @@ div {
   .lightbox-modal {
     padding: 1.2rem 0.5rem 1rem 0.5rem;
   }
+
   .lightbox-modal img {
     max-width: 90vw;
     max-height: 40vh;
@@ -687,6 +729,7 @@ div {
 .showcase-section {
   margin: 3.5rem 0 4.5rem 0;
 }
+
 .showcase-row {
   display: flex;
   align-items: center;
@@ -694,13 +737,16 @@ div {
   gap: 3vw;
   margin-bottom: 2.5rem;
   flex-wrap: wrap;
+
   &.left-image {
     flex-direction: row;
   }
+
   &.right-image {
     flex-direction: row-reverse;
   }
 }
+
 .showcase-image-wrapper {
   flex: 1 1 420px;
   max-width: 600px;
@@ -709,6 +755,7 @@ div {
   align-items: center;
   justify-content: center;
 }
+
 .showcase-image {
   width: 100%;
   max-width: 540px;
@@ -719,10 +766,12 @@ div {
   margin: 0 auto;
   transition: transform 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.22);
   box-shadow: none;
+
   &:hover {
     transform: scale(1.03) rotate(-1deg);
   }
 }
+
 .showcase-text {
   flex: 1 1 320px;
   min-width: 220px;
@@ -731,11 +780,12 @@ div {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 1.5vw;
   font-size: 1.18em;
   color: #222;
   box-shadow: none;
+
   h2 {
     font-size: 2.1rem;
     font-weight: 800;
@@ -746,6 +796,7 @@ div {
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
   p {
     font-size: 1.18em;
     color: #444;
@@ -754,19 +805,26 @@ div {
     font-weight: 500;
   }
 }
+
 .sub-row {
   margin-top: 1.5rem;
+
   .showcase-text {
     padding-top: 1.1vw;
     padding-bottom: 1.1vw;
     font-size: 1.05em;
   }
 }
+
 @media (max-width: 900px) {
-  .showcase-row, .sub-row {
+
+  .showcase-row,
+  .sub-row {
     flex-direction: column !important;
     gap: 1.5vw;
-    .showcase-image-wrapper, .showcase-text {
+
+    .showcase-image-wrapper,
+    .showcase-text {
       max-width: 100%;
       min-width: 0;
       padding: 1.2vw 0.5vw;
@@ -782,10 +840,10 @@ div {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 12px;
   padding: 1.2rem 1.5rem;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   margin-bottom: 1rem;
 }
 
@@ -804,12 +862,12 @@ div {
   font-size: 0.9em;
   font-weight: 600;
   transition: all 0.2s ease;
-  
+
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(250, 111, 111, 0.3);
   }
-  
+
   &:last-child {
     background: rgba(250, 111, 111, 0.2);
     color: var(--brand-colour, #fa6f6f);
@@ -828,7 +886,7 @@ div {
   cursor: pointer;
   transition: all 0.2s ease;
   margin-left: 1rem;
-  
+
   &:hover {
     background: var(--brand-colour, #fa6f6f);
     color: white;
@@ -849,6 +907,7 @@ div {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -856,16 +915,17 @@ div {
 }
 
 .skill-category {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 16px;
-  padding: 1.8rem;
-  border: 1px solid rgba(0,0,0,0.05);
+  padding: 0rem 1.8rem;
+  padding-bottom: 1.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
-  
+
   &:hover {
     transform: translateY(-2px);
   }
-  
+
   h3 {
     font-size: 1.4rem;
     font-weight: 700;
@@ -889,33 +949,43 @@ div {
   justify-content: space-between;
   align-items: center;
   padding: 0.6rem 0;
-  border-bottom: 1px solid rgba(0,0,0,0.05);
-  
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+
   &:last-child {
     border-bottom: none;
   }
-  
+
   .skill-name {
     font-size: 1.05em;
     font-weight: 600;
     color: #333;
   }
-  
-  .skill-rating {
-    font-size: 1.1em;
-    letter-spacing: 2px;
-    color: #ffd700;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-    animation: starGlow 2s ease-in-out infinite alternate;
-  }
-}
 
-@keyframes starGlow {
-  from {
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
-  }
-  to {
-    text-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+  .skill-level {
+    font-size: 0.6em;
+    font-weight: 700;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+    &.expert {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      // box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    }
+
+    &.advanced {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      color: white;
+      // box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+    }
+
+    &.competent {
+      background: linear-gradient(135deg, #FF9800, #F57C00);
+      color: white;
+      // box-shadow: 0 2px 8px rgba(255, 152, 0, 0.3);
+    }
   }
 }
 
@@ -924,16 +994,16 @@ div {
     grid-template-columns: 1fr;
     gap: 1.2rem;
   }
-  
+
   .skill-category {
     padding: 1.4rem;
   }
-  
+
   .skill-item {
     .skill-name {
       font-size: 1em;
     }
-    
+
     .skill-rating {
       font-size: 1em;
       letter-spacing: 1px;
