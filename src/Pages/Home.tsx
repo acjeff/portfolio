@@ -407,7 +407,7 @@ function Home() {
                           {skillsExpanded && (
                             <div className="skills-grid">
                               <div className="skill-category">
-                                <h3>🚀 Frontend Development</h3>
+                                <h3><FaRocket/> Frontend Development</h3>
                                 <div className="skill-items">
                                   <div className="skill-item">
                                     <span className="skill-name">React.js</span>
@@ -436,7 +436,7 @@ function Home() {
                                 </div>
                               </div>
                               <div className="skill-category">
-                                <h3>⚙️ Backend & Infrastructure</h3>
+                                <h3><FaCogs/> Backend & Infrastructure</h3>
                                 <div className="skill-items">
                                   <div className="skill-item">
                                     <span className="skill-name">Node.js</span>
@@ -461,7 +461,7 @@ function Home() {
                                 </div>
                               </div>
                               <div className="skill-category">
-                                <h3>🎨 Design & Creative</h3>
+                                <h3><FaPalette/> Design & Creative</h3>
                                 <div className="skill-items">
                                   <div className="skill-item">
                                     <span className="skill-name">UI/UX Design</span>
