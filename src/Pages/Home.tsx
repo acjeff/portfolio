@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import '../Styles/Home.scss';
 import HomeLayer from "../Components/HomeLayer";
 import RadialMenu from "../Components/RadialMenu";
-import ProjectSideNavigation from "../Components/ProjectSideNavigation";
 import SkillsModal from "../Components/SkillsModal";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -128,7 +127,7 @@ const projects = [
 function Home() {
     const [width, setWidth] = useState('15%');
     const [targetWidth, setTargetWidth] = useState('15%');
-    const [currentProjectSection, setCurrentProjectSection] = useState(0);
+    const [setCurrentProjectSection] = useState(0);
     const [showingProject, setShowingProject] = useState<
       | typeof projects[0]
       | null
