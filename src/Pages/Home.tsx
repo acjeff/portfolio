@@ -9,7 +9,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import gdImage from '../images/gd/gd1.png';
 import meAndRuby from '../images/me-and-ruby.png';
-import { FaRocket, FaCogs, FaPalette, FaChartLine } from 'react-icons/fa';
+
 
 const projects = [
   {
@@ -138,7 +138,7 @@ function Home() {
       sectionIdx: number;
       itemIdx: number;
     } | null>(null);
-    const [skillsExpanded, setSkillsExpanded] = useState(false);
+  
 
     const projectsRef = useRef<HTMLDivElement | null>(null);
     const animationRef = useRef<number | null>(null);
