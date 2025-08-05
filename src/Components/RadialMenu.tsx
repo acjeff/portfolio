@@ -52,7 +52,7 @@ const menuItems: MenuItem[] = [
     id: 'cv',
     icon: FiDownload,
     label: 'CV',
-    href: '/cv.pdf',
+    href: '/Alex-Jefferies-CV.pdf',
     download: true
   }
 ];

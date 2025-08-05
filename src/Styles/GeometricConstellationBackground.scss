@@ -1,0 +1,127 @@
+.geometric-constellation-background {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.constellation-node {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  animation: floatAndGlow 6s ease-in-out infinite;
+  opacity: 0.7;
+  
+  &[data-shape="circle"] {
+    border-radius: 50%;
+    background: linear-gradient(45deg, #ff6f61, #ff8a80);
+    box-shadow: 0 0 10px rgba(255, 111, 97, 0.5);
+  }
+  
+  &[data-shape="square"] {
+    background: linear-gradient(45deg, #20c997, #4dd0e1);
+    box-shadow: 0 0 10px rgba(32, 201, 151, 0.5);
+    transform: rotate(45deg);
+  }
+  
+  &[data-shape="triangle"] {
+    background: linear-gradient(45deg, #6f42c1, #9c27b0);
+    box-shadow: 0 0 10px rgba(111, 66, 193, 0.5);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  }
+  
+  &[data-shape="diamond"] {
+    background: linear-gradient(45deg, #fd7e14, #ff9800);
+    box-shadow: 0 0 10px rgba(253, 126, 20, 0.5);
+    transform: rotate(45deg);
+  }
+}
+
+.constellation-line {
+  stroke: rgba(255, 255, 255, 0.3);
+  stroke-width: 1px;
+  animation: pulseLine 4s ease-in-out infinite;
+  stroke-dasharray: 5, 5;
+  stroke-dashoffset: 0;
+}
+
+@keyframes floatAndGlow {
+  0% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.7;
+  }
+  25% {
+    transform: translateY(-8px) scale(1.1);
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(-4px) scale(1.05);
+    opacity: 0.8;
+  }
+  75% {
+    transform: translateY(-12px) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.7;
+  }
+}
+
+@keyframes pulseLine {
+  0% {
+    stroke-opacity: 0.3;
+    stroke-dashoffset: 0;
+  }
+  50% {
+    stroke-opacity: 0.6;
+    stroke-dashoffset: 10;
+  }
+  100% {
+    stroke-opacity: 0.3;
+    stroke-dashoffset: 0;
+  }
+}
+
+// Add some subtle rotation animations for different shapes
+.constellation-node[data-shape="square"] {
+  animation: floatAndGlow 6s ease-in-out infinite, rotateSquare 8s linear infinite;
+}
+
+.constellation-node[data-shape="diamond"] {
+  animation: floatAndGlow 6s ease-in-out infinite, rotateDiamond 10s linear infinite;
+}
+
+@keyframes rotateSquare {
+  0% {
+    transform: rotate(45deg) translateY(0px) scale(1);
+  }
+  100% {
+    transform: rotate(405deg) translateY(0px) scale(1);
+  }
+}
+
+@keyframes rotateDiamond {
+  0% {
+    transform: rotate(45deg) translateY(0px) scale(1);
+  }
+  100% {
+    transform: rotate(-315deg) translateY(0px) scale(1);
+  }
+}
+
+// Add a subtle background gradient for depth
+.geometric-constellation-background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 20% 80%, rgba(255, 111, 97, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(32, 201, 151, 0.05) 0%, transparent 50%),
+              radial-gradient(circle at 40% 40%, rgba(111, 66, 193, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+} 
