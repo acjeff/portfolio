@@ -208,22 +208,9 @@ function Home() {
         )
       : [];
 
-    // Lightbox close and navigation on ESC/arrow keys
-    useEffect(() => {
-      if (lightbox === null) return;
-      const onKeyDown = (e: KeyboardEvent) => {
-        if (e.key === 'Escape') setLightbox(null);
-        if (e.key === 'ArrowLeft') prevLightbox();
-        if (e.key === 'ArrowRight') nextLightbox();
-      };
-      window.addEventListener('keydown', onKeyDown);
-      return () => window.removeEventListener('keydown', onKeyDown);
-    }, [lightbox, allGalleryImages]);
-
     const openLightbox = (sectionIdx: number, itemIdx: number) => {
       setLightbox({ sectionIdx, itemIdx });
     };
-    const closeLightbox = () => setLightbox(null);
 
     const currentLightboxIndex = lightbox
       ? allGalleryImages.findIndex(
@@ -242,6 +229,18 @@ function Home() {
         setLightbox({ sectionIdx: next.sectionIdx, itemIdx: next.itemIdx });
       }
     };
+
+    // Lightbox close and navigation on ESC/arrow keys
+    useEffect(() => {
+      if (lightbox === null) return;
+      const onKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') setLightbox(null);
+        if (e.key === 'ArrowLeft') prevLightbox();
+        if (e.key === 'ArrowRight') nextLightbox();
+      };
+      window.addEventListener('keydown', onKeyDown);
+      return () => window.removeEventListener('keydown', onKeyDown);
+    }, [lightbox, allGalleryImages, prevLightbox, nextLightbox]);
 
     const col = '#fa6f6f';
     const colStyle = { color: col };
