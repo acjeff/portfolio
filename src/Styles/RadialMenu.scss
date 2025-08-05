@@ -3,6 +3,10 @@
   top: 2rem;
   right: 2rem;
   z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .radial-menu-button {
@@ -41,6 +45,14 @@
       background: white;
     }
   }
+}
+
+.menu-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  letter-spacing: 0.05em;
 }
 
 .radial-menu {

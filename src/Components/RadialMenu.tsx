@@ -89,6 +89,9 @@ const RadialMenu: React.FC = () => {
         {/* @ts-ignore */}
         {isOpen ? <FiX /> : <FaLink />}
       </button>
+      
+      {/* Links Label */}
+      <div className="menu-label">Links</div>
 
       {/* Radial Menu Items */}
       <div className={`radial-menu ${isOpen ? 'open' : ''}`}>

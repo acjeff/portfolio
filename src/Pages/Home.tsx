@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import '../Styles/Home.scss';
 import HomeLayer from "../Components/HomeLayer";
 import RadialMenu from "../Components/RadialMenu";
+import ProjectSideNavigation from "../Components/ProjectSideNavigation";
+import SkillsModal from "../Components/SkillsModal";
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
@@ -14,9 +16,10 @@ const projects = [
     id: 1,
     name: 'GridDuck',
     logo: gdImage, // Placeholder, replace with actual logo if available
+    headlineImage: gdImage, // Add headline image
     company: 'GridDuck',
     range: '2017 - Present',
-    brandColour: '#fa6f6f',
+    brandColour: '#49b9c4',
     companyDescription: 'GridDuck is a smart energy management platform for commercial buildings, helping businesses monitor and optimize their energy usage.',
     productDescription: 'A comprehensive energy management platform that provides real-time monitoring, analytics, and control systems for commercial building energy consumption.',
     myWork: [
@@ -46,6 +49,7 @@ const projects = [
     id: 2,
     name: 'UTC Hub',
     logo: gdImage, // Placeholder
+    headlineImage: gdImage, // Add headline image
     company: 'UTC Hub',
     range: '2016 - 2017',
     brandColour: '#a1c4fd',
@@ -71,6 +75,7 @@ const projects = [
     id: 3,
     name: 'Gigbloc',
     logo: gdImage, // Placeholder
+    headlineImage: gdImage, // Add headline image
     company: 'Gigbloc',
     range: '2015 - 2016',
     brandColour: '#fbc2eb',
@@ -96,6 +101,7 @@ const projects = [
     id: 4,
     name: 'WIREWAX',
     logo: gdImage, // Placeholder
+    headlineImage: gdImage, // Add headline image
     company: 'WIREWAX',
     range: '2013 - 2015',
     brandColour: '#96e6a1',
@@ -122,6 +128,7 @@ const projects = [
 function Home() {
     const [width, setWidth] = useState('15%');
     const [targetWidth, setTargetWidth] = useState('15%');
+    const [currentProjectSection, setCurrentProjectSection] = useState(0);
     const [showingProject, setShowingProject] = useState<
       | typeof projects[0]
       | null
@@ -220,6 +227,43 @@ function Home() {
           img => img.sectionIdx === lightbox.sectionIdx && img.itemIdx === lightbox.itemIdx
         )
       : -1;
+
+    // Handle scroll to update current project section
+    useEffect(() => {
+      let ticking = false;
+      
+      const handleScroll = () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            if (!showingProject) return;
+            
+            const sections = document.querySelectorAll('.showcase-section');
+            const scrollPosition = window.scrollY + window.innerHeight / 3;
+            
+            let activeSection = 0;
+            let minDistance = Infinity;
+            
+            sections.forEach((section, index) => {
+              const rect = section.getBoundingClientRect();
+              const sectionCenter = rect.top + rect.height / 2;
+              const distance = Math.abs(scrollPosition - sectionCenter);
+              
+              if (distance < minDistance) {
+                minDistance = distance;
+                activeSection = index;
+              }
+            });
+            
+            setCurrentProjectSection(activeSection);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, [showingProject]);
     
     const prevLightbox = useCallback(() => {
       if (currentLightboxIndex > 0) {
@@ -294,6 +338,9 @@ function Home() {
         <div ref={projectsRef} className={'home-wrapper'} style={{ top: isProjectPanelOpen ? 'calc(-100% + 120px)' : '0' }}>
             {/* Radial Menu */}
             <RadialMenu />
+
+            {/* Skills Modal */}
+            <SkillsModal />
 
             {/* Floating Circle */}
             <div className="floating-circle">
@@ -372,157 +419,39 @@ function Home() {
                           <p className="details">{showingProject.range}</p>
                         </div>
                       </div>
-                      <section>
-                        <h2>About {showingProject.company}</h2>
-                        <p>{showingProject.companyDescription}</p>
-                        <h3>Product</h3>
-                        <p>{showingProject.productDescription}</p>
-                      </section>
-                      <section>
-                        <h2>What I Did</h2>
-                        <ul>
-                          {showingProject.myWork.map((item, idx) => <li key={idx}>{item}</li>)}
-                        </ul>
-                      </section>
-                      <section>
-                        <h2>Skills & Expertise</h2>
-                        <div className="skills-summary">
-                          <div className="skills-preview">
-                            <div className="skill-tags">
-                              <span className="skill-tag">React.js</span>
-                              <span className="skill-tag">Node.js</span>
-                              <span className="skill-tag">UI/UX Design</span>
-                              <span className="skill-tag">Product Development</span>
-                              <span className="skill-tag">AWS</span>
-                              <span className="skill-tag">+12 more</span>
-                            </div>
-                            <button 
-                              className="expand-skills-btn"
-                              onClick={() => setSkillsExpanded(!skillsExpanded)}
-                            >
-                              {skillsExpanded ? 'Show Less' : 'View All Skills'}
-                            </button>
-                          </div>
-                          
-                          {skillsExpanded && (
-                            <div className="skills-grid">
-                              <div className="skill-category">
-                                {/* @ts-ignore */}
-                                <h3><FaRocket/> Frontend Development</h3>
-                                <div className="skill-items">
-                                  <div className="skill-item">
-                                    <span className="skill-name">React.js</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">JavaScript</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">HTML5/CSS</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">AngularJS</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">React Native</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">jQuery/Bootstrap</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="skill-category">
-                                {/* @ts-ignore */}
-                                <h3><FaCogs/> Backend & Infrastructure</h3>
-                                <div className="skill-items">
-                                  <div className="skill-item">
-                                    <span className="skill-name">Node.js</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Git</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">PostgreSQL</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">AWS</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">CI/CD</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="skill-category">
-                                {/* @ts-ignore */}
-                                <h3><FaPalette/> Design & Creative</h3>
-                                <div className="skill-items">
-                                  <div className="skill-item">
-                                    <span className="skill-name">UI/UX Design</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Branding</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Adobe Illustrator</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Photoshop</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Premiere Pro</span>
-                                    <div className="skill-level competent">Competent</div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="skill-category">
-                                {/* @ts-ignore */}
-                              <h3><FaChartLine/> Product & Management</h3>
-                                <div className="skill-items">
-                                  <div className="skill-item">
-                                    <span className="skill-name">Product Development</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Rapid Prototyping</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Team Leadership</span>
-                                    <div className="skill-level expert">Expert</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Product Management</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                  <div className="skill-item">
-                                    <span className="skill-name">Roadmap Planning</span>
-                                    <div className="skill-level advanced">Advanced</div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          )}
+                      
+                      <div className="project-content-layout">
+                        <div className="project-content-left">
+                          <section>
+                            <h2>About {showingProject.company}</h2>
+                            <p>{showingProject.companyDescription}</p>
+                            <h3>Product</h3>
+                            <p>{showingProject.productDescription}</p>
+                          </section>
+                          <section>
+                            <h2>What I Did</h2>
+                            <ul>
+                              {showingProject.myWork.map((item, idx) => <li key={idx}>{item}</li>)}
+                            </ul>
+                          </section>
                         </div>
-                      </section>
-                      <nav className="bolo-nav">
-                        {showingProject.sections.map((section, idx) => (
-                          <a key={idx} href={`#section-${idx}`}>{section.header}</a>
-                        ))}
-                      </nav>
+                        
+                        <div className="project-content-right">
+                          <div className="project-headline-image">
+                            <img 
+                              src={showingProject.headlineImage} 
+                              alt={`${showingProject.name} headline`} 
+                              className="headline-image"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <ProjectSideNavigation 
+                        sections={showingProject.sections}
+                        currentSection={currentProjectSection}
+                        onSectionChange={setCurrentProjectSection}
+                      />
                       {showingProject.sections.map((section, sectionIdx) => (
                         <section key={sectionIdx} id={`section-${sectionIdx}`} className="showcase-section">
                           <div className={`showcase-row ${sectionIdx % 2 === 0 ? 'left-image' : 'right-image'}`}>
