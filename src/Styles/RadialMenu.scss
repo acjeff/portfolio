@@ -9,50 +9,79 @@
   gap: 0.5rem;
 }
 
+.radial-menu-button-container {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  &.skills {
+    right: 7rem;
+  }
+}
+
 .radial-menu-button {
   width: 4rem;
   height: 4rem;
   border: none;
-  background: #fa6f6f;
+  background: var(--brand-colour, #fa6f6f);
   color: white;
-  border-radius: 10px;
+  border-radius: 12px;
   position: relative;
   backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
+  transition: all 0.2s ease;
   font-size: 1.5rem;
+  // box-shadow: 0 2px 8px var(--brand-colour, rgba(250, 111, 111, 0.2));
   z-index: 10000;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   
   &:hover {
+    background: var(--brand-colour, #e85a5a);
+    // box-shadow: 0 4px 12px var(--brand-colour, rgba(250, 111, 111, 0.25));
+    transform: translateY(-1px);
+    
     svg {
-      animation: spinIn 0.6s ease-in-out forwards;
+      animation: spinIn 0.5s linear forwards;
     }
+  }
+  
+  &:active {
+    transform: translateY(0);
+    // box-shadow: 0 2px 6px var(--brand-colour, rgba(250, 111, 111, 0.2));
   }
   
   &:not(:hover) {
     svg {
-      animation: spinOut 0.4s ease-in forwards;
+      animation: spinOut 1s ease-in forwards;
     }
   }
   
   &.open {
-    color: #333;
-    background: white;
+    background: #4facfe;
+    // box-shadow: 0 2px 8px rgba(79, 172, 254, 0.2);
+    
     &:hover {
-      background: white;
+      background: #3a9bfe;
+      // box-shadow: 0 4px 12px rgba(79, 172, 254, 0.25);
     }
   }
 }
 
 .menu-label {
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #333;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: #ffffff;
   text-align: center;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.02em;
+  margin-top: 0.2rem;
 }
 
 .radial-menu {
@@ -88,43 +117,47 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  // background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(5px);
-  // box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  width: 3.5rem;
+  height: 3.5rem;
+  background: var(--brand-colour, #fa6f6f);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  // box-shadow: 0 2px 8px var(--brand-colour, rgba(250, 111, 111, 0.15));
   text-decoration: none;
-  color: #333;
-  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
+  color: #ffffff;
+  transition: all 0.2s ease;
+  border-radius: 10px;
   
   &:hover {
-    // background: rgba(255, 255, 255, 1);
-    // box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-    // transform: scale(1.1);
-    // color: #fa6f6f;
+    background: var(--brand-colour, #e85a5a);
+    // box-shadow: 0 4px 12px var(--brand-colour, rgba(250, 111, 111, 0.2));
+    transform: translateY(-1px);
+    color: #ffffff;
+  }
+  
+  &:active {
+    transform: translateY(0);
   }
 }
 
 .menu-item-icon {
   font-size: 1.25rem;
-  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
+  transition: all 0.2s ease;
 }
 
 .menu-item-label {
-  font-size: 0.625rem;
+  font-size: 0.6rem;
   font-weight: 500;
   text-align: center;
   line-height: 1;
-  // opacity: 0;
-  // display: none;
   opacity: 1;
   display: block;
-  transform: translateY(0.5rem);
-  transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
+  transform: translateY(0.1rem);
+  transition: all 0.2s ease;
   
   .menu-item-link:hover & {
     opacity: 1;
-    transform: translateY(0.2rem);
+    // transform: translateY(0.2rem);
     display: block;
   }
 }
@@ -170,13 +203,13 @@
   //   transform: rotate(180deg) scale(1.1);
   // }
   100% {
-    transform: rotate(180deg) scale(1);
+    transform: rotate(360deg) scale(1);
   }
 }
 
 @keyframes spinOut {
   0% {
-    transform: rotate(180deg) scale(1);
+    transform: rotate(360deg) scale(1);
   }
   // 50% {
   //   transform: rotate(180deg) scale(0.9);

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { FiX, FiPlayCircle, FiDownload, FiMusic, FiGithub, FiMail, FiLinkedin } from 'react-icons/fi';
+import { FiX, FiPlayCircle, FiDownload, FiMusic, FiGithub, FiMail, FiLinkedin, FiArrowUp, FiLink } from 'react-icons/fi';
 import { FaLink } from 'react-icons/fa';
+import { useTheme } from '../contexts/ThemeContext';
 import '../Styles/RadialMenu.scss';
 
 interface MenuItem {
@@ -44,7 +45,7 @@ const menuItems: MenuItem[] = [
   {
     id: 'game',
     icon: FiPlayCircle,
-    label: 'Game Idea',
+    label: 'Game',
     href: 'https://acjeff.github.io/deeper',
     external: true
   },
@@ -52,13 +53,14 @@ const menuItems: MenuItem[] = [
     id: 'cv',
     icon: FiDownload,
     label: 'CV',
-    href: '/Alex-Jefferies-CV.pdf',
+    href: './Alex-Jefferies-CV.pdf',
     download: true
   }
 ];
 
 const RadialMenu: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const { currentTheme } = useTheme();
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -79,51 +81,60 @@ const RadialMenu: React.FC = () => {
 
   return (
     <div className="radial-menu-container">
-      {/* Menu Button */}
-      <button 
-        className={`radial-menu-button ${isOpen ? 'open' : ''}`}
-        onClick={toggleMenu}
-        aria-label="Toggle menu"
-        aria-expanded={isOpen}
-      >
-        {/* @ts-ignore */}
-        {isOpen ? <FiX /> : <FaLink />}
-      </button>
-      
-      {/* Links Label */}
-      <div className="menu-label">Links</div>
+      <div className="radial-menu-button-container">
+        {/* Menu Button */}
+        <button
+          className={`radial-menu-button ${isOpen ? 'open' : ''}`}
+          onClick={toggleMenu}
+          aria-label="Toggle menu"
+          aria-expanded={isOpen}
+          style={{
+            '--brand-colour': currentTheme.colors.primary
+          } as React.CSSProperties}
+        >
+          <div className="radial-menu-icon">
+            {/* @ts-ignore */}
+            {isOpen ? <FiArrowUp /> : <FiLink />}
+          </div>
+          <div className="menu-label">Links</div>
+
+        </button>
+      </div >
+
 
       {/* Radial Menu Items */}
-      <div className={`radial-menu ${isOpen ? 'open' : ''}`}>
-        {menuItems.map((item, index) => (
-          <div
-            key={item.id}
-            className="menu-item"
-            style={{
-              '--item-index': index,
-              '--total-items': menuItems.length
-            } as React.CSSProperties}
-          >
-            <a
-              href={item.href}
-              onClick={(e) => {
-                if (item.download) {
-                  e.preventDefault();
-                  handleItemClick(item);
-                }
-              }}
-              target={item.external ? '_blank' : undefined}
-              rel={item.external ? 'noopener noreferrer' : undefined}
-              className="menu-item-link"
-              title={item.label}
+      < div className={`radial-menu ${isOpen ? 'open' : ''}`}>
+        {
+          menuItems.map((item, index) => (
+            <div
+              key={item.id}
+              className="menu-item"
+              style={{
+                '--item-index': index,
+                '--total-items': menuItems.length
+              } as React.CSSProperties}
             >
-              <span className="menu-item-icon">{React.createElement(item.icon, {})}</span>
-              <span className="menu-item-label">{item.label}</span>
-            </a>
-          </div>
-        ))}
-      </div>
-    </div>
+              <a
+                href={item.href}
+                onClick={(e) => {
+                  if (item.download) {
+                    e.preventDefault();
+                    handleItemClick(item);
+                  }
+                }}
+                target={item.external ? '_blank' : undefined}
+                rel={item.external ? 'noopener noreferrer' : undefined}
+                className="menu-item-link"
+                title={item.label}
+              >
+                <span className="menu-item-icon">{React.createElement(item.icon, {})}</span>
+                <span className="menu-item-label">{item.label}</span>
+              </a>
+            </div>
+          ))
+        }
+      </div >
+    </div >
   );
 };
 

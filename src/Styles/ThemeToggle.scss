@@ -36,7 +36,7 @@
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  // box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
   padding: 20px;
   animation: slideIn 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.22);
   overflow-y: auto;
@@ -102,12 +102,12 @@
   
   &:hover {
     transform: translateX(5px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    // box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
   
   &.active {
     border-color: currentColor;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    // box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   }
 }
 

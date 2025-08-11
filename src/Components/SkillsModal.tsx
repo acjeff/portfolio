@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { FaRocket, FaCogs, FaPalette, FaChartLine, FaCode, FaUsers, FaLightbulb, FaBolt } from 'react-icons/fa';
-import { FiX } from 'react-icons/fi';
+import { FiBriefcase, FiCloudLightning, FiX } from 'react-icons/fi';
+import { useTheme } from '../contexts/ThemeContext';
 import '../Styles/SkillsModal.scss';
 
 const SkillsModal: React.FC = () => {
+  const { currentTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('overview');
 
@@ -86,23 +88,30 @@ const SkillsModal: React.FC = () => {
   return (
     <>
       {/* Fixed Skills Button */}
-      <div className="skills-button-container">
+      <div className="radial-menu-button-container skills">
         <button 
-          className="skills-button"
+          className="radial-menu-button"
           onClick={toggleModal}
-          aria-label="Open skills">
-          <div className="skills-icon">
+          aria-label="Open skills"
+          style={{
+            '--brand-colour': currentTheme.colors.primary
+          } as React.CSSProperties}>
+          <div className="radial-menu-icon">
             {/* @ts-ignore */}
-            <FaBolt/>
+            <FiBriefcase/>
+          
           </div>
+          <div className="menu-label">Skills</div>
         </button>
-        <div className="skills-label">Skills</div>
+      
       </div>
 
       {/* Modal Overlay */}
       {isOpen && (
         <div className="skills-modal-overlay" onClick={closeModal}>
-          <div className="skills-modal" onClick={(e) => e.stopPropagation()}>
+          <div className="skills-modal" onClick={(e) => e.stopPropagation()} style={{
+            '--brand-colour': currentTheme.colors.primary
+          } as React.CSSProperties}>
             {/* Close Button */}
             <button className="modal-close-btn" onClick={closeModal}>
               {/* @ts-ignore */}

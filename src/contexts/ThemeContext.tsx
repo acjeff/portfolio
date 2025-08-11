@@ -214,10 +214,11 @@ export const themes: Theme[] = [
   }
 ];
 
-interface ThemeContextType {
+export interface ThemeContextType {
   currentTheme: Theme;
   setTheme: (themeId: string) => void;
   themes: Theme[];
+  updateThemeColor: (color: string) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -244,8 +245,26 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
     }
   };
 
+  const updateThemeColor = (color: string) => {
+    setCurrentTheme(prevTheme => ({
+      ...prevTheme,
+      colors: {
+        ...prevTheme.colors,
+        primary: color,
+        text: color,
+        shadow: color.replace(')', ', 0.4)').replace('rgb', 'rgba'),
+        floatingCircle: {
+          ...prevTheme.colors.floatingCircle,
+          background: `linear-gradient(45deg, ${color}, ${color}dd, ${color})`,
+          border: color,
+          shadow: color.replace(')', ', 0.4)').replace('rgb', 'rgba')
+        }
+      }
+    }));
+  };
+
   return (
-    <ThemeContext.Provider value={{ currentTheme, setTheme, themes }}>
+    <ThemeContext.Provider value={{ currentTheme, setTheme, themes, updateThemeColor }}>
       {children}
     </ThemeContext.Provider>
   );

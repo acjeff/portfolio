@@ -2,11 +2,6 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  //top: 0;
-  //transition: 0.5s all ease-in;
-  //&.showing {
-  //  top: -86%;
-  //}
 }
 
 // Floating Circle Styles
@@ -52,10 +47,10 @@
     background: linear-gradient(45deg, #fa6f6f, #ff8a8a, #fa6f6f);
     clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%);
     animation: rotate 60s linear infinite;
-    box-shadow:
-      0 0 30px rgba(250, 111, 111, 0.4),
-      0 0 60px rgba(250, 111, 111, 0.2),
-      0 0 90px rgba(250, 111, 111, 0.1);
+    // box-shadow:
+    //   0 0 30px rgba(250, 111, 111, 0.4),
+    //   0 0 60px rgba(250, 111, 111, 0.2),
+    //   0 0 90px rgba(250, 111, 111, 0.1);
   }
 
   img {
@@ -76,10 +71,10 @@
 
     &::after {
       animation: rotate 15s linear infinite;
-      box-shadow:
-        0 0 40px rgba(250, 111, 111, 0.6),
-        0 0 80px rgba(250, 111, 111, 0.3),
-        0 0 120px rgba(250, 111, 111, 0.2);
+      // box-shadow:
+      //   0 0 40px rgba(250, 111, 111, 0.6),
+      //   0 0 80px rgba(250, 111, 111, 0.3),
+      //   0 0 120px rgba(250, 111, 111, 0.2);
     }
 
     img {
@@ -180,7 +175,7 @@
   // transition: all 0.5s ease-out;
   transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
   position: absolute;
-  height: calc(100% - 120px);
+  height: calc(100% - 90px);
   width: 100%;
 }
 
@@ -209,10 +204,10 @@ div {
   // transition: all 0.5s ease-out;
   transition: 0.8s all cubic-bezier(0.68, -0.55, 0.265, 1.22);
   border-top: 1px solid #e8e8e8;
-  top: 120px;
+  top: 90px;
   position: fixed;
   width: 100%;
-  height: calc(100% - 122px);
+  height: calc(100% - 92px);
 
   .project-content-inner {
     padding: 20px 60px;
@@ -244,12 +239,10 @@ div {
     object-fit: contain;
     border-radius: 12px;
     background: #fff;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border: 1.5px solid #f0f0f0;
   }
 
   h1 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 800;
     margin: 0;
     color: var(--brand-colour, #fa6f6f);
@@ -260,7 +253,7 @@ div {
   .details {
     font-size: 0.875rem;
     color: #666;
-    margin-top: 0.75rem;
+    margin-top: 0.1rem;
     font-weight: 500;
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -273,8 +266,8 @@ div {
   z-index: 1002;
   background: rgba(255, 255, 255, 0.97);
   box-shadow: none;
-  padding-top: 1.2rem;
-  padding-bottom: 1.2rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.2rem;
   margin-bottom: 1.5rem;
 }
 
@@ -288,7 +281,7 @@ div {
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   margin-bottom: 3rem;
-  
+
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -299,48 +292,48 @@ div {
   display: flex;
   flex-direction: column;
   gap: 3.5rem;
-  
+
   section {
     margin-bottom: 0;
-    
+
     h2 {
       font-size: 2.5rem;
       font-weight: 700;
       color: var(--brand-colour, #fa6f6f);
       margin-bottom: 1.5rem;
       position: relative;
-      
-      &::before {
-        content: '';
-        position: absolute;
-        left: -2rem;
-        top: 0.5rem;
-        width: 1.5rem;
-        height: 3px;
-        background: var(--brand-colour, #fa6f6f);
-        border-radius: 2px;
-      }
+
+      // &::before {
+      //   content: '';
+      //   position: absolute;
+      //   left: -2rem;
+      //   top: 0.5rem;
+      //   width: 1.5rem;
+      //   height: 3px;
+      //   background: var(--brand-colour, #fa6f6f);
+      //   border-radius: 2px;
+      // }
     }
-    
+
     h3 {
       font-size: 1.5rem;
       font-weight: 600;
       color: #333;
       margin: 2rem 0 1rem 0;
       position: relative;
-      
-      &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        bottom: -0.5rem;
-        width: 3rem;
-        height: 2px;
-        background: linear-gradient(90deg, var(--brand-colour, #fa6f6f) 0%, transparent 100%);
-        border-radius: 1px;
-      }
+
+      // &::after {
+      //   content: '';
+      //   position: absolute;
+      //   left: 0;
+      //   bottom: -0.5rem;
+      //   width: 3rem;
+      //   height: 2px;
+      //   background: linear-gradient(90deg, var(--brand-colour, #fa6f6f) 0%, transparent 100%);
+      //   border-radius: 1px;
+      // }
     }
-    
+
     p {
       font-size: 1.125rem;
       line-height: 1.8;
@@ -349,12 +342,12 @@ div {
       font-weight: 400;
       letter-spacing: 0.01em;
     }
-    
+
     ul {
       margin-top: 1.5rem;
       list-style: none;
       padding-left: 0;
-      
+
       li {
         font-size: 1.125rem;
         line-height: 1.8;
@@ -364,7 +357,7 @@ div {
         position: relative;
         font-weight: 400;
         letter-spacing: 0.01em;
-        
+
         &::before {
           content: '';
           position: absolute;
@@ -393,7 +386,7 @@ div {
   overflow: hidden;
   position: sticky;
   top: 2rem;
-  
+
   .headline-image {
     width: 100%;
     height: auto;
@@ -406,7 +399,7 @@ div {
 .project-content-left {
   section {
     position: relative;
-    
+
     // Add decorative elements
     &::before {
       content: '';
@@ -418,7 +411,7 @@ div {
       background: linear-gradient(180deg, transparent 0%, var(--brand-colour, #fa6f6f) 20%, var(--brand-colour, #fa6f6f) 80%, transparent 100%);
       opacity: 0.3;
     }
-    
+
     // First letter styling for paragraphs
     p:first-of-type::first-letter {
       font-size: 3.5rem;
@@ -439,32 +432,32 @@ div {
     section {
       h2 {
         font-size: 2rem;
-        
+
         &::before {
           left: -1.5rem;
           width: 1rem;
         }
       }
-      
+
       h3 {
         font-size: 1.25rem;
       }
-      
+
       p {
         font-size: 1rem;
       }
-      
+
       ul li {
         font-size: 1rem;
       }
     }
   }
-  
+
   .project-header {
     h1 {
       font-size: 2.5rem;
     }
-    
+
     .project-logo {
       width: 60px;
       height: 60px;
@@ -582,13 +575,14 @@ div {
   display: flex;
   bottom: 0;
   width: 100%;
-  height: 120px;
+  height: 90px;
   flex-direction: column;
   flex: 1 1;
   justify-content: center;
   z-index: 1000;
   background-color: #ffffff;
   border-top: 1px solid #e8e8e8;
+
   .project {
     display: flex;
     flex-direction: column;
@@ -630,7 +624,7 @@ div {
   font-weight: 700;
   font-size: 22px;
   padding: 0 20px;
-  top: 10px;
+  top: -3px;
   position: absolute;
   z-index: 9999;
 }
@@ -763,9 +757,9 @@ div {
     padding: 1rem 1.8rem;
     border-radius: 8px; // Less rounded
     backdrop-filter: blur(10px);
-    box-shadow:
-      0 0 20px rgba(250, 111, 111, 0.3),
-      0 0 40px rgba(250, 111, 111, 0.1);
+    // box-shadow:
+    //   0 0 20px rgba(250, 111, 111, 0.3),
+    //   0 0 40px rgba(250, 111, 111, 0.1);
     animation: fadeInUp 0.8s ease-out 0.3s both;
     clip-path: polygon(5% -5%, 95% 0%, 100% 20%, 100% 80%, 95% 110%, 5% 100%, 0% 80%, 0% 20%); // Angular polygon shape
   }
@@ -1038,17 +1032,17 @@ div {
 
 .skills-section {
   position: relative;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -3rem;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(180deg, transparent 0%, var(--brand-colour, #fa6f6f) 20%, var(--brand-colour, #fa6f6f) 80%, transparent 100%);
-    opacity: 0.3;
-  }
+
+  // &::before {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0;
+  //   left: -3rem;
+  //   width: 1px;
+  //   height: 100%;
+  //   background: linear-gradient(180deg, transparent 0%, var(--brand-colour, #fa6f6f) 20%, var(--brand-colour, #fa6f6f) 80%, transparent 100%);
+  //   opacity: 0.3;
+  // }
 }
 
 .skills-summary {
@@ -1082,13 +1076,13 @@ div {
   cursor: pointer;
   transition: all 0.2s ease;
   border: 1px solid rgba(250, 111, 111, 0.15);
-  
+
   &:hover {
     background: var(--brand-colour, #fa6f6f);
     color: white;
     transform: translateY(-1px);
   }
-  
+
   &:last-child {
     background: rgba(250, 111, 111, 0.15);
     color: var(--brand-colour, #fa6f6f);
@@ -1106,7 +1100,7 @@ div {
   font-weight: 500;
   transition: all 0.2s ease;
   font-size: 0.8rem;
-  
+
   &:hover {
     background: #333;
     color: white;
@@ -1138,7 +1132,7 @@ div {
   background: white;
   border-radius: 12px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  // box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   border: 1px solid rgba(0, 0, 0, 0.03);
   position: relative;
   overflow: hidden;
@@ -1146,9 +1140,9 @@ div {
 
   &:hover {
     transform: translateY(-3px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
+    // box-shadow: 0 15px 50px rgba(0, 0, 0, 0.12);
   }
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -1158,19 +1152,19 @@ div {
     height: 4px;
     background: linear-gradient(90deg, var(--brand-colour, #fa6f6f) 0%, transparent 100%);
   }
-  
+
   &.frontend::before {
     background: linear-gradient(90deg, #007bff 0%, transparent 100%);
   }
-  
+
   &.backend::before {
     background: linear-gradient(90deg, #28a745 0%, transparent 100%);
   }
-  
+
   &.design::before {
     background: linear-gradient(90deg, #e83e8c 0%, transparent 100%);
   }
-  
+
   &.management::before {
     background: linear-gradient(90deg, #6f42c1 0%, transparent 100%);
   }
@@ -1181,12 +1175,12 @@ div {
   align-items: start;
   margin-bottom: 1.25rem;
   flex-direction: column;
-  
+
   .category-icon {
     font-size: 1.25rem;
     color: var(--brand-colour, #fa6f6f);
   }
-  
+
   h3 {
     font-size: 1.25rem;
     font-weight: 600;
@@ -1211,11 +1205,11 @@ div {
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.03);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  
+
   &:hover {
     background: rgba(248, 249, 250, 0.8);
     transform: translateY(-1px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    // box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   }
 }
 
@@ -1238,17 +1232,17 @@ div {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  
+
   &.expert {
     background: #28a745;
     color: white;
   }
-  
+
   &.advanced {
     background: #007bff;
     color: white;
   }
-  
+
   &.competent {
     background: #ffc107;
     color: #333;
@@ -1261,7 +1255,7 @@ div {
   background: rgba(0, 0, 0, 0.08);
   border-radius: 2px;
   overflow: hidden;
-  
+
   .progress-bar {
     height: 100%;
     background: white;

@@ -4,10 +4,12 @@ import HomeLayer from "../Components/HomeLayer";
 import RadialMenu from "../Components/RadialMenu";
 // import ProjectSideNavigation from "../Components/ProjectSideNavigation";
 import SkillsModal from "../Components/SkillsModal";
+import { useTheme } from '../contexts/ThemeContext';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import gdImage from '../images/gd/gd1.png';
+import gdLogo from '../images/gd/gd-logo.png';
 import meAndRuby from '../images/me-and-ruby.png';
 
 
@@ -15,7 +17,7 @@ const projects = [
   {
     id: 1,
     name: 'GridDuck',
-    logo: gdImage, // Placeholder, replace with actual logo if available
+    logo: gdLogo, // Placeholder, replace with actual logo if available
     headlineImage: gdImage, // Add headline image
     company: 'GridDuck',
     range: '2017 - Present',
@@ -256,7 +258,8 @@ function Home() {
       return () => window.removeEventListener('keydown', onKeyDown);
     }, [lightbox, prevLightbox, nextLightbox]);
 
-    const col = '#fa6f6f';
+    const { currentTheme, updateThemeColor } = useTheme();
+    const col = currentTheme.colors.primary;
     const colStyle = { color: col };
 
     const projectSliderSettings = {
@@ -300,7 +303,10 @@ function Home() {
     };
 
     return (
-        <div ref={projectsRef} className={'home-wrapper ' + (isProjectPanelOpen ? 'showing': '')} style={{ top: isProjectPanelOpen ? 'calc(-100% + 120px)' : '0' }}>
+        <div ref={projectsRef} className={'home-wrapper ' + (isProjectPanelOpen ? 'showing': '')} style={{ 
+          top: isProjectPanelOpen ? 'calc(-100% + 90px)' : '0',
+          '--brand-colour': currentTheme.colors.primary
+        } as React.CSSProperties}>
             {/* Radial Menu */}
             <RadialMenu />
 
@@ -330,6 +336,7 @@ function Home() {
                     <p className="p-title" style={colStyle}>
                         <span className={'clickable'} onClick={() => { 
                             setIsProjectPanelOpen(false);
+                            updateThemeColor('#fa6f6f'); // Reset to default color
                             window.setTimeout(() => {
                                 setShowingProject(null);
                             }, 800);
@@ -347,12 +354,13 @@ function Home() {
                 {/*<div className="row">*/}
                 <Slider {...projectSliderSettings}>
                     {projects.map((project) => (
-                        <div className={`project ${showingProject?.name === project.name ? 'selected' : ''}`} key={project.id} onClick={() => {
+                        <div className={`project ${showingProject?.name === project.name ? 'selected' : ''}`} style={{color: showingProject?.name === project.name ? project.brandColour : 'grey'}} key={project.id} onClick={() => {
                             setShowingProject(project);
                             setIsProjectPanelOpen(true);
+                            updateThemeColor(project.brandColour);
                         }}>
-                            <p style={{ color: showingProject?.name === project.name ? col : 'grey' }}>{project.name}</p>
-                            <p className="details" style={{ color: showingProject?.name === project.name ? col : 'grey' }}>{project.range}</p>
+                            <p style={{ color: showingProject?.name === project.name ? project.brandColour : 'grey' }}>{project.name}</p>
+                            <p className="details" style={{ color: showingProject?.name === project.name ? project.brandColour : 'grey' }}>{project.range}</p>
                         </div>
                     ))}
                 </Slider>
@@ -366,8 +374,8 @@ function Home() {
                 // Use a very subtle background color or pattern
                 // The actual background is handled by SCSS ::before, but we set a CSS var here
                 // Fallback to a very light version of the brand colour
-                '--brand-colour': showingProject?.brandColour || '#fa6f6f',
-                '--theme-colour': col,
+                '--brand-colour': showingProject?.brandColour || currentTheme.colors.primary,
+                '--theme-colour': currentTheme.colors.primary,
                 '--project-bg': showingProject?.background
                   ? `radial-gradient(circle at 60% 40%, ${showingProject.background.replace(/linear-gradient\([^,]+,\s*([^,]+),\s*([^,]+)\)/, '$1 0%, $2 100%').replace(/0%/g, '10%').replace(/100%/g, '90%')}, #fff 100%)`
                   : 'linear-gradient(120deg, #f6f8fa 0%, #e9ecef 100%)',
