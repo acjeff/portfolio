@@ -24,8 +24,8 @@
 }
 
 .radial-menu-button {
-  width: 4rem;
-  height: 4rem;
+  width: 3.7rem;
+  height: 3.7rem;
   border: none;
   background: var(--brand-colour, #fa6f6f);
   color: white;
@@ -42,6 +42,9 @@
   z-index: 10000;
   flex-direction: column;
   border: 1px solid rgba(255, 255, 255, 0.15);
+  .radial-menu-icon {
+    font-size: 1.2rem;
+  }
   
   &:hover {
     background: var(--brand-colour, #e85a5a);
@@ -65,7 +68,7 @@
   }
   
   &.open {
-    background: #4facfe;
+    background: #9c9c9c;
     // box-shadow: 0 2px 8px rgba(79, 172, 254, 0.2);
     
     &:hover {
@@ -107,7 +110,7 @@
     opacity: 1;
     transform: scale(1) translate(
       0,
-      calc(var(--item-index) * 4rem + 4rem)
+      calc(var(--item-index) * 4rem + 4.4rem)
     );
   }
 }

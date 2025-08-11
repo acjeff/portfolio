@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { FiX, FiPlayCircle, FiDownload, FiMusic, FiGithub, FiMail, FiLinkedin, FiArrowUp, FiLink } from 'react-icons/fi';
-import { FaLink } from 'react-icons/fa';
+import {FiPlayCircle, FiDownload, FiMusic, FiGithub, FiMail, FiLinkedin, FiArrowUp, FiLink, FiArrowDown } from 'react-icons/fi';
 import { useTheme } from '../contexts/ThemeContext';
 import '../Styles/RadialMenu.scss';
 
@@ -58,7 +57,7 @@ const menuItems: MenuItem[] = [
   }
 ];
 
-const RadialMenu: React.FC = () => {
+const RadialMenu: React.FC<{ isProjectPanelOpen: boolean }> = ({ isProjectPanelOpen }) => {
   const { currentTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(true);
 
@@ -94,7 +93,7 @@ const RadialMenu: React.FC = () => {
         >
           <div className="radial-menu-icon">
             {/* @ts-ignore */}
-            {isOpen ? <FiArrowUp /> : <FiLink />}
+            {isOpen ? !isProjectPanelOpen ? <FiArrowUp /> : <FiArrowDown /> : <FiLink />}
           </div>
           <div className="menu-label">Links</div>
 

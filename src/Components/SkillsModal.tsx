@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { FaRocket, FaCogs, FaPalette, FaChartLine, FaCode, FaUsers, FaLightbulb, FaBolt } from 'react-icons/fa';
-import { FiBriefcase, FiCloudLightning, FiX } from 'react-icons/fi';
+import { FaRocket, FaCogs, FaPalette, FaChartLine, FaCode, FaUsers, FaLightbulb } from 'react-icons/fa';
+import { FiBriefcase, FiX } from 'react-icons/fi';
 import { useTheme } from '../contexts/ThemeContext';
 import '../Styles/SkillsModal.scss';
 

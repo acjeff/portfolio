@@ -210,7 +210,7 @@ div {
   height: calc(100% - 92px);
 
   .project-content-inner {
-    padding: 20px 60px;
+    // padding: 20px 60px;
   }
 }
 
@@ -219,7 +219,7 @@ div {
   align-items: center;
   gap: 1.5rem;
   margin-bottom: 3rem;
-  padding: 2rem 0;
+  padding: 2rem 20px;
   border-bottom: 2px solid #f0f0f0;
   position: relative;
 
@@ -227,7 +227,7 @@ div {
     content: '';
     position: absolute;
     bottom: -2px;
-    left: 0;
+    left: 20px;
     width: 4rem;
     height: 2px;
     background: var(--brand-colour, #fa6f6f);
@@ -281,7 +281,7 @@ div {
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   margin-bottom: 3rem;
-
+  padding: 20px 60px;
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
     gap: 3rem;
@@ -622,7 +622,7 @@ div {
 .p-title {
   margin: 0;
   font-weight: 700;
-  font-size: 22px;
+  font-size: 20px;
   padding: 0 20px;
   top: -3px;
   position: absolute;

@@ -308,7 +308,7 @@ function Home() {
           '--brand-colour': currentTheme.colors.primary
         } as React.CSSProperties}>
             {/* Radial Menu */}
-            <RadialMenu />
+            <RadialMenu isProjectPanelOpen={isProjectPanelOpen}/>
 
             {/* Skills Modal */}
             <SkillsModal />

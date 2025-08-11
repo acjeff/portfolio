@@ -648,8 +648,8 @@
 // Responsive adjustments
 @media (max-width: 768px) {
   .skills-button, .radial-menu-button {
-    width: 3rem;
-    height: 3rem;
+    width: 3.5rem;
+    height: 3.5rem;
     font-size: 1.3rem;
     .skills-icon {
       font-size: 1.2rem;
@@ -657,9 +657,9 @@
   }
   .modal-close-btn {
     position: absolute;
-    bottom: 1.5rem;
+    bottom: 3.5rem;
     top: auto;
-    right: 2.5rem;
+    right: 4rem;
     background: rgba(255, 255, 255, 0.9);
     border: none;
     width: 4rem;
@@ -670,7 +670,8 @@
     justify-content: center;
     cursor: pointer;
     font-size: 2rem;
-    color: #666;
+    background: var(--brand-colour, #fff);
+    color: #fff;
     transition: all 0.3s ease;
     z-index: 10;
     backdrop-filter: blur(10px);
@@ -680,7 +681,7 @@
     top: calc(100% - 265px);
     right: 6rem;
   }
-  .radial-menu-container {
+  .radial-menu-container, .radial-menu-button-container {
     transition: 0.8s ease-in-out;
     top: calc(100% - 265px);
   }
@@ -688,10 +689,17 @@
     .skills-button-container {
       top: calc(100% - 223px);
     }
-    .radial-menu-container {
-      top: calc(100% - 223px);
-    } 
-   
+
+    .radial-menu-container, .radial-menu-button-container {
+      transition: 0.8s ease-in-out;
+      top: calc(100% - 170px);
+    }
+    .radial-menu-button-container {
+      top: 1rem;
+    }
+    .radial-menu.open .menu-item {
+      transform: scale(1) translate(0, calc(var(--item-index) * 4rem + 3.1rem));
+  }
   }
   
   .skills-modal {
@@ -705,7 +713,7 @@
   }
   
   .modal-content {
-    padding: 2rem 1rem 1rem 1rem;
+    padding: 2rem 0.5rem 1rem 0.5rem;
   }
   
   .modal-header h1 {
