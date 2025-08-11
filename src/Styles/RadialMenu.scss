@@ -11,7 +11,7 @@
 
 .radial-menu-button-container {
   position: fixed;
-  top: 2rem;
+  top: 1rem;
   right: 2rem;
   z-index: 10000;
   display: flex;
@@ -68,11 +68,11 @@
   }
   
   &.open {
-    background: #9c9c9c;
+    // background: #9c9c9c;
     // box-shadow: 0 2px 8px rgba(79, 172, 254, 0.2);
     
     &:hover {
-      background: #3a9bfe;
+      // background: #3a9bfe;
       // box-shadow: 0 4px 12px rgba(79, 172, 254, 0.25);
     }
   }
@@ -108,10 +108,7 @@
   backdrop-filter: blur(5px);
   .radial-menu.open & {
     opacity: 1;
-    transform: scale(1) translate(
-      0,
-      calc(var(--item-index) * 4rem + 4.4rem)
-    );
+    transform: scale(1) translate(0, calc(var(--item-index) * 4rem + 3.1rem));
   }
 }
 

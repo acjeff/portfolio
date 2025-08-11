@@ -95,7 +95,7 @@ const RadialMenu: React.FC<{ isProjectPanelOpen: boolean }> = ({ isProjectPanelO
             {/* @ts-ignore */}
             {isOpen ? !isProjectPanelOpen ? <FiArrowUp /> : <FiArrowDown /> : <FiLink />}
           </div>
-          <div className="menu-label">Links</div>
+          <div className="menu-label">{`${isOpen ? 'Hide' : 'Links'}`}</div>
 
         </button>
       </div >

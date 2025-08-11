@@ -695,10 +695,10 @@
       top: calc(100% - 170px);
     }
     .radial-menu-button-container {
-      top: 1rem;
+      bottom: 1rem;
     }
     .radial-menu.open .menu-item {
-      transform: scale(1) translate(0, calc(var(--item-index) * 4rem + 3.1rem));
+      transform: scale(1) translate(0, calc(-1 * var(--item-index) * 4rem + -4rem));
   }
   }
   
