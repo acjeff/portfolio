@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {FiPlayCircle, FiDownload, FiMusic, FiGithub, FiMail, FiLinkedin, FiArrowUp, FiLink, FiArrowDown } from 'react-icons/fi';
 import { useTheme } from '../contexts/ThemeContext';
 import '../Styles/RadialMenu.scss';
@@ -60,6 +60,15 @@ const menuItems: MenuItem[] = [
 const RadialMenu: React.FC<{ isProjectPanelOpen: boolean }> = ({ isProjectPanelOpen }) => {
   const { currentTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(true);
+
+  // Close radial menu when project panel opens, reopen when it closes
+  useEffect(() => {
+    if (isProjectPanelOpen) {
+      setIsOpen(false);
+    } else {
+      setIsOpen(true);
+    }
+  }, [isProjectPanelOpen]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
