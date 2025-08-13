@@ -4,6 +4,83 @@
   height: 100%;
 }
 
+// Responsive Video Wrapper (16:9 aspect ratio)
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; // 16:9 aspect ratio (9/16 = 0.5625)
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  
+  .responsive-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+// Scroll Direction Arrow Indicator
+.scroll-arrow-indicator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9999;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  
+  .arrow-icon {
+    width: 40px;
+    height: 40px;
+    background: #333;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+  }
+  
+  &.down .arrow-icon {
+    animation: bounce-down 1s infinite;
+  }
+  
+  &.up .arrow-icon {
+    animation: bounce-up 1s infinite;
+  }
+}
+
+@keyframes bounce-down {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes bounce-up {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(5px);
+  }
+  60% {
+    transform: translateY(3px);
+  }
+}
+
 // My Role Section - Top Level Styles
 .my-role-section {
   // margin: 2rem 0 !important;
@@ -188,6 +265,16 @@
   color: rgba(0, 0, 0, 0.8) !important;
   text-transform: uppercase !important;
   letter-spacing: 0.05em !important;
+}
+
+// Clickable Section Headers
+.showcase-text h2 {
+  transition: all 0.2s ease !important;
+  
+  &:hover {
+    color: var(--brand-colour, #fa6f6f) !important;
+    transform: translateX(5px) !important;
+  }
 }
 
 // Video Placeholder Styles
@@ -626,6 +713,7 @@ div {
     width: 100%;
     height: auto;
     display: block;
+    border-radius: 16px;
     transition: transform 0.3s ease;
   }
 
@@ -2003,5 +2091,99 @@ div {
       font-size: 1em;
       letter-spacing: 1px;
     }
+  }
+}
+
+// Scroll Indicator Styles
+.scroll-indicator {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: scrollIndicatorFadeIn 0.3s ease-out;
+  pointer-events: none;
+}
+
+.scroll-indicator-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 200px;
+}
+
+.scroll-arrow {
+  font-size: 2rem;
+  color: var(--brand-colour, #fa6f6f);
+  animation: scrollArrowBounce 1.5s ease-in-out infinite;
+}
+
+.scroll-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #333;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.scroll-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: var(--brand-colour, #fa6f6f);
+  border-radius: 2px;
+  transition: width 0.2s ease-out;
+  transform-origin: left;
+}
+
+@keyframes scrollIndicatorFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes scrollArrowBounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-8px);
+  }
+  60% {
+    transform: translateY(-4px);
+  }
+}
+
+// Fade out animation for scroll indicator
+.scroll-indicator.fading-out {
+  animation: scrollIndicatorFadeOut 0.3s ease-out forwards;
+}
+
+@keyframes scrollIndicatorFadeOut {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
   }
 }

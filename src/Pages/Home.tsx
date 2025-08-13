@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import '../Styles/Home.scss';
+import { performanceMonitor } from '../utils/performance';
+
 import HomeLayer from "../Components/HomeLayer";
 import RadialMenu from "../Components/RadialMenu";
 // import ProjectSideNavigation from "../Components/ProjectSideNavigation";
@@ -10,6 +12,18 @@ import 'slick-carousel/slick/slick-theme.css';
 import Slider from 'react-slick';
 import gdImage from '../images/gd/gd1.png';
 import gdLogo from '../images/Brand Work/GridDuck/GridDuck-logo-no-type.png';
+import wirewaxLogo from '../images/Brand Work/wirewax/wirewax-logo-header.jpeg';
+import utcLogo from '../images/Brand Work/UTC/utc-logo-header.png';
+import gigblocLogo from '../images/Brand Work/gigbloc/gigbloc-logo-header.png';
+
+// Gigbloc Images
+import gigblocHeader from '../images/Brand Work/gigbloc/header-image.png';
+import gigblocApp1 from '../images/Brand Work/gigbloc/app-1.png';
+import gigblocApp2 from '../images/Brand Work/gigbloc/app-2.png';
+import gigblocPress from '../images/Brand Work/gigbloc/press.png';
+import gigblocPress2 from '../images/Brand Work/gigbloc/press-2.png';
+import gigblocPress3 from '../images/Brand Work/gigbloc/press-3.png';
+import gigblocPress4 from '../images/Brand Work/gigbloc/press-4.png';
 import meAndRuby from '../images/me-and-ruby.png';
 
 // GridDuck Product Work Images
@@ -38,6 +52,27 @@ import businessCardFront from '../images/Brand Work/GridDuck/gridduck-business-c
 import clickupDashboard from '../images/Product Work/GridDuck/General Product/clickup-dashboard.png';
 import clickupKanban from '../images/Product Work/GridDuck/General Product/click-up-kanban.png';
 import foh from '../images/Brand Work/GridDuck/foh.png';
+
+// WIREWAX Video
+import wirewaxVideo from '../images/Brand Work/wirewax/wirewax-video.mp4';
+
+// WIREWAX Images
+import wirewaxDashboard from '../images/Brand Work/wirewax/dashboard.webp';
+import wirewaxSplash from '../images/Brand Work/wirewax/splash.png';
+import wirewaxSplash2 from '../images/Brand Work/wirewax/splash-2.jpg';
+import wirewaxPanels from '../images/Brand Work/wirewax/panels.webp';
+import wirewaxDashboard2 from '../images/Brand Work/wirewax/dashboard-2.jpg';
+import wirewaxSplashWirewax from '../images/Brand Work/wirewax/splash-wirewax.png';
+
+// UTC Images
+import utc1 from '../images/Brand Work/UTC/utc-1.png';
+import utc2 from '../images/Brand Work/UTC/utc-2.png';
+import utc3 from '../images/Brand Work/UTC/utc-3.png';
+import utc4 from '../images/Brand Work/UTC/utc-4.png';
+import utc5 from '../images/Brand Work/UTC/utc-5.png';
+import utc6 from '../images/Brand Work/UTC/utc-6.png';
+import utc7 from '../images/Brand Work/UTC/utc-7.png';
+import utc8 from '../images/Brand Work/UTC/utc-8.png';
 
 // Import actual brand logos from Simple Icons
 import { 
@@ -193,7 +228,7 @@ const projects = [
   {
     id: 2,
     name: 'UTC Hub',
-    logo: gdImage, // Placeholder
+    logo: utcLogo,
     headlineImage: utcHubVideo,
     company: 'UTC Hub',
     range: '2016 - 2017',
@@ -227,7 +262,7 @@ const projects = [
           'Managed all technical decisions and infrastructure development',
           'Oversaw the entire product lifecycle from concept to deployment'
         ],
-        images: [clickupDashboard, clickupKanban, gdImage]
+        images: [utc1, utc2, utc3]
       },
       {
         header: 'Platform Development',
@@ -239,7 +274,7 @@ const projects = [
           'Created employer portal for posting opportunities and reviewing applications',
           'Implemented secure authentication and role-based access control'
         ],
-        images: [themesAccessibility, automatedReports, whiteLabel]
+        images: [utc4, utc5, utc6]
       },
       {
         header: 'Product Strategy',
@@ -251,7 +286,7 @@ const projects = [
           'Established product metrics and success criteria for platform adoption',
           'Coordinated with UTC colleges and employer partners for platform requirements'
         ],
-        images: [gaiaDash1, gaiaModel, integratedBilling]
+        images: [utc7, utc8]
       }
     ],
     background: 'linear-gradient(120deg, #2c5aa0 0%, #4a90e2 100%)'
@@ -259,18 +294,18 @@ const projects = [
   {
     id: 3,
     name: 'Gigbloc',
-    logo: gdImage, // Placeholder
-    headlineImage: whiteLabel, // Using existing image as placeholder
+    logo: gigblocLogo,
+    headlineImage: gigblocHeader,
     company: 'Gigbloc',
     range: '2015 - 2016',
-    brandColour: '#e74c3c', // Red color typical for music/entertainment platforms
-    companyDescription: 'Gigbloc was a live music platform startup that connected music venues, artists, and audiences.',
-    productDescription: 'A comprehensive platform for live music event management, ticketing, and artist discovery, helping organizers and attendees manage gigs and events.',
+    brandColour: '#282c34', // Dark blue-grey from Gigbloc branding
+    companyDescription: 'Gigbloc was a music discovery startup that helped people find live gigs in their local area by combining Songkick ticket data with SoundCloud music streaming.',
+    productDescription: 'A mobile app and website that filtered local music events by genre, allowing users to discover and listen to music from artists playing nearby, with a focus on helping lesser-known artists and small gigs get discovered.',
     myWork: [
-      'Co-founded and built the technical backbone of a live music platform as Founder/CTO.',
-      'Lead development and product innovation for the entire platform.',
-      'Built ticketing and event listing features with integrated payment processing.',
-      'Developed artist and venue management tools for the live music ecosystem.'
+      'Co-founded the startup and designed the complete app and website experience.',
+      'Built the iOS app in Swift and developed the web platform.',
+      'Integrated Songkick API for ticket data and SoundCloud API for music streaming.',
+      'Scaled the platform to 10,000 users through product-led growth.'
     ],
     techStack: [  
       techStacks.swift,
@@ -282,40 +317,40 @@ const projects = [
     ],
     sections: [
       {
-        header: 'Startup Leadership',
-        jobTitle: 'Founder & Chief Technology Officer',
-        summary: 'Co-founding and building the technical backbone of a live music platform from concept to market.',
+        header: 'Product Design & Development',
+        jobTitle: 'Co-Founder & Lead Developer',
+        summary: 'Designing and building the complete music discovery experience from concept to 10,000 users.',
         highlights: [
-          'Co-founded startup and built complete technical platform from scratch',
-          'Led development and product innovation for entire platform',
-          'Managed technical team and development processes',
-          'Established technical architecture and scalability planning'
+          'Designed the complete app and website user experience',
+          'Built the iOS app in Swift for seamless mobile experience',
+          'Developed the web platform for desktop music discovery',
+          'Scaled the platform to 10,000 active users'
         ],
-        images: [clickupDashboard, clickupKanban, gdImage]
+        images: [gigblocApp1, gigblocApp2]
       },
       {
-        header: 'Event Management Platform',
-        jobTitle: 'Lead Full-Stack Engineer',
-        summary: 'Building comprehensive event management, ticketing, and artist discovery features.',
+        header: 'API Integration & Data',
+        jobTitle: 'Backend Engineer',
+        summary: 'Integrating Songkick and SoundCloud APIs to create a comprehensive local music discovery platform.',
         highlights: [
-          'Developed event listing and ticketing interface for live music events',
-          'Built integrated payment processing and ticket management system',
-          'Created artist and venue management tools for live music ecosystem',
-          'Implemented real-time event updates and notification systems'
+          'Integrated Songkick API for real-time ticket and event data',
+          'Connected SoundCloud API for music streaming and discovery',
+          'Built genre-based filtering system for local music events',
+          'Created location-based search and recommendation engine'
         ],
-        images: [themesAccessibility, automatedReports, whiteLabel]
+        images: [gigblocPress, gigblocPress2]
       },
       {
-        header: 'Payment Integration',
-        jobTitle: 'Payment Systems Engineer',
-        summary: 'Integrating secure payment processing and financial management for event ticketing.',
+        header: 'Growth & User Acquisition',
+        jobTitle: 'Product Manager',
+        summary: 'Driving user growth through product-led strategies and community building.',
         highlights: [
-          'Integrated multiple payment gateways for secure transactions',
-          'Built automated billing and financial reporting systems',
-          'Implemented fraud prevention and transaction monitoring',
-          'Developed refund and dispute resolution workflows'
+          'Achieved 10,000 users through organic growth strategies',
+          'Focused on helping lesser-known artists get discovered',
+          'Built features for small gig discovery and local music scenes',
+          'Created weekly discovery features for upcoming local events'
         ],
-        images: [integratedBilling, automationThermostat, gaiaDash1]
+        images: [gigblocPress3, gigblocPress4]
       }
     ],
     background: 'linear-gradient(120deg, #e74c3c 0%, #c0392b 100%)'
@@ -323,11 +358,11 @@ const projects = [
   {
     id: 4,
     name: 'WIREWAX',
-    logo: gdImage, // Placeholder
-    headlineImage: gaiaDash1, // Using existing image as placeholder
+    logo: wirewaxLogo,
+    headlineImage: wirewaxVideo,
     company: 'WIREWAX',
     range: '2013 - 2015',
-    brandColour: '#27ae60', // Green color typical for creative/tech companies
+    brandColour: '#f7a8d8', // Pink color from WIREWAX branding
     companyDescription: 'WIREWAX is an interactive video technology company that enables clickable, interactive video experiences.',
     productDescription: 'Advanced interactive video platform that allows creators to add clickable elements, hotspots, and interactive overlays to video content.',
     myWork: [
@@ -348,49 +383,66 @@ const projects = [
       techStacks.aws,
       techStacks.github
     ],
-    sections: [
-      {
-        header: 'Interactive Video Development',
-        jobTitle: 'Front-End Developer',
-        summary: 'Building interactive video features and clickable video experiences for content creators.',
-        highlights: [
-          'Developed interactive video overlay system with clickable elements',
-          'Built video analytics dashboard for user engagement tracking',
-          'Created interactive video editor for content creators',
-          'Implemented real-time video interaction and hotspot management'
-        ],
-        images: [themesAccessibility, automatedReports, whiteLabel]
-      },
-      {
-        header: 'Client Support & Design',
-        jobTitle: 'Client Support & Design Specialist',
-        summary: 'Providing technical support and design assistance for interactive video projects.',
-        highlights: [
-          'Liaised with clients to understand interactive video requirements',
-          'Provided design support and technical guidance for video projects',
-          'Created custom interactive video solutions for client needs',
-          'Developed documentation and training materials for clients'
-        ],
-        images: [gaiaDash1, gaiaModel, integratedBilling]
-      },
-      {
-        header: 'Video Analytics',
-        jobTitle: 'Analytics Developer',
-        summary: 'Building analytics and engagement tracking tools for interactive video content.',
-        highlights: [
-          'Enhanced video analytics dashboard with engagement metrics',
-          'Developed user behavior tracking for interactive video elements',
-          'Built reporting tools for content performance analysis',
-          'Implemented A/B testing framework for video interactions'
-        ],
-        images: [clickupDashboard, clickupKanban, gdImage]
-      }
-    ],
+          sections: [
+        {
+          header: 'Interactive Video Development',
+          jobTitle: 'Front-End Developer',
+          summary: 'Building interactive video features and clickable video experiences for content creators.',
+          highlights: [
+            'Developed interactive video overlay system with clickable elements',
+            'Built video analytics dashboard for user engagement tracking',
+            'Created interactive video editor for content creators',
+            'Implemented real-time video interaction and hotspot management'
+          ],
+          images: [wirewaxDashboard, wirewaxSplash]
+        },
+        {
+          header: 'Client Support & Design',
+          jobTitle: 'Client Support & Design Specialist',
+          summary: 'Providing technical support and design assistance for interactive video projects.',
+          highlights: [
+            'Liaised with clients to understand interactive video requirements',
+            'Provided design support and technical guidance for video projects',
+            'Created custom interactive video solutions for client needs',
+            'Developed documentation and training materials for clients'
+          ],
+          images: [wirewaxSplash2, wirewaxPanels]
+        },
+        {
+          header: 'Video Analytics',
+          jobTitle: 'Analytics Developer',
+          summary: 'Building analytics and engagement tracking tools for interactive video content.',
+          highlights: [
+            'Enhanced video analytics dashboard with engagement metrics',
+            'Developed user behavior tracking for interactive video elements',
+            'Built reporting tools for content performance analysis',
+            'Implemented A/B testing framework for video interactions'
+          ],
+          images: [wirewaxDashboard2, wirewaxSplashWirewax]
+        }
+      ],
     background: 'linear-gradient(120deg, #27ae60 0%, #2ecc71 100%)'
   }
 ];
 
+// Helper function to get project by name
+const getProjectByName = (name: string) => {
+  return projects.find(project => project.name.toLowerCase() === name.toLowerCase());
+};
+
 function Home() {
+    // Performance monitoring
+    useEffect(() => {
+        performanceMonitor.logMemoryUsage('Home Component Initial Load');
+        
+        // Log memory usage every 30 seconds
+        const interval = setInterval(() => {
+            performanceMonitor.logMemoryUsage('Home Component Periodic Check');
+        }, 30000);
+        
+        return () => clearInterval(interval);
+    }, []);
+
     const [width, setWidth] = useState('15%');
     const [targetWidth, setTargetWidth] = useState('15%');
     // const [currentProjectSection, setCurrentProjectSection] = useState(0);
@@ -400,6 +452,47 @@ function Home() {
     >(null);
     const [isProjectPanelOpen, setIsProjectPanelOpen] = useState(false);
     const [hasScrolled, setHasScrolled] = useState(false);
+    const [scrollProgress, setScrollProgress] = useState(0);
+    const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
+        const [lastSelectedProject, setLastSelectedProject] = useState(0); // Track last selected project index
+
+    // URL parameter handling for project selection
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const projectParam = urlParams.get('project');
+        
+        if (projectParam) {
+            const project = getProjectByName(projectParam);
+            if (project) {
+                setShowingProject(project);
+                setIsProjectPanelOpen(true);
+                // @ts-ignore
+                updateThemeColor(project.brandColour);
+                setLastSelectedProject(projects.findIndex(p => p.id === project.id));
+            }
+        }
+    }, []);
+
+    // Update URL when project changes
+    useEffect(() => {
+        if (showingProject) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('project', showingProject.name);
+            window.history.replaceState({}, '', url.toString());
+        } else {
+            const url = new URL(window.location.href);
+            url.searchParams.delete('project');
+            window.history.replaceState({}, '', url.toString());
+        }
+    }, [showingProject]);
+
+    const scrollRef = useRef({
+    accumulatedScroll: 0,
+    lastScrollTime: 0,
+    isInCooldown: false,
+    timeoutId: null as NodeJS.Timeout | null
+  });
 
     const [lightbox, setLightbox] = useState<{
       sectionIdx: number;
@@ -546,6 +639,18 @@ function Home() {
       }
     }, [currentLightboxIndex, allGalleryImages]);
 
+    const scrollToSection = useCallback((sectionIdx: number) => {
+      const sectionElement = document.getElementById(`section-${sectionIdx}`);
+      
+      if (sectionElement) {
+        // Scroll the section into view with smooth behavior
+        sectionElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }, []);
+
     // Lightbox close and navigation on ESC/arrow keys
     useEffect(() => {
       if (lightbox === null) return;
@@ -562,34 +667,123 @@ function Home() {
     const col = currentTheme.colors.primary;
     const colStyle = { color: col };
 
-    // Wheel event detection to auto-select first project and return to home
+        // Simple scroll detection for project selection
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
       const handleWheel = (event: WheelEvent) => {
-        // Auto-select first project when scrolling down on home
-        if (!isProjectPanelOpen && !showingProject && !hasScrolled && event.deltaY > 0) {
-          setHasScrolled(true);
-          setShowingProject(projects[0]);
-          setIsProjectPanelOpen(true);
-          updateThemeColor(projects[0].brandColour);
-          
-          // Prevent the default scroll behavior
-          event.preventDefault();
+        const SCROLL_THRESHOLD = 600; // Increased to reduce accidental triggers
+        const SCROLL_TIMEOUT = 800; // Increased from 500ms to 800ms
+        const COOLDOWN_TIME = 800; // Cooldown after action
+        
+        const currentTime = Date.now();
+        const currentScrollRef = scrollRef.current as {
+          accumulatedScroll: number;
+          lastScrollTime: number;
+          isInCooldown: boolean;
+          timeoutId: NodeJS.Timeout | null;
+        };
+        
+        // Skip if in cooldown
+        if (currentScrollRef.isInCooldown) {
+          return;
         }
         
-        // Return to home when scrolling up at the top of a project
-        if (isProjectPanelOpen && showingProject && event.deltaY < 0) {
+        // Clear existing timeout
+        if (currentScrollRef.timeoutId) {
+          clearTimeout(currentScrollRef.timeoutId);
+        }
+        
+        // Set new timeout to reset scroll
+        currentScrollRef.timeoutId = setTimeout(() => {
+          currentScrollRef.accumulatedScroll = 0;
+          setScrollProgress(0);
+          currentScrollRef.timeoutId = null;
+        }, SCROLL_TIMEOUT);
+        
+        currentScrollRef.lastScrollTime = currentTime;
+        
+        // Handle opening project (scroll down on home)
+        if (!isProjectPanelOpen && !showingProject && !hasScrolled && event.deltaY > 0) {
+          currentScrollRef.accumulatedScroll += event.deltaY;
+          const progress = Math.min((currentScrollRef.accumulatedScroll / SCROLL_THRESHOLD) * 100, 100);
+          setScrollProgress(progress);
+          setScrollDirection('down');
+          
+                      // Trigger action when threshold is reached
+            if (currentScrollRef.accumulatedScroll >= SCROLL_THRESHOLD) {
+              // Clear timeout
+              if (currentScrollRef.timeoutId) {
+                clearTimeout(currentScrollRef.timeoutId);
+                currentScrollRef.timeoutId = null;
+              }
+              
+              setHasScrolled(true);
+              // eslint-disable-next-line react-hooks/exhaustive-deps
+              setShowingProject(projects[lastSelectedProject]);
+              setIsProjectPanelOpen(true);
+              // eslint-disable-next-line react-hooks/exhaustive-deps
+              updateThemeColor(projects[lastSelectedProject].brandColour);
+              
+              // Set cooldown
+              currentScrollRef.accumulatedScroll = 0;
+              setScrollProgress(0);
+              currentScrollRef.isInCooldown = true;
+              
+              setTimeout(() => {
+                currentScrollRef.isInCooldown = false;
+              }, COOLDOWN_TIME);
+              
+              event.preventDefault();
+            }
+        }
+        
+        // Handle returning home (scroll up at top of project)
+        else if (isProjectPanelOpen && showingProject && event.deltaY < 0) {
           const projectContents = document.querySelector('.project-contents');
           if (projectContents && projectContents.scrollTop <= 0) {
-            setIsProjectPanelOpen(false);
-            setHasScrolled(false); // Reset scroll state
-            updateThemeColor('#fa6f6f'); // Reset to default color
-            window.setTimeout(() => {
-              setShowingProject(null);
-            }, 800);
+            currentScrollRef.accumulatedScroll += Math.abs(event.deltaY);
+            const progress = Math.min((currentScrollRef.accumulatedScroll / SCROLL_THRESHOLD) * 100, 100);
+            setScrollProgress(progress);
+            setScrollDirection('up');
             
-            // Prevent the default scroll behavior
-            event.preventDefault();
+            // Trigger action when threshold is reached
+            if (currentScrollRef.accumulatedScroll >= SCROLL_THRESHOLD) {
+              // Clear timeout
+              if (currentScrollRef.timeoutId) {
+                clearTimeout(currentScrollRef.timeoutId);
+                currentScrollRef.timeoutId = null;
+              }
+              
+              setIsProjectPanelOpen(false);
+              setHasScrolled(false);
+              updateThemeColor('#fa6f6f');
+              
+              // Set cooldown
+              currentScrollRef.accumulatedScroll = 0;
+              setScrollProgress(0);
+              currentScrollRef.isInCooldown = true;
+              
+              setTimeout(() => {
+                currentScrollRef.isInCooldown = false;
+              }, COOLDOWN_TIME);
+              
+              window.setTimeout(() => {
+                setShowingProject(null);
+              }, 800);
+              
+              event.preventDefault();
+            }
+          } else {
+            // Reset if not at top
+            currentScrollRef.accumulatedScroll = 0;
+            setScrollProgress(0);
           }
+        }
+        
+        // Reset scroll when scrolling opposite direction
+        else if (event.deltaY < 0 && !isProjectPanelOpen) {
+          currentScrollRef.accumulatedScroll = 0;
+          setScrollProgress(0);
         }
       };
 
@@ -606,8 +800,16 @@ function Home() {
         if (homeWrapperRef.current) {
           homeWrapperRef.current.removeEventListener('wheel', handleWheel);
         }
-      };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        const currentScrollRef = scrollRef.current;
+        if (currentScrollRef.timeoutId) {
+          clearTimeout(currentScrollRef.timeoutId);
+        }
+              };
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isProjectPanelOpen, showingProject, hasScrolled, updateThemeColor]);
+
+
 
     const projectSliderSettings = {
         dots: false,
@@ -659,8 +861,23 @@ function Home() {
           style={{ 
             top: isProjectPanelOpen ? 'calc(-100% + 90px)' : '0',
             '--brand-colour': currentTheme.colors.primary
-          } as React.CSSProperties}
+                    } as React.CSSProperties}
         >
+          {/* Scroll Direction Arrow Indicator */}
+          {scrollProgress > 0 && scrollProgress < 100 && (
+            <div 
+              className={`scroll-arrow-indicator ${scrollDirection}`}
+              style={{
+                opacity: scrollProgress / 100,
+                transform: `translate(-50%, -50%) scale(${0.5 + (scrollProgress / 100) * 0.5})`
+              }}
+            >
+              <div className="arrow-icon">
+                {scrollDirection === 'down' ? '↓' : '↑'}
+              </div>
+            </div>
+          )}
+ 
             {/* Radial Menu */}
             <RadialMenu isProjectPanelOpen={isProjectPanelOpen}/>
 
@@ -708,11 +925,20 @@ function Home() {
                 )}
                 {/*<div className="row">*/}
                 <Slider {...projectSliderSettings}>
-                    {projects.map((project) => (
+                    {projects.map((project, index) => (
                         <div className={`project ${showingProject?.name === project.name ? 'selected' : ''}`} style={{color: showingProject?.name === project.name ? project.brandColour : 'grey'}} key={project.id} onClick={() => {
+                            setLastSelectedProject(index); // Track the selected project index
                             setShowingProject(project);
                             setIsProjectPanelOpen(true);
                             updateThemeColor(project.brandColour);
+                            
+                            // Scroll to the top of the project panel when opening a new project
+                            setTimeout(() => {
+                                const projectContents = document.querySelector('.project-contents');
+                                if (projectContents) {
+                                    projectContents.scrollTop = 0;
+                                }
+                            }, 100); // Small delay to ensure the project panel is open
                         }}>
                             <p style={{ color: showingProject?.name === project.name ? project.brandColour : 'grey' }}>{project.name}</p>
                             <p className="details" style={{ color: showingProject?.name === project.name ? project.brandColour : 'grey' }}>{project.range}</p>
@@ -804,11 +1030,13 @@ function Home() {
                                 />
                               </div>
                             ) : (
-                              <img 
-                                src={showingProject.headlineImage} 
-                                alt={`${showingProject.name} headline`} 
-                                className="headline-image"
-                              />
+                              <div className="floating-screen">
+                                <img 
+                                  src={showingProject.headlineImage} 
+                                  alt={`${showingProject.name} headline`} 
+                                  className="headline-image"
+                                />
+                              </div>
                             )}
                           </div>
                         </div>
@@ -880,7 +1108,12 @@ function Home() {
                                 </div>
                             </div>
                             <div className="showcase-text">
-                              <h2>{section.header}</h2>
+                              <h2 
+                                onClick={() => scrollToSection(sectionIdx)}
+                                style={{ cursor: 'pointer' }}
+                              >
+                                {section.header}
+                              </h2>
                               <div className="job-title">{section.jobTitle}</div>
                               <p className="section-summary">{section.summary}</p>
                               <ul className="highlights-list">
