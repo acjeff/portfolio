@@ -15,6 +15,8 @@ import meAndRuby from '../images/me-and-ruby.png';
 // GridDuck Product Work Images
 // @ts-ignore
 import monitoringVideo from '../images/Product Work/GridDuck/General Product/video/monitoring.mp4';
+// @ts-ignore
+import utcHubVideo from '../images/Product Work/GridDuck/General Product/video/utc-hub-optimized.mp4';
 import whiteLabel from '../images/Product Work/GridDuck/General Product/white-label.png';
 import themesAccessibility from '../images/Product Work/GridDuck/General Product/themes-and-accessibility.png';
 import integratedBilling from '../images/Product Work/GridDuck/General Product/integrated-automated-billing.png';
@@ -37,6 +39,66 @@ import clickupDashboard from '../images/Product Work/GridDuck/General Product/cl
 import clickupKanban from '../images/Product Work/GridDuck/General Product/click-up-kanban.png';
 import foh from '../images/Brand Work/GridDuck/foh.png';
 
+// Import actual brand logos from Simple Icons
+import { 
+  SiReact, 
+  SiReactrouter, 
+  SiTypescript, 
+  SiNodedotjs, 
+  SiPostgresql, 
+  SiSass, 
+  SiGithub, 
+  SiRedis, 
+  SiInfluxdb, 
+  SiExpress, 
+  SiMongodb, 
+  SiHeroku, 
+  SiSocketdotio, 
+  SiBootstrap, 
+  SiRubyonrails, 
+  SiStripe, 
+  SiJquery, 
+  SiJavascript, 
+  SiHtml5, 
+  SiCss, 
+  SiPhp, 
+  SiMysql, 
+  SiAngular,
+  SiSwift,
+  SiCanvas
+} from '@icons-pack/react-simple-icons';
+import { FaAws } from 'react-icons/fa';
+
+// Centralized Tech Stack Definitions
+const techStacks = {
+  react: { name: 'React JS', icon: SiReact, color: '#61DAFB', url: 'https://reactjs.org' },
+  reactNative: { name: 'React Native', icon: SiReactrouter, color: '#61DAFB', url: 'https://reactnative.dev' },
+  typescript: { name: 'TypeScript', icon: SiTypescript, color: '#3178C6', url: 'https://www.typescriptlang.org' },
+  nodejs: { name: 'Node JS', icon: SiNodedotjs, color: '#339933', url: 'https://nodejs.org' },
+  postgresql: { name: 'PostgreSQL', icon: SiPostgresql, color: '#336791', url: 'https://www.postgresql.org' },
+  scss: { name: 'SCSS', icon: SiSass, color: '#CC6699', url: 'https://sass-lang.com' },
+  github: { name: 'GitHub', icon: SiGithub, color: '#181717', url: 'https://github.com' },
+  aws: { name: 'AWS', icon: FaAws, color: '#FF9900', url: 'https://aws.amazon.com' },
+  redis: { name: 'Redis', icon: SiRedis, color: '#DC382D', url: 'https://redis.io' },
+  influxdb: { name: 'Influx DB', icon: SiInfluxdb, color: '#22ADF6', url: 'https://www.influxdata.com' },
+  express: { name: 'Express', icon: SiExpress, color: '#000000', url: 'https://expressjs.com' },
+  mongodb: { name: 'MongoDB', icon: SiMongodb, color: '#47A248', url: 'https://www.mongodb.com' },
+  heroku: { name: 'Heroku', icon: SiHeroku, color: '#430098', url: 'https://www.heroku.com' },
+  socketio: { name: 'Socket.io', icon: SiSocketdotio, color: '#010101', url: 'https://socket.io' },
+  bootstrap: { name: 'Bootstrap', icon: SiBootstrap, color: '#7952B3', url: 'https://getbootstrap.com' },
+  rubyRails: { name: 'Ruby on Rails', icon: SiRubyonrails, color: '#CC0000', url: 'https://rubyonrails.org' },
+  stripe: { name: 'Stripe', icon: SiStripe, color: '#008CDD', url: 'https://stripe.com' },
+  angularjs: { name: 'AngularJS', icon: SiAngular, color: '#DD0031', url: 'https://angularjs.org' },
+  jquery: { name: 'jQuery', icon: SiJquery, color: '#0769AD', url: 'https://jquery.com' },
+  javascript: { name: 'JavaScript', icon: SiJavascript, color: '#F7DF1E', url: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
+  html5: { name: 'HTML5', icon: SiHtml5, color: '#E34F26', url: 'https://developer.mozilla.org/en-US/docs/Web/HTML' },
+  css3: { name: 'CSS3', icon: SiCss, color: '#1572B6', url: 'https://developer.mozilla.org/en-US/docs/Web/CSS' },
+  php: { name: 'PHP', icon: SiPhp, color: '#777BB4', url: 'https://www.php.net' },
+  mysql: { name: 'MySQL', icon: SiMysql, color: '#4479A1', url: 'https://www.mysql.com' },
+  swift: { name: 'Swift', icon: SiSwift, color: '#F05138', url: 'https://swift.org' },
+  videojs: { name: 'Video.js', icon: '🎥', color: '#25ABE1', url: 'https://videojs.com' },
+  canvas: { name: 'Canvas API', icon: SiCanvas, color: '#5A5A5A', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API' }
+};
 
 const projects = [
   {
@@ -54,6 +116,19 @@ const projects = [
       'Led full-stack development, product strategy, and UX design across all features.',
       'Chief Product Officer managing entire product lifecycle and team processes.',
       'Designed brand identity, marketing materials, and user documentation.'
+    ],
+    techStack: [
+      techStacks.react,
+      techStacks.reactNative,
+      techStacks.typescript,
+      techStacks.nodejs,
+      techStacks.postgresql,
+      techStacks.scss,
+      techStacks.github,
+      techStacks.aws,
+      techStacks.redis,
+      techStacks.influxdb,
+      techStacks.stripe
     ],
     sections: [
       {
@@ -119,39 +194,49 @@ const projects = [
     id: 2,
     name: 'UTC Hub',
     logo: gdImage, // Placeholder
-    headlineImage: clickupDashboard, // Using existing image as placeholder
+    headlineImage: utcHubVideo,
     company: 'UTC Hub',
     range: '2016 - 2017',
     brandColour: '#2c5aa0', // Blue color typical for educational/tech platforms
-    companyDescription: 'UTC Hub was a collaborative platform for students and teachers, facilitating project management and communication in educational environments.',
-    productDescription: 'A web-based platform that connected students and teachers for project collaboration, resource sharing, and educational workflow management.',
+    companyDescription: 'UTC Hub was a platform designed to help students from UTC Technical Colleges find apprenticeships and work experience opportunities.',
+    productDescription: 'A web-based platform that connected UTC students with employers, facilitating apprenticeship applications and work experience placements.',
     myWork: [
-      'Directed technical strategy and infrastructure development as Chief Technology Officer (CTO).',
-      'Oversaw product lifecycle from conception to deployment.',
-      'Led development of core collaboration features and classroom management tools.',
-      'Managed technical architecture and platform scalability.'
+      'Designed and built the complete platform as Chief Technology Officer (CTO).',
+      'Rapidly prototyped and developed the platform within 6 months of joining as CTO.',
+      'Created a comprehensive system for apprenticeship and work experience matching.',
+      'Built the technical architecture and infrastructure from concept to deployment.'
+    ],
+    techStack: [
+      techStacks.angularjs,
+      techStacks.scss,
+      techStacks.nodejs,
+      techStacks.mysql,
+      techStacks.socketio,
+      techStacks.bootstrap,
+      techStacks.aws,
+      techStacks.github
     ],
     sections: [
       {
         header: 'Technical Leadership',
         jobTitle: 'Chief Technology Officer',
-        summary: 'Leading technical strategy and infrastructure development for an educational collaboration platform.',
+        summary: 'Leading the complete technical development of an apprenticeship and work experience platform.',
         highlights: [
-          'Directed complete technical strategy and infrastructure development',
-          'Oversaw product lifecycle from conception to deployment',
-          'Managed technical architecture and platform scalability',
-          'Led development team and technical decision-making processes'
+          'Designed and built the complete platform architecture from scratch',
+          'Rapidly prototyped and developed the platform within 6 months',
+          'Managed all technical decisions and infrastructure development',
+          'Oversaw the entire product lifecycle from concept to deployment'
         ],
         images: [clickupDashboard, clickupKanban, gdImage]
       },
       {
         header: 'Platform Development',
         jobTitle: 'Lead Full-Stack Engineer',
-        summary: 'Building core collaboration features and classroom management tools for educational environments.',
+        summary: 'Building a comprehensive apprenticeship and work experience matching platform for UTC students.',
         highlights: [
-          'Developed project management dashboard for educational collaboration',
-          'Built real-time communication and resource sharing features',
-          'Created classroom management and student progress tracking tools',
+          'Developed apprenticeship and work experience listing system',
+          'Built student profile and application management features',
+          'Created employer portal for posting opportunities and reviewing applications',
           'Implemented secure authentication and role-based access control'
         ],
         images: [themesAccessibility, automatedReports, whiteLabel]
@@ -159,12 +244,12 @@ const projects = [
       {
         header: 'Product Strategy',
         jobTitle: 'Product Manager',
-        summary: 'Defining product vision and managing development cycles for educational technology platform.',
+        summary: 'Defining product vision and managing rapid development cycles for apprenticeship platform.',
         highlights: [
-          'Defined product vision and roadmap for educational collaboration',
-          'Managed development cycles and feature prioritization',
-          'Conducted user research with students and teachers',
-          'Established product metrics and success criteria'
+          'Defined product vision and roadmap for apprenticeship matching',
+          'Managed rapid development cycles and feature prioritization',
+          'Established product metrics and success criteria for platform adoption',
+          'Coordinated with UTC colleges and employer partners for platform requirements'
         ],
         images: [gaiaDash1, gaiaModel, integratedBilling]
       }
@@ -186,6 +271,14 @@ const projects = [
       'Lead development and product innovation for the entire platform.',
       'Built ticketing and event listing features with integrated payment processing.',
       'Developed artist and venue management tools for the live music ecosystem.'
+    ],
+    techStack: [  
+      techStacks.swift,
+      techStacks.angularjs,
+      techStacks.scss,
+      techStacks.postgresql,
+      techStacks.aws,
+      techStacks.github
     ],
     sections: [
       {
@@ -243,6 +336,18 @@ const projects = [
       'Liaised with clients and provided design support for interactive video projects.',
       'Worked on interactive video overlays and clickable video elements.'
     ],
+    techStack: [
+      techStacks.javascript,
+      techStacks.jquery,
+      techStacks.html5,
+      techStacks.css3,
+      techStacks.canvas,
+      techStacks.angularjs,
+      techStacks.scss,
+      techStacks.mongodb,
+      techStacks.aws,
+      techStacks.github
+    ],
     sections: [
       {
         header: 'Interactive Video Development',
@@ -294,6 +399,7 @@ function Home() {
       | null
     >(null);
     const [isProjectPanelOpen, setIsProjectPanelOpen] = useState(false);
+    const [hasScrolled, setHasScrolled] = useState(false);
 
     const [lightbox, setLightbox] = useState<{
       sectionIdx: number;
@@ -303,6 +409,7 @@ function Home() {
   
 
     const projectsRef = useRef<HTMLDivElement | null>(null);
+    const homeWrapperRef = useRef<HTMLDivElement | null>(null);
     const animationRef = useRef<number | null>(null);
     const mouseMoving = useRef(false);
     const stopTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -386,6 +493,8 @@ function Home() {
         : [], [showingProject]
     );
 
+
+
     // Auto-cycling carousel functionality
     useEffect(() => {
       if (!showingProject) return;
@@ -453,6 +562,53 @@ function Home() {
     const col = currentTheme.colors.primary;
     const colStyle = { color: col };
 
+    // Wheel event detection to auto-select first project and return to home
+    useEffect(() => {
+      const handleWheel = (event: WheelEvent) => {
+        // Auto-select first project when scrolling down on home
+        if (!isProjectPanelOpen && !showingProject && !hasScrolled && event.deltaY > 0) {
+          setHasScrolled(true);
+          setShowingProject(projects[0]);
+          setIsProjectPanelOpen(true);
+          updateThemeColor(projects[0].brandColour);
+          
+          // Prevent the default scroll behavior
+          event.preventDefault();
+        }
+        
+        // Return to home when scrolling up at the top of a project
+        if (isProjectPanelOpen && showingProject && event.deltaY < 0) {
+          const projectContents = document.querySelector('.project-contents');
+          if (projectContents && projectContents.scrollTop <= 0) {
+            setIsProjectPanelOpen(false);
+            setHasScrolled(false); // Reset scroll state
+            updateThemeColor('#fa6f6f'); // Reset to default color
+            window.setTimeout(() => {
+              setShowingProject(null);
+            }, 800);
+            
+            // Prevent the default scroll behavior
+            event.preventDefault();
+          }
+        }
+      };
+
+      // Add wheel listener to window
+      window.addEventListener('wheel', handleWheel, { passive: false });
+      
+      // Add wheel listener to home-wrapper using ref
+      if (homeWrapperRef.current) {
+        homeWrapperRef.current.addEventListener('wheel', handleWheel, { passive: false });
+      }
+
+      return () => {
+        window.removeEventListener('wheel', handleWheel);
+        if (homeWrapperRef.current) {
+          homeWrapperRef.current.removeEventListener('wheel', handleWheel);
+        }
+      };
+    }, [isProjectPanelOpen, showingProject, hasScrolled, updateThemeColor]);
+
     const projectSliderSettings = {
         dots: false,
         infinite: false,
@@ -494,10 +650,17 @@ function Home() {
     };
 
     return (
-        <div ref={projectsRef} className={'home-wrapper ' + (isProjectPanelOpen ? 'showing': '')} style={{ 
-          top: isProjectPanelOpen ? 'calc(-100% + 90px)' : '0',
-          '--brand-colour': currentTheme.colors.primary
-        } as React.CSSProperties}>
+        <div 
+          ref={(el) => {
+            projectsRef.current = el;
+            homeWrapperRef.current = el;
+          }}
+          className={'home-wrapper ' + (isProjectPanelOpen ? 'showing': '')} 
+          style={{ 
+            top: isProjectPanelOpen ? 'calc(-100% + 90px)' : '0',
+            '--brand-colour': currentTheme.colors.primary
+          } as React.CSSProperties}
+        >
             {/* Radial Menu */}
             <RadialMenu isProjectPanelOpen={isProjectPanelOpen}/>
 
@@ -527,6 +690,7 @@ function Home() {
                     <p className="p-title" style={colStyle}>
                         <span className={'clickable'} onClick={() => { 
                             setIsProjectPanelOpen(false);
+                            setHasScrolled(false); // Reset scroll state
                             updateThemeColor('#fa6f6f'); // Reset to default color
                             window.setTimeout(() => {
                                 setShowingProject(null);
@@ -596,6 +760,33 @@ function Home() {
                               {showingProject.myWork.map((item, idx) => <li key={idx}>{item}</li>)}
                             </ul>
                           </section>
+                          {showingProject.techStack && (
+                            <section className="tech-stack-section">
+                              <h3>Tech Stack</h3>
+                              <div className="tech-stack-grid">
+                                {showingProject.techStack.map((tech, idx) => (
+                                  <div 
+                                    key={idx} 
+                                    className="tech-item"
+                                    onClick={() => tech.url && window.open(tech.url, '_blank')}
+                                    style={{ cursor: tech.url ? 'pointer' : 'default' }}
+                                  >
+                                    <span 
+                                      className="tech-icon"
+                                      style={{ 
+                                        '--tech-color': tech.color,
+                                        '--tech-color-pastel': tech.color ? `color-mix(in srgb, ${tech.color} 60%, white)` : 'inherit'
+                                      } as React.CSSProperties}
+                                    >
+                                      {/* @ts-ignore */}
+                                      {typeof tech.icon === 'string' ? tech.icon : React.createElement(tech.icon)}
+                                    </span>
+                                    <span className="tech-name">{tech.name}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </section>
+                          )}
                         </div>
                         
                         <div className="project-content-right">
@@ -609,6 +800,7 @@ function Home() {
                                   loop
                                   muted
                                   playsInline
+                                  preload="metadata"
                                 />
                               </div>
                             ) : (

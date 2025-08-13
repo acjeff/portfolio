@@ -96,7 +96,142 @@
   background: #EF4444 !important; // Red for Brand/Design
 }
 
+// Tech Stack Section Styles
+.tech-stack-section {
+  margin: 2rem 0 !important;
+  position: relative !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  padding: 1.5rem !important;
+  border-radius: 6px !important;
+}
 
+.tech-stack-section h3 {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  color: var(--brand-colour, #fa6f6f) !important;
+  margin: 0 0 1.5rem 0 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.1em !important;
+  position: relative !important;
+}
+
+.tech-stack-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  width: 2rem;
+  height: 2px;
+  background: var(--brand-colour, #fa6f6f);
+}
+
+.tech-stack-grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+  gap: 1rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.tech-item {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem 0.75rem !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  border-radius: 8px !important;
+  transition: all 0.2s ease !important;
+  text-align: center !important;
+  min-height: 80px !important;
+}
+
+.tech-item:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+  border-color: var(--brand-colour, #fa6f6f) !important;
+  background: rgba(255, 255, 255, 0.9) !important;
+  
+  .tech-icon {
+    color: var(--tech-color, inherit) !important;
+    
+    svg {
+      fill: var(--tech-color, currentColor) !important;
+    }
+  }
+}
+
+.tech-item[style*="cursor: pointer"]:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+.tech-icon {
+  font-size: 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+  color: var(--tech-color-pastel, inherit) !important;
+  
+  svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    display: block !important;
+    margin: 0 auto !important;
+    fill: var(--tech-color-pastel, currentColor) !important;
+  }
+}
+
+.tech-name {
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  color: rgba(0, 0, 0, 0.8) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+}
+
+// Video Placeholder Styles
+.video-placeholder {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.05)) !important;
+  border: 2px dashed rgba(0, 0, 0, 0.2) !important;
+  border-radius: 8px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  min-height: 200px !important;
+}
+
+.video-placeholder:hover {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.08)) !important;
+  border-color: var(--brand-colour, #fa6f6f) !important;
+  transform: scale(1.02) !important;
+}
+
+.play-button {
+  font-size: 3rem !important;
+  color: var(--brand-colour, #fa6f6f) !important;
+  margin-bottom: 1rem !important;
+  opacity: 0.8 !important;
+  transition: all 0.3s ease !important;
+}
+
+.video-placeholder:hover .play-button {
+  opacity: 1 !important;
+  transform: scale(1.1) !important;
+}
+
+.video-placeholder p {
+  font-size: 0.9rem !important;
+  color: rgba(0, 0, 0, 0.6) !important;
+  font-weight: 500 !important;
+  margin: 0 !important;
+  text-align: center !important;
+}
 
 // Floating Circle Styles
 .floating-circle {
