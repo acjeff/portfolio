@@ -5,7 +5,7 @@ import { performanceMonitor } from '../utils/performance';
 import HomeLayer from "../Components/HomeLayer";
 import RadialMenu from "../Components/RadialMenu";
 // import ProjectSideNavigation from "../Components/ProjectSideNavigation";
-import SkillsModal from "../Components/SkillsModal";
+import SkillsPage from "../Components/SkillsModal";
 import { useTheme } from '../contexts/ThemeContext';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -430,6 +430,36 @@ const getProjectByName = (name: string) => {
   return projects.find(project => project.name.toLowerCase() === name.toLowerCase());
 };
 
+// Helper function to scroll to section with smooth behavior
+const scrollToSectionElement = (sectionId: string | number, delay: number = 100) => {
+  setTimeout(() => {
+    const sectionElement = document.getElementById(`section-${sectionId}`);
+    if (sectionElement) {
+      // Get the project header height to offset the scroll
+      const projectHeader = document.querySelector('.project-header-fixed');
+      const headerHeight = projectHeader ? projectHeader.getBoundingClientRect().height : 0;
+      
+      const elementTop = sectionElement.offsetTop - headerHeight - 20; // 20px additional offset
+      const projectContents = document.querySelector('.project-contents');
+      
+      if (projectContents) {
+        projectContents.scrollTo({
+          top: elementTop,
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, delay);
+};
+
+// Helper function to update URL with current section
+const updateURLWithSection = (projectName: string, sectionId: string | number) => {
+  const url = new URL(window.location.href);
+  url.searchParams.set('project', projectName);
+  url.searchParams.set('section', sectionId.toString());
+  window.history.replaceState({}, '', url.toString());
+};
+
 function Home() {
     // Performance monitoring
     useEffect(() => {
@@ -454,13 +484,20 @@ function Home() {
     const [hasScrolled, setHasScrolled] = useState(false);
     const [scrollProgress, setScrollProgress] = useState(0);
     const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
-        const [lastSelectedProject, setLastSelectedProject] = useState(0); // Track last selected project index
+    const [lastSelectedProject, setLastSelectedProject] = useState(0); // Track last selected project index
+    const [isSkillsOpen, setIsSkillsOpen] = useState(false);
 
-    // URL parameter handling for project selection
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // URL parameter handling for project and section selection
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
         const projectParam = urlParams.get('project');
+        const sectionParam = urlParams.get('section');
+        const skillsParam = urlParams.get('skills');
+        
+        // Handle skills parameter
+        if (skillsParam === 'true' || skillsParam === '1') {
+            setIsSkillsOpen(true);
+        }
         
         if (projectParam) {
             const project = getProjectByName(projectParam);
@@ -470,22 +507,62 @@ function Home() {
                 // @ts-ignore
                 updateThemeColor(project.brandColour);
                 setLastSelectedProject(projects.findIndex(p => p.id === project.id));
+                
+                // Handle section parameter if provided
+                if (sectionParam) {
+                    // Check if it's a numeric section or a special section (intro, role, tech)
+                    const sectionIdx = parseInt(sectionParam);
+                    if (!isNaN(sectionIdx) && sectionIdx >= 0 && sectionIdx < project.sections.length) {
+                        // Scroll to numeric section after project panel opens with longer delay for initial load
+                        scrollToSectionElement(sectionIdx, 500);
+                    } else if (['intro', 'role', 'tech'].includes(sectionParam)) {
+                        // Scroll to special section
+                        scrollToSectionElement(sectionParam, 500);
+                    }
+                }
             }
         }
     }, []);
 
-    // Update URL when project changes
+    // Update URL when project or section changes
     useEffect(() => {
         if (showingProject) {
             const url = new URL(window.location.href);
             url.searchParams.set('project', showingProject.name);
+            
+            // Keep section parameter if it exists and is valid
+            const currentSection = url.searchParams.get('section');
+            if (currentSection) {
+                const sectionIdx = parseInt(currentSection);
+                const isValidNumericSection = !isNaN(sectionIdx) && sectionIdx >= 0 && sectionIdx < showingProject.sections.length;
+                const isValidSpecialSection = ['intro', 'role', 'tech'].includes(currentSection);
+                
+                if (!isValidNumericSection && !isValidSpecialSection) {
+                    url.searchParams.delete('section');
+                }
+            }
+            
             window.history.replaceState({}, '', url.toString());
         } else {
             const url = new URL(window.location.href);
             url.searchParams.delete('project');
+            url.searchParams.delete('section');
             window.history.replaceState({}, '', url.toString());
         }
     }, [showingProject]);
+
+    // Update URL when skills page opens/closes
+    useEffect(() => {
+        const url = new URL(window.location.href);
+        
+        if (isSkillsOpen) {
+            url.searchParams.set('skills', 'true');
+        } else {
+            url.searchParams.delete('skills');
+        }
+        
+        window.history.replaceState({}, '', url.toString());
+    }, [isSkillsOpen]);
 
     const scrollRef = useRef({
     accumulatedScroll: 0,
@@ -499,6 +576,19 @@ function Home() {
       itemIdx: number;
     } | null>(null);
     const [carouselStates, setCarouselStates] = useState<{ [key: string]: number }>({});
+
+    // Add/remove body class to disable scrolling when skills are open
+    useEffect(() => {
+        if (isSkillsOpen) {
+            document.body.classList.add('skills-open');
+        } else {
+            document.body.classList.remove('skills-open');
+        }
+        
+        return () => {
+            document.body.classList.remove('skills-open');
+        };
+    }, [isSkillsOpen]);
   
 
     const projectsRef = useRef<HTMLDivElement | null>(null);
@@ -639,17 +729,58 @@ function Home() {
       }
     }, [currentLightboxIndex, allGalleryImages]);
 
-    const scrollToSection = useCallback((sectionIdx: number) => {
-      const sectionElement = document.getElementById(`section-${sectionIdx}`);
-      
-      if (sectionElement) {
-        // Scroll the section into view with smooth behavior
-        sectionElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
+    const scrollToSection = useCallback((sectionId: string | number) => {
+      // Update URL with section parameter
+      if (showingProject) {
+        const url = new URL(window.location.href);
+        url.searchParams.set('section', sectionId.toString());
+        window.history.replaceState({}, '', url.toString());
       }
-    }, []);
+      
+      // Scroll to the section
+      scrollToSectionElement(sectionId);
+    }, [showingProject]);
+
+    // Helper function to check if a section is currently active
+    const isSectionActive = useCallback((sectionId: string | number) => {
+      if (!showingProject) return false;
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentSection = urlParams.get('section');
+      return currentSection === sectionId.toString();
+    }, [showingProject]);
+
+    // Intersection Observer for automatic URL updates based on scroll position
+    useEffect(() => {
+      if (!showingProject) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const sectionData = entry.target.getAttribute('data-section');
+              if (sectionData) {
+                updateURLWithSection(showingProject.name, sectionData);
+              }
+            }
+          });
+        },
+        {
+          root: document.querySelector('.project-contents'),
+          rootMargin: '-20% 0px -60% 0px', // Trigger when section is 20% from top
+          threshold: 0.1
+        }
+      );
+
+      // Observe all section elements
+      const sections = document.querySelectorAll('[id^="section-"]');
+      sections.forEach((section) => {
+        observer.observe(section);
+      });
+
+      return () => {
+        observer.disconnect();
+      };
+    }, [showingProject]);
 
     // Lightbox close and navigation on ESC/arrow keys
     useEffect(() => {
@@ -670,6 +801,11 @@ function Home() {
         // Simple scroll detection for project selection
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(() => {
+      // Skip scroll handling if skills page is open
+      if (isSkillsOpen) {
+        return;
+      }
+
       const handleWheel = (event: WheelEvent) => {
         const SCROLL_THRESHOLD = 600; // Increased to reduce accidental triggers
         const SCROLL_TIMEOUT = 800; // Increased from 500ms to 800ms
@@ -807,7 +943,7 @@ function Home() {
         }
               };
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isProjectPanelOpen, showingProject, hasScrolled, updateThemeColor]);
+    }, [isProjectPanelOpen, showingProject, hasScrolled, updateThemeColor, isSkillsOpen]);
 
 
 
@@ -852,17 +988,25 @@ function Home() {
     };
 
     return (
-        <div 
-          ref={(el) => {
-            projectsRef.current = el;
-            homeWrapperRef.current = el;
-          }}
-          className={'home-wrapper ' + (isProjectPanelOpen ? 'showing': '')} 
-          style={{ 
-            top: isProjectPanelOpen ? 'calc(-100% + 90px)' : '0',
-            '--brand-colour': currentTheme.colors.primary
-                    } as React.CSSProperties}
-        >
+        <>
+            {/* Skills Page - Completely Outside Main Flow */}
+            <SkillsPage 
+              isSkillsOpen={isSkillsOpen}
+              onToggleSkills={() => setIsSkillsOpen(!isSkillsOpen)}
+              isProjectPanelOpen={isProjectPanelOpen}
+            />
+            
+            <div 
+              ref={(el) => {
+                projectsRef.current = el;
+                homeWrapperRef.current = el;
+              }}
+              className={'home-wrapper ' + (isProjectPanelOpen ? 'showing': '')} 
+              style={{ 
+                top: isProjectPanelOpen ? 'calc(-100% + 90px)' : (isSkillsOpen ? '100vh' : '0'),
+                '--brand-colour': currentTheme.colors.primary
+                        } as React.CSSProperties}
+            >
           {/* Scroll Direction Arrow Indicator */}
           {scrollProgress > 0 && scrollProgress < 100 && (
             <div 
@@ -881,8 +1025,7 @@ function Home() {
             {/* Radial Menu */}
             <RadialMenu isProjectPanelOpen={isProjectPanelOpen}/>
 
-            {/* Skills Modal */}
-            <SkillsModal />
+
 
             {/* Floating Circle */}
             <div className="floating-circle">
@@ -932,6 +1075,11 @@ function Home() {
                             setIsProjectPanelOpen(true);
                             updateThemeColor(project.brandColour);
                             
+                            // Clear section parameter when opening a new project
+                            const url = new URL(window.location.href);
+                            url.searchParams.delete('section');
+                            window.history.replaceState({}, '', url.toString());
+                            
                             // Scroll to the top of the project panel when opening a new project
                             setTimeout(() => {
                                 const projectContents = document.querySelector('.project-contents');
@@ -976,40 +1124,77 @@ function Home() {
                       
                       <div className="project-content-layout">
                         <div className="project-content-left">
-                          <section>
-                            {/* <h2>About {showingProject.company}</h2> */}
-                            <p>{showingProject.companyDescription}</p>
+                          <section id="section-intro" data-section="intro" className="showcase-section">
+                            <div className="showcase-row left-image">
+                              <div className="showcase-text">
+                                                              <div className={`section-header-container ${isSectionActive('intro') ? 'active' : ''}`}>
+                                <h2 
+                                  onClick={() => scrollToSection('intro')}
+                                >
+                                  Overview
+                                </h2>
+                              </div>
+                                <p>{showingProject.companyDescription}</p>
+                              </div>
+                            </div>
                           </section>
-                          <section className="my-role-section">
-                            <h3>My Role</h3>
-                            <ul className="role-list">
-                              {showingProject.myWork.map((item, idx) => <li key={idx}>{item}</li>)}
-                            </ul>
+                          
+                          <section id="section-role" data-section="role" className="showcase-section">
+                            <div className="showcase-row right-image">
+                              <div className="showcase-text">
+                                                              <div className={`section-header-container ${isSectionActive('role') ? 'active' : ''}`}>
+                                <h2 
+                                  onClick={() => scrollToSection('role')}
+                                >
+                                  My Role
+                                </h2>
+                              </div>
+                                <ul className="role-list">
+                                  {showingProject.myWork.map((item, idx) => (
+                                    <li key={idx}>
+                                      <span className="role-bullet"></span>
+                                      {item}
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            </div>
                           </section>
+                          
                           {showingProject.techStack && (
-                            <section className="tech-stack-section">
-                              <h3>Tech Stack</h3>
-                              <div className="tech-stack-grid">
-                                {showingProject.techStack.map((tech, idx) => (
-                                  <div 
-                                    key={idx} 
-                                    className="tech-item"
-                                    onClick={() => tech.url && window.open(tech.url, '_blank')}
-                                    style={{ cursor: tech.url ? 'pointer' : 'default' }}
-                                  >
-                                    <span 
-                                      className="tech-icon"
-                                      style={{ 
-                                        '--tech-color': tech.color,
-                                        '--tech-color-pastel': tech.color ? `color-mix(in srgb, ${tech.color} 60%, white)` : 'inherit'
-                                      } as React.CSSProperties}
-                                    >
-                                      {/* @ts-ignore */}
-                                      {typeof tech.icon === 'string' ? tech.icon : React.createElement(tech.icon)}
-                                    </span>
-                                    <span className="tech-name">{tech.name}</span>
+                            <section id="section-tech" data-section="tech" className="showcase-section">
+                              <div className="showcase-row left-image">
+                                <div className="showcase-text">
+                                                                <div className={`section-header-container ${isSectionActive('tech') ? 'active' : ''}`}>
+                                <h2 
+                                  onClick={() => scrollToSection('tech')}
+                                >
+                                  Tech Stack
+                                </h2>
+                              </div>
+                                  <div className="tech-stack-grid">
+                                    {showingProject.techStack.map((tech, idx) => (
+                                      <div 
+                                        key={idx} 
+                                        className="tech-item"
+                                        onClick={() => tech.url && window.open(tech.url, '_blank')}
+                                        style={{ cursor: tech.url ? 'pointer' : 'default' }}
+                                      >
+                                        <span 
+                                          className="tech-icon"
+                                          style={{ 
+                                            '--tech-color': tech.color,
+                                            '--tech-color-pastel': tech.color ? `color-mix(in srgb, ${tech.color} 60%, white)` : 'inherit'
+                                          } as React.CSSProperties}
+                                        >
+                                          {/* @ts-ignore */}
+                                          {typeof tech.icon === 'string' ? tech.icon : React.createElement(tech.icon)}
+                                        </span>
+                                        <span className="tech-name">{tech.name}</span>
+                                      </div>
+                                    ))}
                                   </div>
-                                ))}
+                                </div>
                               </div>
                             </section>
                           )}
@@ -1046,6 +1231,7 @@ function Home() {
                         <section 
                           key={sectionIdx} 
                           id={`section-${sectionIdx}`} 
+                          data-section={sectionIdx.toString()}
                           className="showcase-section"
                         >
                           <div className={`showcase-row ${sectionIdx % 2 === 0 ? 'left-image' : 'right-image'}`}>
@@ -1108,12 +1294,13 @@ function Home() {
                                 </div>
                             </div>
                             <div className="showcase-text">
-                              <h2 
-                                onClick={() => scrollToSection(sectionIdx)}
-                                style={{ cursor: 'pointer' }}
-                              >
-                                {section.header}
-                              </h2>
+                              <div className={`section-header-container ${isSectionActive(sectionIdx) ? 'active' : ''}`}>
+                                <h2 
+                                  onClick={() => scrollToSection(sectionIdx)}
+                                >
+                                  {section.header}
+                                </h2>
+                              </div>
                               <div className="job-title">{section.jobTitle}</div>
                               <p className="section-summary">{section.summary}</p>
                               <ul className="highlights-list">
@@ -1173,6 +1360,7 @@ function Home() {
               </div>
             )}
         </div>
+        </>
     );
 }
 

@@ -2,6 +2,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 // Responsive Video Wrapper (16:9 aspect ratio)
@@ -277,6 +278,85 @@
   }
 }
 
+// Section Header Container
+.section-header-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  position: relative;
+
+  h2 {
+    margin: 0;
+    flex: 1;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  &.active {
+    h2 {
+      color: var(--brand-colour, #fa6f6f);
+    }
+  }
+}
+
+// Role List Styling with Colored Dots
+.role-list {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  li {
+    position: relative !important;
+    padding-left: 1.5rem !important;
+    margin-bottom: 1.2em !important;
+    font-size: 1.08rem !important;
+    line-height: 1.4 !important;
+    color: #555 !important;
+    list-style: none !important;
+
+    &::before {
+      display: none !important;
+    }
+
+    // Custom colors for each role item
+    &:nth-child(1) .role-bullet {
+      background: #3B82F6 !important; // Blue for Product/Platform
+    }
+
+    &:nth-child(2) .role-bullet {
+      background: #10B981 !important; // Green for Engineering/Development
+    }
+
+    &:nth-child(3) .role-bullet {
+      background: #F59E0B !important; // Orange for Leadership/CPO
+    }
+
+    &:nth-child(4) .role-bullet {
+      background: #8B5CF6 !important; // Purple for Brand/Design
+    }
+
+    &:nth-child(5) .role-bullet {
+      background: #EF4444 !important; // Red for additional role
+    }
+
+    .role-bullet {
+      position: absolute !important;
+      left: 0 !important;
+      top: 0.5rem !important;
+      width: 6px !important;
+      height: 6px !important;
+      border-radius: 50% !important;
+      display: block !important;
+    }
+
+    &:last-child {
+      margin-bottom: 0 !important;
+    }
+  }
+}
+
 // Video Placeholder Styles
 .video-placeholder {
   display: flex !important;
@@ -493,6 +573,8 @@
   position: absolute;
   height: calc(100% - 90px);
   width: 100%;
+  
+
 }
 
 p,
@@ -618,7 +700,9 @@ div {
     margin-bottom: 0;
 
     h2 {
-      font-size: 2.5rem;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
       font-weight: 700;
       color: var(--brand-colour, #fa6f6f);
       margin-bottom: 1.5rem;
@@ -673,7 +757,7 @@ div {
         font-size: 1.125rem;
         line-height: 1.8;
         color: #555;
-        margin-bottom: 1.25rem;
+        margin-bottom: 2.5rem;
         padding-left: 1.5rem;
         position: relative;
         font-weight: 400;
@@ -1164,14 +1248,14 @@ div {
 
     li {
       margin-bottom: 0.5em;
-      color: #444;
+      color: #555;
       font-size: 1.08em;
     }
   }
 
   p {
     color: #555;
-    font-size: 1.08em;
+    font-size: 1.08rem;
     margin-bottom: 0.7em;
   }
 }
