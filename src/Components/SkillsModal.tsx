@@ -3,8 +3,8 @@ import { FaRocket, FaCogs, FaPalette, FaChartLine, FaCode, FaUsers, FaLightbulb 
 import { FiBriefcase, FiX } from 'react-icons/fi';
 import { useTheme } from '../contexts/ThemeContext';
 import { 
-  SiReact, SiJavascript, SiHtml5, SiCss, SiReactrouter, SiAngular, SiJquery, SiBootstrap,
-  SiNodedotjs, SiGithub, SiPostgresql, SiMongodb, SiHeroku, SiExpress, SiRedis, SiInfluxdb,
+  SiReact, SiJavascript, SiHtml5, SiReactrouter, SiAngular, SiJquery,
+  SiNodedotjs, SiGithub, SiPostgresql, SiMongodb, SiExpress, SiRedis, SiInfluxdb,
   SiStripe, SiRubyonrails, SiPhp, SiMysql, SiSwift, SiCanvas, SiTypescript, SiSass
 } from '@icons-pack/react-simple-icons';
 import { FaAws } from 'react-icons/fa';
