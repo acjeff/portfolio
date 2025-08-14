@@ -490,6 +490,7 @@ function Home() {
     const [lastSelectedProject, setLastSelectedProject] = useState(0); // Track last selected project index
     const [isSkillsOpen, setIsSkillsOpen] = useState(false);
     const [isProjectsHovered, setIsProjectsHovered] = useState(false);
+    const [videoLoading, setVideoLoading] = useState<{ [key: string]: boolean }>({});
 
     // URL parameter handling for project and section selection
     useEffect(() => {
@@ -1360,6 +1361,12 @@ function Home() {
                           <div className="project-headline-image">
                             {showingProject.headlineImage.endsWith('.mp4') || showingProject.headlineImage.endsWith('.webm') ? (
                               <div className="floating-screen">
+                                {videoLoading[showingProject.headlineImage] && (
+                                  <div className="video-loader">
+                                    <div className="loader-spinner"></div>
+                                    <span>Loading video...</span>
+                                  </div>
+                                )}
                                 <video 
                                   src={showingProject.headlineImage} 
                                   className="headline-video"
@@ -1368,6 +1375,10 @@ function Home() {
                                   muted
                                   playsInline
                                   preload="metadata"
+                                  onLoadStart={() => setVideoLoading(prev => ({ ...prev, [showingProject.headlineImage]: true }))}
+                                  onCanPlay={() => setVideoLoading(prev => ({ ...prev, [showingProject.headlineImage]: false }))}
+                                  onError={() => setVideoLoading(prev => ({ ...prev, [showingProject.headlineImage]: false }))}
+                                  style={{ opacity: videoLoading[showingProject.headlineImage] ? 0 : 1 }}
                                 />
                               </div>
                             ) : (
