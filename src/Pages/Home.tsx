@@ -103,7 +103,7 @@ import {
   SiCanvas
 } from '@icons-pack/react-simple-icons';
 import { FaAws } from 'react-icons/fa';
-import { FiPlayCircle, FiDownload, FiMusic, FiGithub, FiMail, FiLinkedin, FiArrowUp, FiLink, FiArrowDown, FiFolder } from 'react-icons/fi';
+import { FiFolder } from 'react-icons/fi';
 
 // Centralized Tech Stack Definitions
 const techStacks = {
