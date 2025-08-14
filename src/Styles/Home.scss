@@ -623,7 +623,8 @@ div {
   position: relative;
   &.projects-bar {
     border-bottom: none !important;
-    align-items: center;
+    align-items: center !important;
+    justify-content: center !important;
     &::after {
       display: none !important;
     }

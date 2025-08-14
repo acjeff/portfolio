@@ -11,12 +11,12 @@ const MovingDoodleBackground = () => {
         const container = containerRef.current;
         if (!container) return;
 
-        const doodleCount = 100;
+        const doodleCount = 50; // Reduced from 100 for better performance
         const doodles: HTMLDivElement[] = [];
 
         // Clear any existing doodles first
         doodlesRef.current.forEach(doodle => {
-            if (doodle.parentNode) {
+            if (doodle && doodle.parentNode) {
                 doodle.parentNode.removeChild(doodle);
             }
         });
@@ -37,8 +37,9 @@ const MovingDoodleBackground = () => {
         doodlesRef.current = doodles;
 
         return () => {
+            // Ensure complete cleanup
             doodles.forEach(doodle => {
-                if (doodle.parentNode) {
+                if (doodle && doodle.parentNode) {
                     doodle.parentNode.removeChild(doodle);
                 }
             });

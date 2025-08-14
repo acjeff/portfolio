@@ -107,11 +107,10 @@ const RadialMenu: React.FC<{ isProjectPanelOpen: boolean }> = ({ isProjectPanelO
           <div className="menu-label">{`${isOpen ? 'Hide' : 'Links'}`}</div>
 
         </button>
-      </div >
-
+      </div>
 
       {/* Radial Menu Items */}
-      < div className={`radial-menu ${isOpen ? 'open' : ''}`}>
+      <div className={`radial-menu ${isOpen ? 'open' : ''}`}>
         {
           menuItems.map((item, index) => (
             <div
@@ -141,8 +140,8 @@ const RadialMenu: React.FC<{ isProjectPanelOpen: boolean }> = ({ isProjectPanelO
             </div>
           ))
         }
-      </div >
-    </div >
+      </div>
+    </div>
   );
 };
 

@@ -462,16 +462,18 @@ const updateURLWithSection = (projectName: string, sectionId: string | number) =
 };
 
 function Home() {
-    // Performance monitoring
+    // Performance monitoring - only in development
     useEffect(() => {
-        performanceMonitor.logMemoryUsage('Home Component Initial Load');
-        
-        // Log memory usage every 30 seconds
-        const interval = setInterval(() => {
-            performanceMonitor.logMemoryUsage('Home Component Periodic Check');
-        }, 30000);
-        
-        return () => clearInterval(interval);
+        if (process.env.NODE_ENV === 'development') {
+            performanceMonitor.logMemoryUsage('Home Component Initial Load');
+            
+            // Log memory usage every 30 seconds
+            const interval = setInterval(() => {
+                performanceMonitor.logMemoryUsage('Home Component Periodic Check');
+            }, 30000);
+            
+            return () => clearInterval(interval);
+        }
     }, []);
 
     const [width, setWidth] = useState('15%');
@@ -654,6 +656,24 @@ function Home() {
         };
     }, [handleMouseMove]);
 
+    // Cleanup animation frame and timeouts on unmount
+    useEffect(() => {
+        return () => {
+            if (animationRef.current) {
+                cancelAnimationFrame(animationRef.current);
+                animationRef.current = null;
+            }
+            if (stopTimeoutRef.current) {
+                clearTimeout(stopTimeoutRef.current);
+                stopTimeoutRef.current = null;
+            }
+            if (scrollRef.current.timeoutId) {
+                clearTimeout(scrollRef.current.timeoutId);
+                scrollRef.current.timeoutId = null;
+            }
+        };
+    }, []);
+
     // Animation loop - separate from event listener setup
     useEffect(() => {
         const animateWidth = () => {
@@ -700,9 +720,9 @@ function Home() {
 
 
 
-    // Auto-cycling carousel functionality
+    // Auto-cycling carousel functionality - only when project is visible
     useEffect(() => {
-      if (!showingProject) return;
+      if (!showingProject || !isProjectPanelOpen) return;
 
       const intervals: NodeJS.Timeout[] = [];
 
@@ -723,7 +743,7 @@ function Home() {
       return () => {
         intervals.forEach(interval => clearInterval(interval));
       };
-    }, [showingProject]);
+    }, [showingProject, isProjectPanelOpen]);
 
     const openLightbox = (sectionIdx: number, itemIdx: number) => {
       setLightbox({ sectionIdx, itemIdx });
