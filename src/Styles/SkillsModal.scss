@@ -705,16 +705,16 @@ body.skills-open {
   .home-wrapper.showing {
     .radial-menu-container, .radial-menu-button-container {
       transition: 0.8s ease-in-out;
-      top: calc(100vh - 5rem);
+      top: calc(100% - 5rem);
     }
     .radial-menu-button-container {
-      top: calc(100vh - 5rem);
+      top: calc(100% - 5rem);
     }
   }
   
   // Skills button positioning when project is showing
   .radial-menu-button-container.skills.project-open {
-    top: calc(100vh - 5rem);
+    top: calc(100% - 5rem);
   }
   
   .radial-menu.open .menu-item {

@@ -2644,7 +2644,7 @@ div {
 // Responsive adjustments
 @media (max-width: 768px) {
   .collapsed-projects {
-    top: calc(100vh - 5rem);
+    top: calc(100% - 5rem);
     left: 2rem;
     right: auto;
   }
