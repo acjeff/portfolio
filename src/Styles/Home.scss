@@ -606,7 +606,7 @@ div {
   top: 90px;
   position: fixed;
   width: 100%;
-  height: calc(100% - 92px);
+  height: 100%;
 
   .project-content-inner {
     // padding: 20px 60px;
@@ -621,6 +621,14 @@ div {
   padding: 2rem 20px;
   border-bottom: 2px solid #f0f0f0;
   position: relative;
+  &.projects-bar {
+    border-bottom: none !important;
+    align-items: center;
+    &::after {
+      display: none !important;
+    }
+    margin-bottom: 0 !important;
+  }
 
   &::after {
     content: '';
@@ -1325,6 +1333,11 @@ div {
   background-color: #ffffff;
   border-top: 1px solid #e8e8e8;
 
+  &.project-selected {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+
   .project {
     display: flex;
     flex-direction: column;
@@ -1333,12 +1346,42 @@ div {
     justify-content: center;
     cursor: pointer;
     text-align: center;
+    height: 74px;
 
     //&.selected {
     //  text-emphasis: dot !important;
     //}
     &:hover {
       opacity: 0.8;
+    }
+
+    .project-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.5rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        transform: translateY(-2px);
+      }
+    }
+
+    .project-selector-logo {
+      width: 32px;
+      height: 32px;
+      object-fit: contain;
+      transition: all 0.3s ease;
+      border-radius: 6px;
+      padding: 4px;
+    }
+
+    .project-text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
     }
 
     p {
@@ -2269,5 +2312,371 @@ div {
   to {
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+// Project Navigation Styles
+.project-navigation {
+  margin: 4rem 0 2rem 0;
+  padding: 2rem 0;
+}
+
+.project-nav-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.project-nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 900px;
+  margin: 0 auto;
+  gap: 3rem;
+}
+
+.project-nav-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 2rem 3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  min-width: 280px;
+  min-height: 120px;
+  position: relative;
+  border-radius: 16px;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-3px);
+    
+    .nav-logo {
+      transform: scale(1.15);
+    }
+    
+    .nav-project-name {
+      transform: translateY(-2px);
+    }
+  }
+
+  &:active:not(:disabled) {
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+
+  .nav-content {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .nav-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-project-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--brand-colour, #fa6f6f);
+    transition: transform 0.3s ease;
+    text-align: center;
+  }
+
+  .nav-placeholder {
+    font-size: 1rem;
+    font-weight: 500;
+    color: transparent;
+    text-align: center;
+  }
+
+  &.prev {
+    .nav-content {
+      flex-direction: row;
+    }
+  }
+
+  &.next {
+    .nav-content {
+      flex-direction: row-reverse;
+    }
+  }
+
+  &.disabled {
+    .nav-project-name {
+      color: transparent;
+    }
+  }
+}
+
+// Responsive adjustments for project navigation
+@media (max-width: 768px) {
+  .project-navigation {
+    margin: 3rem 0 1.5rem 0;
+    padding: 1.5rem 0;
+  }
+
+  .project-nav-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .project-nav-buttons {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .project-nav-btn {
+    width: 100%;
+    max-width: 500px;
+    min-height: 100px;
+    padding: 1.5rem 2rem;
+    
+    .nav-logo {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .nav-project-name {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+// Collapsed Projects Button Styles
+.collapsed-projects {
+  position: fixed;
+  top: 1rem;
+  right: 12rem; // Position to the left of the skills button
+  z-index: 10000;
+}
+
+.projects-button {
+  width: 3.7rem;
+  height: 3.7rem;
+  border: none;
+  background: var(--brand-colour, #fa6f6f);
+  color: white;
+  border-radius: 12px;
+  position: relative;
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.5rem;
+  z-index: 10000;
+  flex-direction: column;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  &:hover {
+    background: var(--brand-colour, #e85a5a);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  .projects-icon {
+    font-size: 1.2rem;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover .projects-icon {
+    animation: spinIn 0.5s linear forwards;
+  }
+
+  &:not(:hover) .projects-icon {
+    animation: spinOut 1s ease-in forwards;
+  }
+
+  .button-label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: #ffffff;
+    text-align: center;
+    letter-spacing: 0.02em;
+    margin-top: 0.2rem;
+  }
+}
+
+.projects-radial {
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  
+  &.open {
+    pointer-events: all;
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.back-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  min-width: 120px;
+
+  &:hover {
+    background: #f8f9fa;
+    transform: translateX(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .back-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #666;
+  }
+
+  .back-text {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+  }
+}
+
+.project-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  min-width: 160px;
+
+  &:hover {
+    background: var(--brand-colour, #fa6f6f);
+    color: white;
+    transform: translateX(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+
+    .project-option-logo {
+      filter: brightness(0) invert(1);
+    }
+
+    .project-option-name {
+      color: white;
+    }
+  }
+
+  &.active {
+    background: var(--brand-colour, #fa6f6f);
+    color: white;
+    border-color: var(--brand-colour, #fa6f6f);
+
+    .project-option-logo {
+      filter: brightness(0) invert(1);
+    }
+
+    .project-option-name {
+      color: white;
+    }
+  }
+
+  .project-option-logo {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    transition: filter 0.3s ease;
+  }
+
+  .project-option-name {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #333;
+    transition: color 0.3s ease;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .collapsed-projects {
+    top: auto;
+    bottom: 7rem;
+    left: 2rem;
+    right: auto;
+  }
+
+  .projects-button {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.3rem;
+
+    .button-label {
+      font-size: 0.6rem;
+    }
+  }
+
+  .projects-radial {
+    top: auto;
+    bottom: 5rem;
+    transform: translateY(10px);
+    
+    &.open {
+      transform: translateY(0);
+    }
+  }
+
+  .project-option {
+    min-width: 140px;
+    padding: 0.6rem 0.8rem;
+
+    .project-option-logo {
+      width: 20px;
+      height: 20px;
+    }
+
+    .project-option-name {
+      font-size: 0.8rem;
+    }
+  }
+
+  .back-option {
+    min-width: 100px;
+    padding: 0.6rem 0.8rem;
+
+    .back-text {
+      font-size: 0.8rem;
+    }
   }
 }

@@ -103,6 +103,7 @@ import {
   SiCanvas
 } from '@icons-pack/react-simple-icons';
 import { FaAws } from 'react-icons/fa';
+import { FiPlayCircle, FiDownload, FiMusic, FiGithub, FiMail, FiLinkedin, FiArrowUp, FiLink, FiArrowDown, FiFolder } from 'react-icons/fi';
 
 // Centralized Tech Stack Definitions
 const techStacks = {
@@ -486,6 +487,7 @@ function Home() {
     const [scrollDirection, setScrollDirection] = useState<'up' | 'down'>('down');
     const [lastSelectedProject, setLastSelectedProject] = useState(0); // Track last selected project index
     const [isSkillsOpen, setIsSkillsOpen] = useState(false);
+    const [isProjectsHovered, setIsProjectsHovered] = useState(false);
 
     // URL parameter handling for project and section selection
     useEffect(() => {
@@ -550,6 +552,26 @@ function Home() {
             window.history.replaceState({}, '', url.toString());
         }
     }, [showingProject]);
+
+    // Handle clicking outside projects list to close it
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as Element;
+            const projectsContainer = document.querySelector('.collapsed-projects');
+            
+            if (isProjectsHovered && projectsContainer && !projectsContainer.contains(target)) {
+                setIsProjectsHovered(false);
+            }
+        };
+
+        if (isProjectsHovered) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [isProjectsHovered]);
 
     // Update URL when skills page opens/closes
     useEffect(() => {
@@ -1045,7 +1067,7 @@ function Home() {
             </div>
 
             {/* <div className="projects" style={{bottom: showingProject ? 'calc(100% - 120px)' : '0'}}> */}
-            <div className="projects" style={{ bottom: '0' }}>
+            <div className={`projects ${isProjectPanelOpen ? 'project-selected' : ''}`} style={{ bottom: '0' }}>
                 {isProjectPanelOpen ? (
                     <p className="p-title" style={colStyle}>
                         <span className={'clickable'} onClick={() => { 
@@ -1088,13 +1110,89 @@ function Home() {
                                 }
                             }, 100); // Small delay to ensure the project panel is open
                         }}>
-                            <p style={{ color: showingProject?.name === project.name ? project.brandColour : 'grey' }}>{project.name}</p>
-                            <p className="details" style={{ color: showingProject?.name === project.name ? project.brandColour : 'grey' }}>{project.range}</p>
+                            <div className="project-header projects-bar">
+                                <img 
+                                    src={project.logo} 
+                                    alt={`${project.name} logo`} 
+                                    className="project-selector-logo"
+                                    style={{
+                                        filter: showingProject?.name === project.name ? 'none' : 'grayscale(100%) saturate(0.8)'
+                                    }}
+                                />
+                                <div className="project-text">
+                                    <p style={{ color: showingProject?.name === project.name ? project.brandColour : 'grey' }}>{project.name}</p>
+                                    <p className="details" style={{ color: showingProject?.name === project.name ? project.brandColour : 'grey' }}>{project.range}</p>
+                                </div>
+                            </div>
                         </div>
                     ))}
                 </Slider>
                 {/*</div>*/}
             </div>
+
+            {/* Collapsed Projects Button */}
+            {isProjectPanelOpen && (
+                <div className="collapsed-projects">
+                    <div className="projects-button" 
+                         onClick={() => setIsProjectsHovered(!isProjectsHovered)}>
+                        <span className="projects-icon">
+                            {/* @ts-ignore */}
+                            <FiFolder />
+                        </span>
+                        <div className="button-label">My Work</div>
+                    </div>
+                    
+                    <div className={`projects-radial ${isProjectsHovered ? 'open' : ''}`}>
+                        <div className="back-option" onClick={() => {
+                            setIsProjectPanelOpen(false);
+                            setHasScrolled(false);
+                            updateThemeColor('#fa6f6f');
+                            window.setTimeout(() => {
+                                setShowingProject(null);
+                            }, 800);
+                        }}>
+                            <span className="back-icon">←</span>
+                            <span className="back-text">Back</span>
+                        </div>
+                        
+                        {projects.map((project, index) => (
+                            <div 
+                                key={project.id}
+                                className={`project-option ${showingProject?.name === project.name ? 'active' : ''}`}
+                                style={{
+                                    '--brand-colour': project.brandColour
+                                } as React.CSSProperties}
+                                onClick={() => {
+                                    setLastSelectedProject(index);
+                                    setShowingProject(project);
+                                    updateThemeColor(project.brandColour);
+                                    setIsProjectsHovered(false); // Close the menu when selecting a project
+                                    
+                                    // Clear section parameter when switching projects
+                                    const url = new URL(window.location.href);
+                                    url.searchParams.delete('section');
+                                    window.history.replaceState({}, '', url.toString());
+                                    
+                                    // Scroll to the top of the project panel
+                                    setTimeout(() => {
+                                        const projectContents = document.querySelector('.project-contents');
+                                        if (projectContents) {
+                                            projectContents.scrollTop = 0;
+                                        }
+                                    }, 100);
+                                }}
+                            >
+                                <img 
+                                    src={project.logo} 
+                                    alt={`${project.name} logo`} 
+                                    className="project-option-logo"
+                                />
+                                <span className="project-option-name">{project.name}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
 
             <div
               className={'project-contents'}
@@ -1312,6 +1410,104 @@ function Home() {
                           </div>
                         </section>
                       ))}
+                      
+                      {/* Project Navigation */}
+                      <div className="project-navigation">
+                        <h3 className="project-nav-title">More Projects</h3>
+                        <div className="project-nav-buttons">
+                          {showingProject && (
+                            <>
+                              <button 
+                                className={`project-nav-btn prev ${lastSelectedProject > 0 ? 'active' : 'disabled'}`}
+                                style={{
+                                  '--brand-colour': lastSelectedProject > 0 ? projects[lastSelectedProject - 1].brandColour : '#ccc'
+                                } as React.CSSProperties}
+                                onClick={() => {
+                                  if (lastSelectedProject > 0) {
+                                    const prevProject = projects[lastSelectedProject - 1];
+                                    setLastSelectedProject(lastSelectedProject - 1);
+                                    setShowingProject(prevProject);
+                                    updateThemeColor(prevProject.brandColour);
+                                    
+                                    // Clear section parameter when switching projects
+                                    const url = new URL(window.location.href);
+                                    url.searchParams.delete('section');
+                                    window.history.replaceState({}, '', url.toString());
+                                    
+                                    // Scroll to the top of the project panel
+                                    setTimeout(() => {
+                                      const projectContents = document.querySelector('.project-contents');
+                                      if (projectContents) {
+                                        projectContents.scrollTop = 0;
+                                      }
+                                    }, 100);
+                                  }
+                                }}
+                                disabled={lastSelectedProject === 0}
+                              >
+                                <div className="nav-content">
+                                  {lastSelectedProject > 0 ? (
+                                    <>
+                                      <img 
+                                        src={projects[lastSelectedProject - 1].logo} 
+                                        alt={`${projects[lastSelectedProject - 1].name} logo`} 
+                                        className="nav-logo"
+                                      />
+                                      <span className="nav-project-name">{projects[lastSelectedProject - 1].name}</span>
+                                    </>
+                                  ) : (
+                                    <span className="nav-placeholder"></span>
+                                  )}
+                                </div>
+                              </button>
+                              
+                              <button 
+                                className={`project-nav-btn next ${lastSelectedProject < projects.length - 1 ? 'active' : 'disabled'}`}
+                                style={{
+                                  '--brand-colour': lastSelectedProject < projects.length - 1 ? projects[lastSelectedProject + 1].brandColour : '#ccc'
+                                } as React.CSSProperties}
+                                onClick={() => {
+                                  if (lastSelectedProject < projects.length - 1) {
+                                    const nextProject = projects[lastSelectedProject + 1];
+                                    setLastSelectedProject(lastSelectedProject + 1);
+                                    setShowingProject(nextProject);
+                                    updateThemeColor(nextProject.brandColour);
+                                    
+                                    // Clear section parameter when switching projects
+                                    const url = new URL(window.location.href);
+                                    url.searchParams.delete('section');
+                                    window.history.replaceState({}, '', url.toString());
+                                    
+                                    // Scroll to the top of the project panel
+                                    setTimeout(() => {
+                                      const projectContents = document.querySelector('.project-contents');
+                                      if (projectContents) {
+                                        projectContents.scrollTop = 0;
+                                      }
+                                    }, 100);
+                                  }
+                                }}
+                                disabled={lastSelectedProject === projects.length - 1}
+                              >
+                                <div className="nav-content">
+                                  {lastSelectedProject < projects.length - 1 ? (
+                                    <>
+                                      <span className="nav-project-name">{projects[lastSelectedProject + 1].name}</span>
+                                      <img 
+                                        src={projects[lastSelectedProject + 1].logo} 
+                                        alt={`${projects[lastSelectedProject + 1].name} logo`} 
+                                        className="nav-logo"
+                                      />
+                                    </>
+                                  ) : (
+                                    <span className="nav-placeholder"></span>
+                                  )}
+                                </div>
+                              </button>
+                            </>
+                          )}
+                        </div>
+                      </div>
                     </>
                   )}
                 </div>
