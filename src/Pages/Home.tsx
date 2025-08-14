@@ -965,7 +965,7 @@ function Home() {
         }
       };
 
-      // Add wheel listener to window
+            // Add wheel listener to window
       window.addEventListener('wheel', handleWheel, { passive: false });
       
       // Add wheel listener to home-wrapper using ref
@@ -973,17 +973,57 @@ function Home() {
         homeWrapperRef.current.addEventListener('wheel', handleWheel, { passive: false });
       }
 
+      // Touch event handling for mobile devices
+      let touchStartY = 0;
+      let touchEndY = 0;
+      let isTouching = false;
+
+      const handleTouchStart = (event: TouchEvent) => {
+        touchStartY = event.touches[0].clientY;
+        isTouching = true;
+      };
+
+      const handleTouchMove = (event: TouchEvent) => {
+        if (!isTouching) return;
+        
+        touchEndY = event.touches[0].clientY;
+        const deltaY = touchStartY - touchEndY; // Positive for scroll down, negative for scroll up
+        
+        // Create a synthetic wheel event for the existing handler
+        const syntheticEvent = {
+          deltaY: deltaY,
+          preventDefault: () => event.preventDefault(),
+          type: 'wheel'
+        } as WheelEvent;
+        
+        handleWheel(syntheticEvent);
+      };
+
+      const handleTouchEnd = () => {
+        isTouching = false;
+        touchStartY = 0;
+        touchEndY = 0;
+      };
+
+      // Add touch listeners to window
+      window.addEventListener('touchstart', handleTouchStart, { passive: false });
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+      window.addEventListener('touchend', handleTouchEnd, { passive: false });
+
       return () => {
         window.removeEventListener('wheel', handleWheel);
         if (homeWrapperRef.current) {
           homeWrapperRef.current.removeEventListener('wheel', handleWheel);
         }
+        window.removeEventListener('touchstart', handleTouchStart);
+        window.removeEventListener('touchmove', handleTouchMove);
+        window.removeEventListener('touchend', handleTouchEnd);
         // eslint-disable-next-line react-hooks/exhaustive-deps
         const currentScrollRef = scrollRef.current;
         if (currentScrollRef.timeoutId) {
           clearTimeout(currentScrollRef.timeoutId);
         }
-              };
+      };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isProjectPanelOpen, showingProject, hasScrolled, updateThemeColor, isSkillsOpen]);
 
@@ -1151,68 +1191,66 @@ function Home() {
             </div>
 
             {/* Collapsed Projects Button */}
-            {isProjectPanelOpen && (
-                <div className="collapsed-projects">
-                    <div className="projects-button" 
-                         onClick={() => setIsProjectsHovered(!isProjectsHovered)}>
-                        <span className="projects-icon">
-                            {/* @ts-ignore */}
-                            <FiFolder />
-                        </span>
-                        <div className="button-label">My Work</div>
+            <div className={`collapsed-projects ${isProjectPanelOpen ? 'visible' : ''}`}>
+                <div className="projects-button" 
+                     onClick={() => setIsProjectsHovered(!isProjectsHovered)}>
+                    <span className="projects-icon">
+                        {/* @ts-ignore */}
+                        <FiFolder />
+                    </span>
+                    <div className="button-label">My Work</div>
+                </div>
+                
+                <div className={`projects-radial ${isProjectsHovered ? 'open' : ''}`}>
+                    <div className="back-option" onClick={() => {
+                        setIsProjectPanelOpen(false);
+                        setHasScrolled(false);
+                        updateThemeColor('#fa6f6f');
+                        window.setTimeout(() => {
+                            setShowingProject(null);
+                        }, 800);
+                    }}>
+                        <span className="back-icon">←</span>
+                        <span className="back-text">Back</span>
                     </div>
                     
-                    <div className={`projects-radial ${isProjectsHovered ? 'open' : ''}`}>
-                        <div className="back-option" onClick={() => {
-                            setIsProjectPanelOpen(false);
-                            setHasScrolled(false);
-                            updateThemeColor('#fa6f6f');
-                            window.setTimeout(() => {
-                                setShowingProject(null);
-                            }, 800);
-                        }}>
-                            <span className="back-icon">←</span>
-                            <span className="back-text">Back</span>
+                    {projects.map((project, index) => (
+                        <div 
+                            key={project.id}
+                            className={`project-option ${showingProject?.name === project.name ? 'active' : ''}`}
+                            style={{
+                                '--brand-colour': project.brandColour
+                            } as React.CSSProperties}
+                            onClick={() => {
+                                setLastSelectedProject(index);
+                                setShowingProject(project);
+                                updateThemeColor(project.brandColour);
+                                setIsProjectsHovered(false); // Close the menu when selecting a project
+                                
+                                // Clear section parameter when switching projects
+                                const url = new URL(window.location.href);
+                                url.searchParams.delete('section');
+                                window.history.replaceState({}, '', url.toString());
+                                
+                                // Scroll to the top of the project panel
+                                setTimeout(() => {
+                                    const projectContents = document.querySelector('.project-contents');
+                                    if (projectContents) {
+                                        projectContents.scrollTop = 0;
+                                    }
+                                }, 100);
+                            }}
+                        >
+                            <img 
+                                src={project.logo} 
+                                alt={`${project.name} logo`} 
+                                className="project-option-logo"
+                            />
+                            <span className="project-option-name">{project.name}</span>
                         </div>
-                        
-                        {projects.map((project, index) => (
-                            <div 
-                                key={project.id}
-                                className={`project-option ${showingProject?.name === project.name ? 'active' : ''}`}
-                                style={{
-                                    '--brand-colour': project.brandColour
-                                } as React.CSSProperties}
-                                onClick={() => {
-                                    setLastSelectedProject(index);
-                                    setShowingProject(project);
-                                    updateThemeColor(project.brandColour);
-                                    setIsProjectsHovered(false); // Close the menu when selecting a project
-                                    
-                                    // Clear section parameter when switching projects
-                                    const url = new URL(window.location.href);
-                                    url.searchParams.delete('section');
-                                    window.history.replaceState({}, '', url.toString());
-                                    
-                                    // Scroll to the top of the project panel
-                                    setTimeout(() => {
-                                        const projectContents = document.querySelector('.project-contents');
-                                        if (projectContents) {
-                                            projectContents.scrollTop = 0;
-                                        }
-                                    }, 100);
-                                }}
-                            >
-                                <img 
-                                    src={project.logo} 
-                                    alt={`${project.name} logo`} 
-                                    className="project-option-logo"
-                                />
-                                <span className="project-option-name">{project.name}</span>
-                            </div>
-                        ))}
-                    </div>
+                    ))}
                 </div>
-            )}
+            </div>
 
             <div
               className={'project-contents'}

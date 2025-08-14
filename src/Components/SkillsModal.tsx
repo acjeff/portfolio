@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { FaRocket, FaCogs, FaPalette, FaChartLine, FaCode, FaUsers, FaLightbulb } from 'react-icons/fa';
 import { FiBriefcase, FiX } from 'react-icons/fi';
 import { useTheme } from '../contexts/ThemeContext';
+import { 
+  SiReact, SiJavascript, SiHtml5, SiCss, SiReactrouter, SiAngular, SiJquery, SiBootstrap,
+  SiNodedotjs, SiGithub, SiPostgresql, SiMongodb, SiHeroku, SiExpress, SiRedis, SiInfluxdb,
+  SiStripe, SiRubyonrails, SiPhp, SiMysql, SiSwift, SiCanvas, SiTypescript, SiSass
+} from '@icons-pack/react-simple-icons';
+import { FaAws } from 'react-icons/fa';
 import '../Styles/SkillsModal.scss';
 
 interface SkillsPageProps {
@@ -13,6 +19,32 @@ interface SkillsPageProps {
 const SkillsPage: React.FC<SkillsPageProps> = ({ isSkillsOpen, onToggleSkills, isProjectPanelOpen }) => {
   const { currentTheme } = useTheme();
   const [activeSection, setActiveSection] = useState<string>('overview');
+
+  // Icon mapping for skills
+  const skillIcons: { [key: string]: any } = {
+    'React.js': SiReact,
+    'JavaScript': SiJavascript,
+    'HTML5/CSS': SiHtml5,
+    'React Native': SiReactrouter,
+    'AngularJS': SiAngular,
+    'jQuery/Bootstrap': SiJquery,
+    'Node.js': SiNodedotjs,
+    'Git': SiGithub,
+    'PostgreSQL': SiPostgresql,
+    'AWS': FaAws,
+    'MongoDB': SiMongodb,
+    'Express': SiExpress,
+    'Redis': SiRedis,
+    'Influx DB': SiInfluxdb,
+    'Stripe': SiStripe,
+    'Ruby on Rails': SiRubyonrails,
+    'PHP': SiPhp,
+    'MySQL': SiMysql,
+    'Swift': SiSwift,
+    'Canvas API': SiCanvas,
+    'TypeScript': SiTypescript,
+    'SCSS': SiSass
+  };
 
   const skillCategories = [
     {
@@ -199,26 +231,35 @@ const SkillsPage: React.FC<SkillsPageProps> = ({ isSkillsOpen, onToggleSkills, i
                       </div>
                       
                       <div className="skills-list">
-                        {category.allSkills.map((skill, index) => (
-                          <div key={skill.name} className="skill-item" style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}>
-                            <div className="skill-info">
-                              <div className="skill-name-level">
-                                <span className="skill-name">{skill.name}</span>
-                                <div className={`skill-level ${skill.level}`}>{skill.level.toUpperCase()}</div>
+                        {category.allSkills.map((skill, index) => {
+                          const SkillIcon = skillIcons[skill.name];
+                          return (
+                            <div key={skill.name} className="skill-item" style={{ '--delay': `${index * 0.1}s` } as React.CSSProperties}>
+                              <div className="skill-info">
+                                <div className="skill-name-level">
+                                  {SkillIcon && (
+                                    <span className="skill-icon">
+                                      {/* @ts-ignore */}
+                                      <SkillIcon />
+                                    </span>
+                                  )}
+                                  <span className="skill-name">{skill.name}</span>
+                                </div>
+                                {/* <span className="skill-years">{skill.years}</span> */}
                               </div>
-                              {/* <span className="skill-years">{skill.years}</span> */}
-                            </div>
-                            <div className="skill-progress">
-                              <div className="progress-bar">
-                                <div 
-                                  className="progress-fill" 
-                                  style={{ width: `${skill.progress}%` }}
-                                ></div>
+                              <div className="skill-progress">
+                                <div className="progress-bar">
+                                  <div 
+                                    className="progress-fill" 
+                                    style={{ width: `${skill.progress}%` }}
+                                  ></div>
+                                  <div className={`skill-level ${skill.level}`}>{skill.level.toUpperCase()}</div>
+                                </div>
+                                {/* <span className="progress-text">{skill.progress}%</span> */}
                               </div>
-                              {/* <span className="progress-text">{skill.progress}%</span> */}
                             </div>
-                          </div>
-                        ))}
+                          );
+                        })}
                       </div>
                     </div>
                   ))}

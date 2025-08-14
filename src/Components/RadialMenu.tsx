@@ -89,7 +89,7 @@ const RadialMenu: React.FC<{ isProjectPanelOpen: boolean }> = ({ isProjectPanelO
 
   return (
     <div className="radial-menu-container">
-      <div className="radial-menu-button-container">
+      <div className={`radial-menu-button-container ${isProjectPanelOpen ? 'project-open' : ''}`}>
         {/* Menu Button */}
         <button
           className={`radial-menu-button ${isOpen ? 'open' : ''}`}

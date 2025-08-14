@@ -18,8 +18,15 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.22);
+  
   &.skills {
     right: 7rem;
+  }
+  
+  &.project-open {
+    top: auto;
+    bottom: 1rem;
   }
 }
 
