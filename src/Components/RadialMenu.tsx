@@ -21,6 +21,13 @@ const menuItems: MenuItem[] = [
     external: true
   },
   {
+    id: 'cv',
+    icon: FiDownload,
+    label: 'CV',
+    href: './Alex-Jefferies-CV.pdf',
+    download: true
+  },
+  {
     id: 'linkedin',
     icon: FiLinkedin,
     label: 'Linkedin',
@@ -47,13 +54,6 @@ const menuItems: MenuItem[] = [
     label: 'Game',
     href: 'https://acjeff.github.io/deeper',
     external: true
-  },
-  {
-    id: 'cv',
-    icon: FiDownload,
-    label: 'CV',
-    href: './Alex-Jefferies-CV.pdf',
-    download: true
   }
 ];
 

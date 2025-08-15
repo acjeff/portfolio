@@ -34,13 +34,10 @@ import utcHubVideo from '../images/Product Work/GridDuck/General Product/video/u
 import whiteLabel from '../images/Product Work/GridDuck/General Product/white-label.png';
 import themesAccessibility from '../images/Product Work/GridDuck/General Product/themes-and-accessibility.png';
 import integratedBilling from '../images/Product Work/GridDuck/General Product/integrated-automated-billing.png';
-import automatedReports from '../images/Product Work/GridDuck/General Product/Automated-Reports.png';
 import automationThermostat from '../images/Product Work/GridDuck/General Product/automation-virtual-thermostat.png';
-import deviceList from '../images/Product Work/GridDuck/General Product/device-list.png';
 import heatmap from '../images/Product Work/GridDuck/General Product/heatmap.png';
 import summaryPage from '../images/Product Work/GridDuck/General Product/summary-page.png';
 import visionAndApproach from '../images/Product Work/GridDuck/General Product/vision-and-approach.png';
-import installerApp from '../images/Product Work/GridDuck/General Product/installer-app.png';
 
 // GridDuck AI Images
 import gaiaModel from '../images/Product Work/GridDuck/AI - Gaia/gaia-model.png';
@@ -225,7 +222,7 @@ const projects = [
           'Marketing materials that communicate complex capabilities simply',
           'Instructional materials with professional aesthetics'
         ],
-        images: [businessCardFront, foh, marketingBanner, bookletCover]
+        images: [businessCardFront, foh, marketingBanner, bookletCover, gdImage]
       }
     ],
     background: 'linear-gradient(120deg, #f6d365 0%, #fda085 100%)'
