@@ -36,12 +36,16 @@ import themesAccessibility from '../images/Product Work/GridDuck/General Product
 import integratedBilling from '../images/Product Work/GridDuck/General Product/integrated-automated-billing.png';
 import automatedReports from '../images/Product Work/GridDuck/General Product/Automated-Reports.png';
 import automationThermostat from '../images/Product Work/GridDuck/General Product/automation-virtual-thermostat.png';
+import deviceList from '../images/Product Work/GridDuck/General Product/device-list.png';
+import heatmap from '../images/Product Work/GridDuck/General Product/heatmap.png';
+import summaryPage from '../images/Product Work/GridDuck/General Product/summary-page.png';
+import visionAndApproach from '../images/Product Work/GridDuck/General Product/vision-and-approach.png';
+import installerApp from '../images/Product Work/GridDuck/General Product/installer-app.png';
 
 // GridDuck AI Images
 import gaiaModel from '../images/Product Work/GridDuck/AI - Gaia/gaia-model.png';
 import gaiaDash1 from '../images/Product Work/GridDuck/AI - Gaia/1-Gaia-on-dash.png';
 import gaiaDash2 from '../images/Product Work/GridDuck/AI - Gaia/2-Gaia-on-dash.png';
-import gaiaDash3 from '../images/Product Work/GridDuck/AI - Gaia/3-Gaia-on-dash.png';
 
 // GridDuck Brand Work Images
 import marketingBanner from '../images/Brand Work/GridDuck/gridduck-marketing-banner.png';
@@ -177,7 +181,7 @@ const projects = [
           'Created and managed processes for ticket and bug management from client to dev and back to client',
           'Established and managed product development cycles and workflows'
         ],
-        images: [clickupDashboard, clickupKanban, gdImage]
+        images: [clickupDashboard, clickupKanban, visionAndApproach]
       },
       {
         header: 'UI/UX Design',
@@ -188,7 +192,7 @@ const projects = [
           'Intuitive data visualization for complex energy insights',
           'Conversational AI interfaces that feel approachable and trustworthy'
         ],
-        images: [themesAccessibility, automatedReports, gaiaDash1]
+        images: [heatmap, summaryPage, gaiaDash1, themesAccessibility]
       },
       {
         header: 'Development',
@@ -210,7 +214,7 @@ const projects = [
           'AI architecture for contextual data analysis',
           'Natural conversational interfaces for complex energy insights'
         ],
-        images: [gaiaDash2, gaiaModel, gaiaDash3]
+        images: [gaiaDash2, gaiaModel, gaiaDash1]
       },
       {
         header: 'Brand Design',
@@ -1118,7 +1122,7 @@ function Home() {
             {/* Personal Description */}
             <div className="personal-description">
                 <p className="description-text">
-                    Product-minded full-stack engineer & UI/UX designer crafting digital experiences for over a decade
+                <span style={{fontWeight: 'bold', lineHeight: '1.8em'}}>Hey, I'm Alex.</span><br/>A product leader with 13 years' experience building and scaling digital products from concept to production.
                 </p>
             </div>
 
