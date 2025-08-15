@@ -705,21 +705,6 @@ function Home() {
         };
     }, [width, targetWidth]);
 
-    // Helper to get all images in the current project
-    const allGalleryImages = useMemo(() => 
-      showingProject
-        ? showingProject.sections.flatMap((section, sectionIdx) =>
-            section.images.map((image, imageIdx) => ({ 
-              image, 
-              description: section.highlights[imageIdx] || section.summary,
-              sectionIdx, 
-              itemIdx: imageIdx, 
-              sectionHeader: section.header 
-            }))
-          )
-        : [], [showingProject]
-    );
-
     // Helper to get images from a specific section only
     const getSectionImages = useCallback((sectionIdx: number) => 
       showingProject && showingProject.sections[sectionIdx]
