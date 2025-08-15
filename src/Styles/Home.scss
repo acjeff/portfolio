@@ -935,8 +935,26 @@ div {
 // Image showcase carousel styling
 .image-showcase {
   position: relative;
-  width: 100%;
-  max-width: 500px;
+  width: 160%;
+  max-width: none;
+  border-radius: 16px;
+  overflow: visible;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.2),
+    0 10px 30px rgba(0, 0, 0, 0.15),
+    0 5px 15px rgba(0, 0, 0, 0.1);
+  transform: perspective(1000px) rotateX(5deg) rotateY(-2deg);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+}
+
+// Position image showcase based on row layout
+.showcase-row.left-image .image-showcase {
+  margin-left: -30%;
+}
+
+.showcase-row.right-image .image-showcase {
+  margin-right: -30%;
 }
 
 .showcase-carousel {
@@ -973,11 +991,6 @@ div {
       width: auto;
       height: auto;
       transition: all 0.3s ease;
-      cursor: pointer;
-
-      &:hover {
-        transform: scale(1.05);
-      }
     }
   }
 }
@@ -1054,7 +1067,18 @@ div {
 // Responsive adjustments for carousel
 @media (max-width: 768px) {
   .image-showcase {
-    max-width: 350px;
+    width: 140%;
+    max-width: none;
+    transform: perspective(800px) rotateX(3deg) rotateY(-1deg);
+  }
+
+  // Adjust offset positioning for mobile
+  .showcase-row.left-image .image-showcase {
+    margin-left: -20%;
+  }
+
+  .showcase-row.right-image .image-showcase {
+    margin-right: -20%;
   }
 
   .showcase-carousel {
@@ -1602,12 +1626,12 @@ div {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.95);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10000;
-  padding: 2rem;
+  padding: 1rem;
   backdrop-filter: blur(8px);
 }
 
@@ -1625,26 +1649,28 @@ div {
 
 .lightbox-content {
   position: relative;
-  width: 800px;
-  height: 600px;
+  width: 95vw;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  max-width: 90vw;
-  max-height: 90vh;
+  justify-content: center;
+  background: transparent;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: none;
+  max-width: 95vw;
+  max-height: 95vh;
 }
 
 .lightbox-image {
   width: 100%;
-  height: 400px;
-  border-radius: 10px;
+  height: 100%;
+  border-radius: 8px;
   object-fit: contain;
-  background: #f8f8f8;
+  background: transparent;
+  max-width: 95vw;
+  max-height: 95vh;
 }
 
 .lightbox-modal p {
@@ -1656,27 +1682,26 @@ div {
 
 .lightbox-close {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  background: rgba(255, 255, 255, 0.8);
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.7);
   border: none;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 6px;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.1rem;
-  color: #666;
+  font-size: 1.5rem;
+  color: white;
   transition: all 0.2s ease;
   z-index: 10;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 0, 0, 0.06);
   
   &:hover {
-    background: rgba(255, 255, 255, 0.95);
-    color: #333;
+    background: rgba(0, 0, 0, 0.9);
+    transform: scale(1.1);
   }
 }
 
@@ -1699,26 +1724,37 @@ div {
 }
 
 .lightbox-navigation {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  margin-top: 1rem;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.75rem 1.5rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
 
   .lightbox-nav {
-    background: var(--brand-colour, #fa6f6f);
+    background: transparent;
     border: none;
     color: white;
     font-size: 1.5rem;
     cursor: pointer;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background 0.3s ease;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &:hover:not(:disabled) {
-      background: #fff;
-      color: var(--brand-colour, #fa6f6f);
-      border: 1px solid var(--brand-colour, #fa6f6f);
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.1);
     }
 
     &:disabled {
@@ -1728,12 +1764,13 @@ div {
   }
 
   span {
-    color: #666;
+    color: white;
     font-size: 0.9rem;
     display: flex;
     align-items: center;
     justify-content: center;
     min-width: 60px;
+    font-weight: 500;
   }
 }
 
@@ -1772,7 +1809,10 @@ div {
   }
 
   .lightbox-image {
-    height: 300px;
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100%;
+    height: 100%;
   }
 
   // When lightbox modal is open, fix carousel controls at bottom
@@ -1900,10 +1940,6 @@ div {
   margin: 0 auto;
   transition: transform 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.22);
   box-shadow: none;
-
-  &:hover {
-    transform: scale(1.03) rotate(-1deg);
-  }
 }
 
 .showcase-text {

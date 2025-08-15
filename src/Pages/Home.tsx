@@ -720,6 +720,19 @@ function Home() {
         : [], [showingProject]
     );
 
+    // Helper to get images from a specific section only
+    const getSectionImages = useCallback((sectionIdx: number) => 
+      showingProject && showingProject.sections[sectionIdx]
+        ? showingProject.sections[sectionIdx].images.map((image, imageIdx) => ({ 
+            image, 
+            description: showingProject.sections[sectionIdx].highlights[imageIdx] || showingProject.sections[sectionIdx].summary,
+            sectionIdx, 
+            itemIdx: imageIdx, 
+            sectionHeader: showingProject.sections[sectionIdx].header 
+          }))
+        : [], [showingProject]
+    );
+
 
 
     // Auto-cycling carousel functionality - only when project is visible
@@ -751,9 +764,12 @@ function Home() {
       setLightbox({ sectionIdx, itemIdx });
     };
 
+    // Get current section images for lightbox navigation
+    const currentSectionImages = lightbox ? getSectionImages(lightbox.sectionIdx) : [];
+    
     const currentLightboxIndex = lightbox
-      ? allGalleryImages.findIndex(
-          img => img.sectionIdx === lightbox.sectionIdx && img.itemIdx === lightbox.itemIdx
+      ? currentSectionImages.findIndex(
+          img => img.itemIdx === lightbox.itemIdx
         )
       : -1;
 
@@ -761,17 +777,17 @@ function Home() {
     
     const prevLightbox = useCallback(() => {
       if (currentLightboxIndex > 0) {
-        const prev = allGalleryImages[currentLightboxIndex - 1];
+        const prev = currentSectionImages[currentLightboxIndex - 1];
         setLightbox({ sectionIdx: prev.sectionIdx, itemIdx: prev.itemIdx });
       }
-    }, [currentLightboxIndex, allGalleryImages]);
+    }, [currentLightboxIndex, currentSectionImages]);
     
     const nextLightbox = useCallback(() => {
-      if (currentLightboxIndex < allGalleryImages.length - 1) {
-        const next = allGalleryImages[currentLightboxIndex + 1];
+      if (currentLightboxIndex < currentSectionImages.length - 1) {
+        const next = currentSectionImages[currentLightboxIndex + 1];
         setLightbox({ sectionIdx: next.sectionIdx, itemIdx: next.itemIdx });
       }
-    }, [currentLightboxIndex, allGalleryImages]);
+    }, [currentLightboxIndex, currentSectionImages]);
 
     const scrollToSection = useCallback((sectionId: string | number) => {
       // Update URL with section parameter
@@ -1404,7 +1420,7 @@ function Home() {
                         >
                           <div className={`showcase-row ${sectionIdx % 2 === 0 ? 'left-image' : 'right-image'}`}>
                                       <div className="showcase-image-wrapper">
-            <div className="image-showcase">
+            <div className="image-showcase" onClick={() => openLightbox(sectionIdx, carouselStates[sectionIdx] || 0)}>
                                   <div className="showcase-carousel">
                                     {section.images.map((image, imageIdx) => (
                                       <div 
@@ -1415,8 +1431,6 @@ function Home() {
                                           src={image}
                                           alt={`${section.header} example ${imageIdx + 1}`}
                                           className="showcase-image"
-                                          style={{ cursor: 'pointer' }}
-                                          onClick={() => openLightbox(sectionIdx, imageIdx)}
                                         />
                                       </div>
                                     ))}
@@ -1590,18 +1604,14 @@ function Home() {
                   <button className="lightbox-close" onClick={() => setLightbox(null)}>
                     ×
                   </button>
-                  {allGalleryImages[currentLightboxIndex] && (
+                  {currentSectionImages[currentLightboxIndex] && (
                     <>
                       <img 
-                        src={allGalleryImages[currentLightboxIndex].image} 
-                        alt={allGalleryImages[currentLightboxIndex].description}
+                        src={currentSectionImages[currentLightboxIndex].image} 
+                        alt={currentSectionImages[currentLightboxIndex].description}
                         className="lightbox-image"
                       />
-                      <div className="lightbox-info">
-                        <h3>{allGalleryImages[currentLightboxIndex].sectionHeader}</h3>
-                        <p>{allGalleryImages[currentLightboxIndex].description}</p>
-                      </div>
-                      {allGalleryImages.length > 1 && (
+                      {currentSectionImages.length > 1 && (
                         <div className="lightbox-navigation">
                           <button 
                             className="lightbox-nav prev" 
@@ -1610,11 +1620,11 @@ function Home() {
                           >
                             ‹
                           </button>
-                          <span>{currentLightboxIndex + 1} / {allGalleryImages.length}</span>
+                          <span>{currentLightboxIndex + 1} / {currentSectionImages.length}</span>
                           <button 
                             className="lightbox-nav next" 
                             onClick={nextLightbox}
-                            disabled={currentLightboxIndex === allGalleryImages.length - 1}
+                            disabled={currentLightboxIndex === currentSectionImages.length - 1}
                           >
                             ›
                           </button>
