@@ -825,10 +825,7 @@ div {
   position: relative;
   border-radius: 16px;
   overflow: visible;
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.2),
-    0 10px 30px rgba(0, 0, 0, 0.15),
-    0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05), 0 10px 30px rgba(0, 0, 0, 0.05), 0 5px 15px rgba(0, 0, 0, 0.05);
   transform: perspective(1000px) rotateX(5deg) rotateY(-2deg);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
