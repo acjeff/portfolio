@@ -3,17 +3,17 @@
   "name": "Alex Jefferies Portfolio",
   "icons": [
     {
-      "src": "me-and-ruby.ico",
+      "src": "linked-pp.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     },
     {
-      "src": "me-and-ruby.png",
+      "src": "linked-pp.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "me-and-ruby.png",
+      "src": "linked-pp.png",
       "type": "image/png",
       "sizes": "512x512"
     }
