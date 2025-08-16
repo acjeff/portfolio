@@ -38,6 +38,7 @@ import automationThermostat from '../images/Product Work/GridDuck/General Produc
 import heatmap from '../images/Product Work/GridDuck/General Product/heatmap.png';
 import summaryPage from '../images/Product Work/GridDuck/General Product/summary-page.png';
 import visionAndApproach from '../images/Product Work/GridDuck/General Product/vision-and-approach.png';
+import saas from '../images/Product Work/GridDuck/General Product/saas.png';
 
 // GridDuck AI Images
 import gaiaModel from '../images/Product Work/GridDuck/AI - Gaia/gaia-model.png';
@@ -200,7 +201,7 @@ const projects = [
           'Intelligent automation that transforms simple devices into smart systems',
           'Real-time billing system with multiple payment integrations'
         ],
-        images: [whiteLabel, automationThermostat, integratedBilling]
+        images: [whiteLabel, automationThermostat, integratedBilling, saas]
       },
       {
         header: 'AI Innovation',
@@ -1412,10 +1413,16 @@ function Home() {
                                         key={imageIdx}
                                         className={`carousel-slide ${imageIdx === (carouselStates[sectionIdx] || 0) ? 'active' : ''}`}
                                       >
-                                        <img
-                                          src={image}
-                                          alt={`${section.header} example ${imageIdx + 1}`}
+                                        <div
                                           className="showcase-image"
+                                          style={{
+                                            backgroundImage: `url(${image})`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: sectionIdx % 2 === 0 ? 'right center' : 'left center',
+                                            backgroundRepeat: 'no-repeat'
+                                          }}
+                                          role="img"
+                                          aria-label={`${section.header} example ${imageIdx + 1}`}
                                         />
                                       </div>
                                     ))}
