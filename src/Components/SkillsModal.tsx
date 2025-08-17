@@ -296,7 +296,7 @@ const SkillsPage: React.FC<SkillsPageProps> = ({ isSkillsOpen, onToggleSkills, i
 
                   <div className="leadership-card">
                     <h3>Rapid Prototyping</h3>
-                    <p>I can turn ideas into working prototypes fast. This ability to quickly validate concepts has saved companies months of development time and millions in potential losses.</p>
+                    <p>I can turn ideas into working prototypes fast. This ability to quickly validate concepts helps companies avoid costly development cycles and identify potential issues early in the process.</p>
                     <div className="leadership-stats">                        
                       {/* <div className="leadership-stat">
                         <span className="stat-number">3-5</span>
