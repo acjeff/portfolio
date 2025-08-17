@@ -147,7 +147,7 @@ const projects = [
     company: 'GridDuck',
     range: '2017 - Present',
     brandColour: '#49b9c4',
-    companyDescription: 'Comprehensive energy management platform with real-time monitoring, AI-powered analytics, and intelligent control systems. Built from concept to production, now serving 500+ sites and 10,000+ devices across diverse industries.',
+    companyDescription: 'GridDuck is a comprehensive energy management platform with real-time monitoring, AI-powered analytics, and intelligent control systems. Built from concept to production, now serving 500+ sites and 10,000+ devices across diverse industries.',
     productDescription: '',
     myWork: [
       'Built complete energy management platform from zero to production serving 500+ sites.',
@@ -242,7 +242,8 @@ const projects = [
       'Designed and built the complete platform as Chief Technology Officer (CTO).',
       'Rapidly prototyped and developed the platform within 6 months of joining as CTO.',
       'Created a comprehensive system for apprenticeship and work experience matching.',
-      'Built the technical architecture and infrastructure from concept to deployment.'
+      'Built the technical architecture and infrastructure from concept to deployment.',
+      'Designed all UI/UX interfaces and user experience flows for students and employers.'
     ],
     techStack: [
       techStacks.angularjs,
@@ -278,6 +279,18 @@ const projects = [
           'Implemented secure authentication and role-based access control'
         ],
         images: [utc4, utc5, utc6]
+      },
+      {
+        header: 'UI/UX Design',
+        jobTitle: 'Lead UI/UX Designer',
+        summary: 'Creating intuitive and accessible interfaces for students and employers to connect seamlessly.',
+        highlights: [
+          'Designed complete user interface for student profiles and application tracking',
+          'Created employer dashboard for posting opportunities and managing applications',
+          'Built responsive design system that worked across all devices and screen sizes',
+          'Implemented user-centered design principles for educational platform accessibility'
+        ],
+        images: [utc7, utc8]
       },
       {
         header: 'Product Strategy',
