@@ -283,10 +283,10 @@ const SkillsPage: React.FC<SkillsPageProps> = ({ isSkillsOpen, onToggleSkills, i
                         <span className="stat-number">3</span>
                         <span className="stat-label">Products Launched</span>
                       </div>
-                      <div className="leadership-stat">
+                      {/* <div className="leadership-stat">
                         <span className="stat-number">1</span>
                         <span className="stat-label">Company Exited</span>
-                      </div>
+                      </div> */}
                       {/* <div className="leadership-stat">
                         <span className="stat-number">6+</span>
                         <span className="stat-label">Years Leading Teams</span>
