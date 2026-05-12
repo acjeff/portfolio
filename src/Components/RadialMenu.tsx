@@ -52,7 +52,7 @@ const menuItems: MenuItem[] = [
     id: 'game',
     icon: FiPlayCircle,
     label: 'Game',
-    href: 'https://acjeff.github.io/deeper',
+    href: 'https://www.agnus.rocks/',
     external: true
   }
 ];
