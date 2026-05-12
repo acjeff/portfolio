@@ -15,6 +15,11 @@ import gdLogo from '../images/Brand Work/GridDuck/GridDuck-logo-no-type.png';
 import wirewaxLogo from '../images/Brand Work/wirewax/wirewax-logo-header.jpeg';
 import utcLogo from '../images/Brand Work/UTC/utc-logo-header.png';
 import gigblocLogo from '../images/Brand Work/gigbloc/gigbloc-logo-header.png';
+import volterasLogo from '../images/Brand Work/Volteras/volteras-logo.jpeg';
+
+// Volteras Product Work
+// @ts-ignore
+import volterasAdminVideo from '../images/Product Work/Volteras/video/admin-v2-view-filters.mp4';
 
 // Gigbloc Images
 import gigblocHeader from '../images/Brand Work/gigbloc/header-image.png';
@@ -102,7 +107,10 @@ import {
   SiMysql, 
   SiAngular,
   SiSwift,
-  SiCanvas
+  SiCanvas,
+  SiPython,
+  SiNextdotjs,
+  SiTailwindcss
 } from '@icons-pack/react-simple-icons';
 import { FaAws } from 'react-icons/fa';
 import { FiFolder } from 'react-icons/fi';
@@ -135,17 +143,48 @@ const techStacks = {
   mysql: { name: 'MySQL', icon: SiMysql, color: '#4479A1', url: 'https://www.mysql.com' },
   swift: { name: 'Swift', icon: SiSwift, color: '#F05138', url: 'https://swift.org' },
   videojs: { name: 'Video.js', icon: '🎥', color: '#25ABE1', url: 'https://videojs.com' },
-  canvas: { name: 'Canvas API', icon: SiCanvas, color: '#5A5A5A', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API' }
+  canvas: { name: 'Canvas API', icon: SiCanvas, color: '#5A5A5A', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API' },
+  python: { name: 'Python', icon: SiPython, color: '#3776AB', url: 'https://www.python.org' },
+  nextjs: { name: 'Next.js', icon: SiNextdotjs, color: '#000000', url: 'https://nextjs.org' },
+  tailwind: { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4', url: 'https://tailwindcss.com' }
 };
 
 const projects = [
+  {
+    id: 0,
+    name: 'Volteras',
+    logo: volterasLogo,
+    headlineImage: volterasAdminVideo,
+    company: 'Volteras',
+    range: 'October 2025 - Present',
+    brandColour: '#6366f1',
+    companyDescription: 'Volteras is a connected-vehicle data platform that gives fleets, charging networks and energy companies a unified API to read live telemetry and send commands to EVs across manufacturers.',
+    productDescription: '',
+    myWork: [
+      'Redesigned and rebuilt the internal admin dashboard from scratch.',
+      'Led development of multiple new features in the core product.',
+      'Played a key role in shaping product direction and strategy.'
+    ],
+    techStack: [
+      techStacks.python,
+      techStacks.nextjs,
+      techStacks.tailwind,
+      techStacks.react,
+      techStacks.postgresql,
+      techStacks.github,
+      techStacks.typescript,
+      techStacks.aws
+    ],
+    sections: [],
+    background: 'linear-gradient(120deg, #6366f1 0%, #ec4899 100%)'
+  },
   {
     id: 1,
     name: 'GridDuck',
     logo: gdLogo,
     headlineImage: monitoringVideo,
     company: 'GridDuck',
-    range: '2017 - Present',
+    range: '2017 - October 2025',
     brandColour: '#49b9c4',
     companyDescription: 'GridDuck is a comprehensive energy management platform with real-time monitoring, AI-powered analytics, and intelligent control systems. Built from concept to production, now serving 500+ sites and 10,000+ devices across diverse industries.',
     productDescription: '',
