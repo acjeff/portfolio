@@ -1,12 +1,36 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FiArrowUpRight, FiCheck, FiCopy } from 'react-icons/fi';
 import '../Styles/Site.scss';
 import CursorGlow from '../Components/CursorGlow';
 import Media from '../Components/Media';
 import ProjectPage from './ProjectPage';
-import { getProjectByName, links, projects, skillGroups } from '../data/projects';
+import { getProjectByName, links, now, projects, sideProjects, skillGroups } from '../data/projects';
+import Icon from '../Components/Icon';
 import Portrait from '../Components/Portrait';
 
 const DEFAULT_GLOW = '#8b9cff';
+const EMAIL = links.email.replace('mailto:', '');
+const SPOTIFY_EMBED = links.music.replace('open.spotify.com/', 'open.spotify.com/embed/') + '?utm_source=generator&theme=0';
+
+// Copies the email address, for visitors without a mail app set up
+function CopyEmail() {
+    const [copied, setCopied] = useState(false);
+    const timer = useRef<number>();
+    useEffect(() => () => window.clearTimeout(timer.current), []);
+    const copy = () => {
+        navigator.clipboard?.writeText(EMAIL).then(() => {
+            setCopied(true);
+            window.clearTimeout(timer.current);
+            timer.current = window.setTimeout(() => setCopied(false), 2000);
+        }).catch(() => {});
+    };
+    return (
+        <button className="copy-email" onClick={copy} aria-label="Copy email address">
+            <Icon icon={copied ? FiCheck : FiCopy} />
+            <span aria-live="polite">{copied ? 'Copied' : 'Copy'}</span>
+        </button>
+    );
+}
 
 // The open project lives in the ?project= query string so old links keep working
 const readProjectParam = () => {
@@ -78,7 +102,13 @@ function Home() {
                 ) : (
                     <main id="top">
                         <section className="hero">
-                            <h1>I take digital products from first sketch to production.</h1>
+                            <div className="hero-text">
+                                <h1>I take digital products from first sketch to production.</h1>
+                                <p className="now" style={{ '--c': projects[0].brandColour } as React.CSSProperties}>
+                                    <span className="now-dot" aria-hidden="true" />
+                                    <span><strong>Now:</strong> {now}</span>
+                                </p>
+                            </div>
                             <div className="hero-side">
                                 <Portrait alt="Alex Jefferies" />
                                 <p>Product leader and full-stack engineer. 14 years across energy, mobility, education and video.</p>
@@ -123,19 +153,48 @@ function Home() {
                                 ))}
                             </div>
                         </section>
+
+                        <section id="outside" className="outside" aria-labelledby="outside-heading">
+                            <h2 id="outside-heading">Outside work</h2>
+                            <div className="outside-grid">
+                                <div className="outside-card music">
+                                    <h3>My music</h3>
+                                    <p>What I make when I'm not making software.</p>
+                                    <iframe
+                                        title="My music on Spotify"
+                                        src={SPOTIFY_EMBED}
+                                        height="152"
+                                        loading="lazy"
+                                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                                    />
+                                </div>
+                                {sideProjects.map(item => (
+                                    <a key={item.name} className="outside-card side-project" href={item.url} target="_blank" rel="noopener noreferrer">
+                                        <div className="side-shot"><img src={item.image} alt="" loading="lazy" /></div>
+                                        <span className="yrs">{item.kind}</span>
+                                        <h3>{item.name} <Icon icon={FiArrowUpRight} /></h3>
+                                        <p>{item.description}</p>
+                                    </a>
+                                ))}
+                            </div>
+                        </section>
                     </main>
                 )}
 
                 <footer className="site-footer">
                     <div>
-                        <h2>Want to work together?</h2>
-                        <a className="email" href={links.email}>labaia33@gmail.com</a>
+                        <h2>Say hello</h2>
+                        <p className="cta-line">Happy to talk product, engineering or music.</p>
+                        <div className="email-row">
+                            <a className="email" href={links.email}>{EMAIL}</a>
+                            <CopyEmail />
+                        </div>
                     </div>
                     <ul>
                         <li><a href={links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
                         <li><a href={links.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
                         <li><a href={links.music} target="_blank" rel="noopener noreferrer">My music</a></li>
-                        <li><a href={links.game} target="_blank" rel="noopener noreferrer">A game I made</a></li>
+                        <li><a href="#outside" onClick={jumpTo('outside')}>Side projects</a></li>
                     </ul>
                 </footer>
             </div>

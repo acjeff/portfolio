@@ -79,6 +79,12 @@ import utc6 from '../images/Brand Work/UTC/utc-6.png';
 import utc7 from '../images/Brand Work/UTC/utc-7.png';
 import utc8 from '../images/Brand Work/UTC/utc-8.png';
 
+// Side projects
+import agnusShot from '../images/outside/agnus.webp';
+import spareShot from '../images/outside/spare.webp';
+import rivertonShot from '../images/outside/riverton.webp';
+import id8Shot from '../images/outside/id8.webp';
+
 // Import actual brand logos from Simple Icons
 import { 
   SiReact, 
@@ -146,6 +152,19 @@ export const techStacks = {
   tailwind: { name: 'Tailwind CSS', icon: SiTailwindcss, color: '#06B6D4', url: 'https://tailwindcss.com' }
 };
 
+// The problem, the call I made, and what came of it, shown at the top of a project page
+export type Story = { problem: string; decision: string; result: string };
+
+// captions line up with images: one sentence each on why that screen mattered
+export type Section = {
+  header: string;
+  jobTitle: string;
+  summary: string;
+  highlights: string[];
+  images: string[];
+  captions?: string[];
+};
+
 export const projects = [
   {
     id: 0,
@@ -157,6 +176,11 @@ export const projects = [
     brandColour: '#6366f1',
     role: 'Head of Engineering',
     summary: 'Oversaw the delivery of 50+ projects, led our AI initiatives including the MCP server launch, and overhauled how the team builds and ships.',
+    story: {
+      problem: 'Volteras runs a lot of projects at once with a small team, and the way work was planned, reviewed and shipped hadn\'t kept pace with it.',
+      decision: 'I put every project through a scoped milestone plan reviewed on a pull request, and redesigned the pipeline so each author signs off their own change before a one-click promotion.',
+      result: 'More than 50 projects delivered since joining, including the launch of the Volteras MCP server, with the new pipeline cutting over in November 2026.'
+    },
     companyDescription: 'Volteras is a connected-vehicle data platform that gives fleets, charging networks and energy companies a unified API to read live telemetry and send commands to EVs across manufacturers.',
     productDescription: '',
     myWork: [
@@ -190,7 +214,10 @@ export const projects = [
           'Accurate billing and invoiceable-vehicle reporting, with breakdowns by organisation and trends over time',
           'A follow-up release focused on upload triage, data packages and organisation performance'
         ],
-        images: [volterasAdminVideo]
+        images: [volterasAdminVideo],
+        captions: [
+          'Saved views and filters take ops straight to the uploads that need triage, without rebuilding a search every time.'
+        ]
       },
       {
         header: 'AI and the MCP server',
@@ -201,7 +228,10 @@ export const projects = [
           'Hosted by Volteras, so there is nothing for customers to install or run',
           'Follows the open Model Context Protocol, over streamable HTTP with OAuth 2.1'
         ],
-        images: [volterasMcpDocs]
+        images: [volterasMcpDocs],
+        captions: [
+          'One hosted URL with OAuth 2.1, so customers connect their AI tool once and never run a server.'
+        ]
       },
       {
         header: 'Scoping tool',
@@ -213,7 +243,12 @@ export const projects = [
           'The full plan sits behind it, covering goals, milestones, dependencies and unknowns',
           'Plans are reviewed on a pull request before they are marked final, and link straight to their Linear project'
         ],
-        images: [volterasScopingList, volterasCicdBrief, volterasCicdDetail]
+        images: [volterasScopingList, volterasCicdBrief, volterasCicdDetail],
+        captions: [
+          'Every scoped project in one list, with its review status and Linear link, so no plan goes missing.',
+          'The brief sets today against the target, with the steps between, so a plan reads at a glance.',
+          'Behind the brief sits the full plan: goals, milestones, dependencies and unknowns, open to challenge on its pull request.'
+        ]
       },
       {
         header: 'CI/CD and pull request workflow',
@@ -224,7 +259,10 @@ export const projects = [
           'Each author signs off their own change on dev before a version is promoted to production',
           'Planned as a single-weekend cutover, with the aim of roughly halving the automated testing bill'
         ],
-        images: [volterasCicdPipeline]
+        images: [volterasCicdPipeline],
+        captions: [
+          'Prod waits until every author has signed off their change on dev, so nothing unchecked reaches customers.'
+        ]
       },
       {
         header: 'Live previews for designers',
@@ -235,7 +273,10 @@ export const projects = [
           'Set up Claude Code on the web so designers can make changes themselves',
           'Designers work on their own branches and only engineers can merge to main, while production stays on S3 and CloudFront'
         ],
-        images: [volterasPortalPreviews]
+        images: [volterasPortalPreviews],
+        captions: [
+          'Each design branch gets its own live preview, while merging to main still needs an engineer\'s approval.'
+        ]
       },
       {
         header: 'Standards for AI-written code',
@@ -246,7 +287,10 @@ export const projects = [
           'Review standards that catch duplicated logic and design drift before they merge',
           'Guidance the team and its AI tools both follow'
         ],
-        images: [volterasLlmStandards]
+        images: [volterasLlmStandards],
+        captions: [
+          'One Storybook of shared components gives the team and its AI tools the same parts to build from.'
+        ]
       },
       {
         header: 'New-user onboarding',
@@ -257,7 +301,10 @@ export const projects = [
           'Redesigned sign-up and sign-in to match the product\'s design language',
           'Clearer team invites and visible trial status throughout the portal'
         ],
-        images: [volterasOnboarding]
+        images: [volterasOnboarding],
+        captions: [
+          'A set-up checklist on the homepage replaces the skipped tour and shows new customers exactly what is left.'
+        ]
       },
       {
         header: 'Eligibility and vehicle import',
@@ -268,7 +315,10 @@ export const projects = [
           'A single results page with filtering, sorting, search and multi-select',
           'Import straight from eligibility results'
         ],
-        images: [volterasEligibilityImport]
+        images: [volterasEligibilityImport],
+        captions: [
+          'Eligibility and enrolment share one page, so customers enrol eligible vehicles straight from their results.'
+        ]
       },
       {
         header: 'Servicing reminder alerts',
@@ -279,7 +329,10 @@ export const projects = [
           'New rules-engine operators to express repeating intervals',
           'A rule builder on the alert definitions page for setting up intervals without code'
         ],
-        images: [volterasServicingAlerts]
+        images: [volterasServicingAlerts],
+        captions: [
+          'Fleets set a service interval by make and model in a simple form, without writing rules by hand.'
+        ]
       }
     ],
     background: 'linear-gradient(120deg, #6366f1 0%, #ec4899 100%)'
@@ -294,6 +347,11 @@ export const projects = [
     brandColour: '#49b9c4',
     role: 'Chief Product Officer',
     summary: 'Built an energy management platform from zero to 500+ sites and 10,000+ devices.',
+    story: {
+      problem: 'Energy customers vary massively, and most platforms grow by bolting on features until they are bloated, hard to use and hard to maintain.',
+      decision: 'I built GridDuck as one modular core where every feature is optional, configurable or hidden unless relevant, so the same product could serve very different customers.',
+      result: 'GridDuck grew from concept to 500+ sites and 10,000+ devices, across customers from transport operators to manufacturers.'
+    },
     companyDescription: 'GridDuck is a comprehensive energy management platform with real-time monitoring, AI-powered analytics, and intelligent control systems. Built from concept to production, now serving 500+ sites and 10,000+ devices across diverse industries.',
     productDescription: '',
     myWork: [
@@ -326,7 +384,12 @@ export const projects = [
           'Created and managed processes for ticket and bug management from client to dev and back to client',
           'Established and managed product development cycles and workflows'
         ],
-        images: [clickupDashboard, clickupKanban, visionAndApproach]
+        images: [clickupDashboard, clickupKanban, visionAndApproach],
+        captions: [
+          'Estimates by person, priority and bug versus feature showed where the team\'s time was actually going.',
+          'One board carried every request from spec and design through build and testing, client tickets included.',
+          'The principle behind every roadmap call: make features modular and optional instead of bolting them on.'
+        ]
       },
       {
         header: 'UI/UX Design',
@@ -337,7 +400,13 @@ export const projects = [
           'Intuitive data visualization for complex energy insights',
           'Conversational AI interfaces that feel approachable and trustworthy'
         ],
-        images: [heatmap, summaryPage, gaiaDash1, themesAccessibility]
+        images: [heatmap, summaryPage, gaiaDash1, themesAccessibility],
+        captions: [
+          'A day-by-hour heatmap shows peak usage at a glance, without reading through a month of line graphs.',
+          'Each site gets a configurable widget board, so a manager sees usage, spend and carbon on one screen.',
+          'Suggested questions lower the bar for people who don\'t yet know what to ask of their energy data.',
+          'Custom themes and dark mode let users set the contrast and colours that suit how they read.'
+        ]
       },
       {
         header: 'Development',
@@ -348,7 +417,13 @@ export const projects = [
           'Intelligent automation that transforms simple devices into smart systems',
           'Real-time billing system with multiple payment integrations'
         ],
-        images: [whiteLabel, automationThermostat, integratedBilling, saas]
+        images: [whiteLabel, automationThermostat, integratedBilling, saas],
+        captions: [
+          'Partners set a logo and colour once, and their brand replaces GridDuck in the dashboard, emails and PDFs.',
+          'Rules run on the GridDuck hub, so a plain heater and a sensor hold 21.5°C even without internet.',
+          'Stripe and Xero integrations handle card and Direct Debit payments, so subscriptions bill themselves.',
+          'Plans gate features inside the product, prompting an upgrade at the moment a customer hits a limit.'
+        ]
       },
       {
         header: 'AI Innovation',
@@ -359,7 +434,12 @@ export const projects = [
           'AI architecture for contextual data analysis',
           'Natural conversational interfaces for complex energy insights'
         ],
-        images: [gaiaDash2, gaiaModel, gaiaDash1]
+        images: [gaiaDash2, gaiaModel, gaiaDash1],
+        captions: [
+          'One form generates an out-of-hours savings report, choosing which sites, details and charts it covers.',
+          'gaia moves customers from meter data to submetering to automation, pointing at where each step saves most.',
+          'Insights like unusual usage and potential savings surface on their own, before anyone thinks to ask.'
+        ]
       },
       {
         header: 'Brand Design',
@@ -370,7 +450,14 @@ export const projects = [
           'Marketing materials that communicate complex capabilities simply',
           'Instructional materials with professional aesthetics'
         ],
-        images: [businessCardFront, foh, marketingBanner, bookletCover, gdImage]
+        images: [businessCardFront, foh, marketingBanner, bookletCover, gdImage],
+        captions: [
+          'A simple duck mark meant to make a technical energy product feel approachable from the first handshake.',
+          'The website leads with saving money and carbon, then shows the dashboard, so buyers see the outcome first.',
+          'The brochure turns a long feature list into four plain solutions a buyer can scan in seconds.',
+          'The welcome booklet gets customers from invite to installed kit in three steps, with support details to hand.',
+          'The hero graphic puts usage and spend up front, with the full widget board behind it for detail.'
+        ]
       }
     ],
     background: 'linear-gradient(120deg, #f6d365 0%, #fda085 100%)'
@@ -385,6 +472,11 @@ export const projects = [
     brandColour: '#2c5aa0', // Blue color typical for educational/tech platforms
     role: 'CTO',
     summary: 'Matched technical-college students with apprenticeships. Designed and built in six months.',
+    story: {
+      problem: 'Students at UTC technical colleges needed a way into the apprenticeships and work experience employers were offering, and employers needed a way to reach them.',
+      decision: 'As CTO I designed and built both sides myself: suitability-ranked listings and mentoring for students, and a portal with engagement stats for employers and colleges.',
+      result: 'The platform went from concept to deployment in six months.'
+    },
     companyDescription: 'UTC Hub was a platform designed to help students from UTC Technical Colleges find apprenticeships and work experience opportunities.',
     productDescription: 'A web-based platform that connected UTC students with employers, facilitating apprenticeship applications and work experience placements.',
     myWork: [
@@ -415,7 +507,12 @@ export const projects = [
           'Managed all technical decisions and infrastructure development',
           'Oversaw the entire product lifecycle from concept to deployment'
         ],
-        images: [utc1, utc2, utc3]
+        images: [utc1, utc2, utc3],
+        captions: [
+          'Listings ranked by suitability and distance, so students see the placements that fit them first.',
+          'Built-in messaging let students talk to mentors and groups without leaving the platform.',
+          'A mentoring directory connected students with working professionals across engineering and beyond.'
+        ]
       },
       {
         header: 'Platform Development',
@@ -427,7 +524,12 @@ export const projects = [
           'Created employer portal for posting opportunities and reviewing applications',
           'Implemented secure authentication and role-based access control'
         ],
-        images: [utc4, utc5, utc6]
+        images: [utc4, utc5, utc6],
+        captions: [
+          'Colleges could track how students engaged with each employer through views, likes and applications over time.',
+          'Breakdowns by year group and gender showed colleges which students each opportunity was reaching.',
+          'Charts by company, industry, university and role showed where a college\'s students were heading.'
+        ]
       },
       {
         header: 'UI/UX Design',
@@ -439,7 +541,11 @@ export const projects = [
           'Built responsive design system that worked across all devices and screen sizes',
           'Implemented user-centered design principles for educational platform accessibility'
         ],
-        images: [utc7, utc8]
+        images: [utc7, utc8],
+        captions: [
+          'Employers manage every opportunity on one board, grouped by status, with views, likes and applications on each card.',
+          'Employer stats lead with three headline numbers, then rank the colleges whose students engage most.'
+        ]
       },
       {
         header: 'Product Strategy',
@@ -451,7 +557,11 @@ export const projects = [
           'Established product metrics and success criteria for platform adoption',
           'Coordinated with UTC colleges and employer partners for platform requirements'
         ],
-        images: [utc7, utc8]
+        images: [utc7, utc8],
+        captions: [
+          'Status columns from inactive to completed gave employers a clear lifecycle for every placement they offered.',
+          'Showing employers which colleges engaged most gave them a reason to keep posting opportunities.'
+        ]
       }
     ],
     background: 'linear-gradient(120deg, #2c5aa0 0%, #4a90e2 100%)'
@@ -466,6 +576,11 @@ export const projects = [
     brandColour: '#282c34', // Dark blue-grey from Gigbloc branding
     role: 'Co-founder and lead developer',
     summary: 'Find live gigs near you and hear the bands before you go.',
+    story: {
+      problem: 'Small gigs by lesser-known artists are hard to find, and harder to take a chance on when you\'ve never heard the band.',
+      decision: 'I joined Songkick\'s gig listings to SoundCloud\'s tracks on a map of the city, so people could hear who\'s playing nearby before they go.',
+      result: 'Gigbloc grew to 10,000 users through organic growth, with coverage in Time Out London and music and local press.'
+    },
     companyDescription: 'Gigbloc was a music discovery startup that helped people find live gigs in their local area by combining Songkick ticket data with SoundCloud music streaming.',
     productDescription: 'A mobile app and website that filtered local music events by genre, allowing users to discover and listen to music from artists playing nearby, with a focus on helping lesser-known artists and small gigs get discovered.',
     myWork: [
@@ -493,7 +608,11 @@ export const projects = [
           'Developed the web platform for desktop music discovery',
           'Scaled the platform to 10,000 active users'
         ],
-        images: [gigblocApp1, gigblocApp2]
+        images: [gigblocApp1, gigblocApp2],
+        captions: [
+          'Tap a venue and its band starts playing, so you hear the gig before you commit to going.',
+          'A day picker and city map show each night\'s gigs, and one button plays that night\'s whole lineup.'
+        ]
       },
       {
         header: 'API Integration & Data',
@@ -505,7 +624,11 @@ export const projects = [
           'Built genre-based filtering system for local music events',
           'Created location-based search and recommendation engine'
         ],
-        images: [gigblocPress, gigblocPress2]
+        images: [gigblocPress, gigblocPress2],
+        captions: [
+          'Circuit Sweet covered how pairing gig listings with playable tracks helps people discover their city\'s music scene.',
+          'The same listings data powered genre heatmaps of London\'s live music, which Time Out wrote up.'
+        ]
       },
       {
         header: 'Growth & User Acquisition',
@@ -517,7 +640,11 @@ export const projects = [
           'Built features for small gig discovery and local music scenes',
           'Created weekly discovery features for upcoming local events'
         ],
-        images: [gigblocPress3, gigblocPress4]
+        images: [gigblocPress3, gigblocPress4],
+        captions: [
+          'Reviewers singled out the focus on local acts yet to hit the mainstream, which was the whole point.',
+          'Coverage in Brooklyn\'s local press showed the idea travelling well beyond London.'
+        ]
       }
     ],
     background: 'linear-gradient(120deg, #e74c3c 0%, #c0392b 100%)'
@@ -532,6 +659,11 @@ export const projects = [
     brandColour: '#f7a8d8', // Pink color from WIREWAX branding
     role: 'Front-end developer',
     summary: 'Tools for making video clickable and interactive.',
+    story: {
+      problem: 'Creators and brands wanted video viewers could click and explore, which meant tools for building interactive layers and hands-on support for the clients using them.',
+      decision: 'I worked across front-end development and client support, building overlay, hotspot and analytics features while helping clients design their interactive projects.',
+      result: 'Clients got interactive video projects built and supported end to end, with an analytics dashboard showing how viewers engaged.'
+    },
     companyDescription: 'WIREWAX is an interactive video technology company that enables clickable, interactive video experiences.',
     productDescription: 'Advanced interactive video platform that allows creators to add clickable elements, hotspots, and interactive overlays to video content.',
     myWork: [
@@ -603,6 +735,17 @@ export const skillGroups = [
   { name: 'Frontend', skills: ['React', 'TypeScript', 'JavaScript', 'HTML and CSS', 'React Native', 'AngularJS'] },
   { name: 'Backend and infrastructure', skills: ['Node.js', 'Python', 'PostgreSQL', 'AWS', 'Redis', 'CI/CD'] },
   { name: 'Design', skills: ['UI and UX design', 'Design systems', 'Branding', 'Illustrator', 'Photoshop'] }
+];
+
+// What I'm working on right now, shown under the hero. Keep it current
+export const now = 'Head of Engineering at Volteras, rolling out a new way for the team to ship and building AI tools for EV fleets.';
+
+// Things I've made outside work, shown in the Outside work strip
+export const sideProjects = [
+  { name: 'Agnus', kind: 'Game', description: 'A daily pattern puzzle, with a new puzzle every day.', url: 'https://www.agnus.rocks/', image: agnusShot },
+  { name: 'Spare', kind: 'Game', description: 'A pixel-art platformer.', url: 'https://acjeff.github.io/spare/', image: spareShot },
+  { name: 'Riverton', kind: 'Game', description: 'A retro pixel-art game.', url: 'https://acjeff.github.io/riverton/', image: rivertonShot },
+  { name: 'ID8', kind: 'Productivity', description: 'A productivity site.', url: 'https://id8.dog/', image: id8Shot }
 ];
 
 export const links = {

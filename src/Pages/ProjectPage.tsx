@@ -1,22 +1,21 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { IconType } from 'react-icons';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { FiArrowLeft, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi';
+import Icon from '../Components/Icon';
 import Media from '../Components/Media';
-import { Project, projects } from '../data/projects';
+import useReveal from '../Components/useReveal';
+import { Project, Section, projects } from '../data/projects';
 
-// react-icons' typings clash with React 18's JSX types, so call the icon as a function
-const Icon = ({ icon }: { icon: IconType }) => <>{icon({ 'aria-hidden': true })}</>;
+type Lightbox = { images: string[]; captions: string[]; index: number; label: string } | null;
 
-type Lightbox = { images: string[]; index: number; label: string } | null;
-
-function SectionGallery({ images, label, onOpen }: { images: string[]; label: string; onOpen: (index: number) => void }) {
+function SectionGallery({ images, captions, label, onOpen }: { images: string[]; captions: string[]; label: string; onOpen: (index: number) => void }) {
     const [active, setActive] = useState(0);
     if (!images.length) return null;
     return (
-        <div className="gallery">
+        <figure className="gallery">
             <button className="shot shot-button" onClick={() => onOpen(active)} aria-label={`Enlarge ${label} image ${active + 1}`}>
-                <Media src={images[active]} alt={`${label}, image ${active + 1}`} />
+                <Media src={images[active]} alt={captions[active] ?? `${label}, image ${active + 1}`} />
             </button>
+            {captions[active] && <figcaption aria-live="polite">{captions[active]}</figcaption>}
             {images.length > 1 && (
                 <div className="thumbs">
                     {images.map((image, idx) => (
@@ -32,14 +31,17 @@ function SectionGallery({ images, label, onOpen }: { images: string[]; label: st
                     ))}
                 </div>
             )}
-        </div>
+        </figure>
     );
 }
 
 function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (name: string | null) => void }) {
     const [lightbox, setLightbox] = useState<Lightbox>(null);
+    const page = useRef<HTMLElement | null>(null);
     const index = projects.findIndex(p => p.id === project.id);
     const next = projects[(index + 1) % projects.length];
+
+    useReveal(page, project.id);
 
     const step = useCallback((delta: number) => {
         setLightbox(lb => lb && { ...lb, index: (lb.index + delta + lb.images.length) % lb.images.length });
@@ -57,7 +59,7 @@ function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (n
     }, [lightbox, step]);
 
     return (
-        <article className="project-page" style={{ '--c': project.brandColour } as React.CSSProperties}>
+        <article ref={page} className="project-page" style={{ '--c': project.brandColour } as React.CSSProperties}>
             <a className="back-link" href="./" onClick={e => { e.preventDefault(); onNavigate(null); }}>
                 <Icon icon={FiArrowLeft} /> All work
             </a>
@@ -73,7 +75,24 @@ function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (n
                 <Media src={project.headlineImage} alt={`${project.name} product`} />
             </div>
 
-            <section className="project-block">
+            {project.story && (
+                <section className="story" aria-label="The short version" data-reveal>
+                    <div>
+                        <h2>The problem</h2>
+                        <p>{project.story.problem}</p>
+                    </div>
+                    <div>
+                        <h2>The decision</h2>
+                        <p>{project.story.decision}</p>
+                    </div>
+                    <div>
+                        <h2>The result</h2>
+                        <p>{project.story.result}</p>
+                    </div>
+                </section>
+            )}
+
+            <section className="project-block" data-reveal>
                 <h2>What I did</h2>
                 <div>
                     <ul className="plain-list">
@@ -90,7 +109,7 @@ function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (n
                 </div>
             </section>
 
-            {project.sections.map((section: Project['sections'][number], idx: number) => {
+            {project.sections.map((section: Section, idx: number) => {
                 const details = (
                     <>
                         <p className="role">{section.jobTitle}</p>
@@ -103,22 +122,24 @@ function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (n
                 // Without images, lay the section out like "What I did": heading left, text right
                 if (!section.images.length) {
                     return (
-                        <section className="project-block" key={idx}>
+                        <section className="project-block" key={idx} data-reveal>
                             <h2>{section.header}</h2>
                             <div>{details}</div>
                         </section>
                     );
                 }
+                const captions = section.captions ?? [];
                 return (
-                    <section className="project-block with-gallery" key={idx}>
+                    <section className="project-block with-gallery" key={idx} data-reveal>
                         <div>
                             <h2>{section.header}</h2>
                             {details}
                         </div>
                         <SectionGallery
                             images={section.images}
+                            captions={captions}
                             label={section.header}
-                            onOpen={i => setLightbox({ images: section.images, index: i, label: section.header })}
+                            onOpen={i => setLightbox({ images: section.images, captions, index: i, label: section.header })}
                         />
                     </section>
                 );
@@ -129,6 +150,7 @@ function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (n
                 href={`?project=${encodeURIComponent(next.name)}`}
                 style={{ '--c': next.brandColour } as React.CSSProperties}
                 onClick={e => { e.preventDefault(); onNavigate(next.name); }}
+                data-reveal
             >
                 <span className="yrs">Next project</span>
                 <span className="next-name">{next.name}</span>
@@ -140,9 +162,13 @@ function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (n
                     {lightbox.images.length > 1 && (
                         <button className="lightbox-btn prev" onClick={e => { e.stopPropagation(); step(-1); }} aria-label="Previous image"><Icon icon={FiChevronLeft} /></button>
                     )}
-                    <div className="lightbox-media" onClick={e => e.stopPropagation()}>
-                        <Media src={lightbox.images[lightbox.index]} alt={`${lightbox.label}, image ${lightbox.index + 1}`} />
-                    </div>
+                    <figure className="lightbox-media" onClick={e => e.stopPropagation()}>
+                        <Media
+                            src={lightbox.images[lightbox.index]}
+                            alt={lightbox.captions[lightbox.index] ?? `${lightbox.label}, image ${lightbox.index + 1}`}
+                        />
+                        {lightbox.captions[lightbox.index] && <figcaption>{lightbox.captions[lightbox.index]}</figcaption>}
+                    </figure>
                     {lightbox.images.length > 1 && (
                         <button className="lightbox-btn next" onClick={e => { e.stopPropagation(); step(1); }} aria-label="Next image"><Icon icon={FiChevronRight} /></button>
                     )}

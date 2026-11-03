@@ -62,7 +62,7 @@ body {
 
 // Text blocks blur whatever icons drift under them. The blur sits on a feathered
 // pseudo-element so its edge never shows; z-index (not isolation) keeps it a backdrop for the glow.
-.site-header, .hero h1, .hero-side p, .work-text, .skills > h2, .skill-groups > div,
+.site-header, .hero-text, .hero-side p, .story > div, .outside, .work-text, .skills > h2, .skill-groups > div,
 .site-footer > *, .back-link, .project-intro, .project-block > h2, .project-block > div:not(.gallery),
 .next-project {
   position: relative;
@@ -90,6 +90,17 @@ body {
   margin: 0 auto;
   padding: 0 var(--gutter);
 }
+
+// Scroll reveals: useReveal adds .reveal, then .in once the element is on screen.
+// Children rise in one after another, so a block's text leads its gallery
+.reveal > * {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s ease, transform .8s cubic-bezier(.2, .7, .2, 1);
+}
+.reveal > :nth-child(2) { transition-delay: .1s; }
+.reveal > :nth-child(3) { transition-delay: .2s; }
+.reveal.in > * { opacity: 1; transform: none; }
 
 // Header
 .site-header {
@@ -148,7 +159,43 @@ body {
   }
 
   p { margin: 16px 0 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+
+  .now {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-top: 28px;
+    max-width: 52ch;
+    font-size: 16px;
+
+    strong { color: var(--ink); font-weight: 600; }
+  }
 }
+
+// A live-status dot, in the colour of the current role
+.now-dot {
+  position: relative;
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c);
+  transform: translateY(-1px);
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--c);
+    animation: now-pulse 2.4s ease-out infinite;
+  }
+}
+@keyframes now-pulse {
+  from { transform: scale(1); opacity: .6; }
+  to { transform: scale(3); opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .now-dot::after { animation: none; } }
 
 .yrs { color: var(--muted); font-size: 15px; font-variant-numeric: tabular-nums; }
 .role { color: var(--ink); font-weight: 500; }
@@ -222,6 +269,57 @@ body {
   ul { margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: 16px; line-height: 1.9; }
 }
 
+// Outside work
+.outside {
+  padding: 0 0 96px;
+  scroll-margin-top: 24px;
+
+  > h2 { margin: 0 0 40px; font-size: 32px; font-weight: 600; letter-spacing: -0.025em; }
+}
+
+.outside-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px 24px;
+  border-top: 1px solid var(--ink);
+  padding-top: 24px;
+}
+
+.outside-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+
+  h3 { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; font-size: 20px; font-weight: 600; }
+  p { margin: 0 0 20px; color: var(--muted); font-size: 16px; line-height: 1.5; }
+  iframe { width: 100%; border: 0; border-radius: 12px; margin-top: auto; }
+}
+
+// The music player takes the first row; side projects sit four across beneath it
+.music { grid-column: 1 / -1; }
+
+.side-project {
+  h3 { margin-top: 4px; }
+  p { margin: 0; }
+}
+
+.side-shot {
+  aspect-ratio: 16 / 10;
+  margin-bottom: 14px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #0b0b10;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform .35s ease;
+  }
+}
+.side-project:hover .side-shot img, .side-project:focus-visible .side-shot img { transform: scale(1.04); }
+
 // Footer
 .site-footer {
   display: flex;
@@ -231,7 +329,9 @@ body {
   padding: 64px 0 48px;
   border-top: 1px solid var(--rule);
 
-  h2 { margin: 0 0 8px; font-size: 20px; font-weight: 500; color: var(--muted); }
+  h2 { margin: 0 0 4px; font-size: 20px; font-weight: 600; }
+  .cta-line { margin: 0 0 12px; color: var(--muted); font-size: 17px; }
+  .email-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; }
   .email { font-size: clamp(24px, 3.4vw, 40px); font-weight: 600; letter-spacing: -0.025em; text-decoration: none; }
   .email:hover { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 2px; }
   ul { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 0; padding: 0; list-style: none; color: var(--muted); font-size: 15px; }
@@ -239,8 +339,38 @@ body {
   ul a:hover { color: var(--ink); }
 }
 
+.copy-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color .15s, border-color .15s;
+
+  &:hover { color: var(--ink); border-color: var(--ink); }
+}
+
 // Project page
 .project-page { padding-bottom: 32px; }
+
+// Problem, decision, result
+.story {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  padding: 72px 0;
+  border-bottom: 1px solid var(--rule);
+
+  // The rule sits on the heading, so the column's backdrop blur doesn't smear it
+  h2 { margin: 0 0 10px; padding-top: 16px; border-top: 2px solid var(--c); font-size: 15px; font-weight: 600; color: var(--muted); }
+  p { margin: 0; font-size: 19px; line-height: 1.45; }
+}
 
 .back-link {
   display: inline-flex;
@@ -301,6 +431,9 @@ body {
 
 .gallery {
   min-width: 0;
+  margin: 0;
+
+  figcaption { margin-top: 12px; color: var(--muted); font-size: 15px; line-height: 1.5; }
 
   .shot-button {
     display: block;
@@ -365,7 +498,9 @@ body {
   padding: 24px;
   background: rgba(23, 25, 30, .92);
 
-  .lightbox-media img, .lightbox-media video { max-width: min(1200px, 84vw); max-height: 86vh; border-radius: 6px; }
+  .lightbox-media { margin: 0; }
+  .lightbox-media img, .lightbox-media video { max-width: min(1200px, 84vw); max-height: 80vh; border-radius: 6px; }
+  .lightbox-media figcaption { max-width: 70ch; margin: 14px auto 0; color: rgba(255, 255, 255, .8); font-size: 15px; line-height: 1.5; text-align: center; }
 }
 
 .lightbox-btn {
@@ -410,6 +545,9 @@ body {
   .shot-hero { padding: 20px 20px 0; }
 
   .skills { padding: 64px 0; }
+  .outside { padding-bottom: 64px; }
+  .outside-grid { grid-template-columns: 1fr 1fr; gap: 32px 16px; }
+  .story { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
   .skill-groups { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
 
   .site-footer { flex-direction: column; align-items: start; }
