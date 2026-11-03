@@ -41,6 +41,7 @@ const readProjectParam = () => {
 function Home() {
     const [project, setProject] = useState(readProjectParam);
     const [hoverTint, setHoverTint] = useState<string | null>(null);
+    const header = useRef<HTMLElement | null>(null);
 
     const navigate = useCallback((name: string | null, scrollTo?: string) => {
         const url = new URL(window.location.href);
@@ -73,6 +74,23 @@ function Home() {
         document.title = project ? `${project.name} · Alex Jefferies` : 'Alex Jefferies · Product leader and engineer';
     }, [project]);
 
+    // On small screens the header sticks to the top; it tucks away while scrolling down
+    useEffect(() => {
+        const el = header.current;
+        if (!el) return;
+        let last = window.scrollY;
+        const onScroll = () => {
+            const y = window.scrollY;
+            el.classList.toggle('scrolled', y > 8);
+            if (Math.abs(y - last) < 6) return;
+            el.classList.toggle('tucked', y > last && y > 120);
+            last = y;
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
     const jumpTo = (id: string) => (e: React.MouseEvent) => {
         e.preventDefault();
         if (project) navigate(null, id);
@@ -85,15 +103,16 @@ function Home() {
         <div className="site">
             <CursorGlow tint={tint} />
             <div className="wrap">
-                <header className="site-header">
+                <header ref={header} className="site-header">
                     <a className="site-name" href="./" onClick={e => { e.preventDefault(); navigate(null, 'top'); }}>Alex Jefferies</a>
                     <nav aria-label="Main">
                         <a href="#work" onClick={jumpTo('work')}>Work</a>
-                        <a href="#skills" onClick={jumpTo('skills')}>Skills</a>
+                        {/* Small screens keep Work, CV and Email; the rest are in the footer */}
+                        <a className="wide-only" href="#skills" onClick={jumpTo('skills')}>Skills</a>
                         <a href={links.cv} download="alexander-jefferies-cv.pdf">CV</a>
-                        <a href={links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                        <a href={links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-                        <a href={links.email}>Email</a>
+                        <a className="wide-only" href={links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                        <a className="wide-only" href={links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                        <a className="nav-cta" href={links.email}>Email</a>
                     </nav>
                 </header>
 

@@ -3,21 +3,38 @@ import { FiArrowLeft, FiChevronLeft, FiChevronRight, FiX } from 'react-icons/fi'
 import Icon from '../Components/Icon';
 import Media from '../Components/Media';
 import useReveal from '../Components/useReveal';
+import useSwipe from '../Components/useSwipe';
 import { Project, Section, projects } from '../data/projects';
 
 type Lightbox = { images: string[]; captions: string[]; index: number; label: string } | null;
 
 function SectionGallery({ images, captions, label, onOpen }: { images: string[]; captions: string[]; label: string; onOpen: (index: number) => void }) {
     const [active, setActive] = useState(0);
+    const thumbs = useRef<HTMLDivElement | null>(null);
+    const swipe = useSwipe(d => setActive(a => (a + d + images.length) % images.length));
+
+    // Keep the active thumbnail in view when swiping through a long strip
+    useEffect(() => {
+        const strip = thumbs.current;
+        const thumb = strip?.children[active] as HTMLElement | undefined;
+        if (!strip || !thumb || strip.scrollWidth <= strip.clientWidth) return;
+        strip.scrollTo({ left: thumb.offsetLeft - (strip.clientWidth - thumb.offsetWidth) / 2, behavior: 'smooth' });
+    }, [active]);
+
     if (!images.length) return null;
     return (
         <figure className="gallery">
-            <button className="shot shot-button" onClick={() => onOpen(active)} aria-label={`Enlarge ${label} image ${active + 1}`}>
+            <button
+                className="shot shot-button"
+                onClick={() => { if (!swipe.swiped.current) onOpen(active); }}
+                {...(images.length > 1 ? swipe.handlers : {})}
+                aria-label={`Enlarge ${label} image ${active + 1}`}
+            >
                 <Media src={images[active]} alt={captions[active] ?? `${label}, image ${active + 1}`} />
             </button>
             {captions[active] && <figcaption aria-live="polite">{captions[active]}</figcaption>}
             {images.length > 1 && (
-                <div className="thumbs">
+                <div className="thumbs" ref={thumbs}>
                     {images.map((image, idx) => (
                         <button
                             key={idx}
@@ -46,6 +63,16 @@ function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (n
     const step = useCallback((delta: number) => {
         setLightbox(lb => lb && { ...lb, index: (lb.index + delta + lb.images.length) % lb.images.length });
     }, []);
+    const swipe = useSwipe(step);
+    const lightboxOpen = lightbox !== null;
+
+    // Stop the page scrolling behind the lightbox
+    useEffect(() => {
+        if (!lightboxOpen) return;
+        const previous = document.body.style.overflow;
+        document.body.style.overflow = 'hidden';
+        return () => { document.body.style.overflow = previous; };
+    }, [lightboxOpen]);
 
     useEffect(() => {
         if (!lightbox) return;
@@ -157,8 +184,18 @@ function ProjectPage({ project, onNavigate }: { project: Project; onNavigate: (n
             </a>
 
             {lightbox && (
-                <div className="lightbox" role="dialog" aria-modal="true" aria-label={lightbox.label} onClick={() => setLightbox(null)}>
+                <div
+                    className="lightbox"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label={lightbox.label}
+                    onClick={() => { if (!swipe.swiped.current) setLightbox(null); }}
+                    {...(lightbox.images.length > 1 ? swipe.handlers : {})}
+                >
                     <button className="lightbox-btn close" onClick={() => setLightbox(null)} aria-label="Close"><Icon icon={FiX} /></button>
+                    {lightbox.images.length > 1 && (
+                        <span className="lightbox-count" aria-live="polite">{lightbox.index + 1} / {lightbox.images.length}</span>
+                    )}
                     {lightbox.images.length > 1 && (
                         <button className="lightbox-btn prev" onClick={e => { e.stopPropagation(); step(-1); }} aria-label="Previous image"><Icon icon={FiChevronLeft} /></button>
                     )}

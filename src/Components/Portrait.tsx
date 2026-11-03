@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import mixed from '../images/portrait/default.webp';
 import bw from '../images/portrait/bw.webp';
 import halftone from '../images/portrait/halftone.webp';
@@ -17,11 +17,12 @@ const FULL_AT = 0.45; // fraction of the smaller viewport side at which a style 
 
 function Portrait({ alt }: { alt: string }) {
     const layers = useRef<(HTMLImageElement | null)[]>([]);
+    // Without a mouse the styles never mix, so only the default is loaded
+    const [interactive] = useState(() =>
+        window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
 
     useEffect(() => {
-        const finePointer = window.matchMedia('(pointer: fine)').matches;
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (!finePointer || reducedMotion) return;
+        if (!interactive) return;
 
         let origin: { x: number; y: number } | null = null;
         const target: number[] = STYLES.map((_, i) => (i === 0 ? 1 : 0));
@@ -58,11 +59,11 @@ function Portrait({ alt }: { alt: string }) {
             window.removeEventListener('pointermove', onMove);
             cancelAnimationFrame(frame);
         };
-    }, []);
+    }, [interactive]);
 
     return (
         <div className="portrait">
-            {STYLES.map((src, i) => (
+            {(interactive ? STYLES : [DEFAULT]).map((src, i) => (
                 <img
                     key={src}
                     ref={el => { layers.current[i] = el; }}

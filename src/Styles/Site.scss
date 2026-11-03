@@ -34,6 +34,7 @@ body {
   overflow-x: clip;
 
   a { color: inherit; }
+  a, button { -webkit-tap-highlight-color: transparent; }
   :focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 2px; }
   img, video { display: block; max-width: 100%; }
 }
@@ -62,26 +63,32 @@ body {
 
 // Text blocks blur whatever icons drift under them. The blur sits on a feathered
 // pseudo-element so its edge never shows; z-index (not isolation) keeps it a backdrop for the glow.
+// The icons only run with a mouse, so touch screens skip the (costly) blur.
 .site-header, .hero-text, .hero-side p, .story > div, .outside, .work-text, .skills > h2, .skill-groups > div,
 .site-footer > *, .back-link, .project-intro, .project-block > h2, .project-block > div:not(.gallery),
 .next-project {
   position: relative;
   z-index: 0;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -36px;
-    z-index: -1;
-    pointer-events: none;
-    -webkit-backdrop-filter: blur(7px);
-    backdrop-filter: blur(7px);
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent),
-      linear-gradient(to bottom, transparent, #000 36px, #000 calc(100% - 36px), transparent);
-    mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent),
-      linear-gradient(to bottom, transparent, #000 36px, #000 calc(100% - 36px), transparent);
-    -webkit-mask-composite: source-in;
-    mask-composite: intersect;
+}
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .site-header, .hero-text, .hero-side p, .story > div, .outside, .work-text, .skills > h2, .skill-groups > div,
+  .site-footer > *, .back-link, .project-intro, .project-block > h2, .project-block > div:not(.gallery),
+  .next-project {
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -36px;
+      z-index: -1;
+      pointer-events: none;
+      -webkit-backdrop-filter: blur(7px);
+      backdrop-filter: blur(7px);
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent),
+        linear-gradient(to bottom, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+      mask-image: linear-gradient(to right, transparent, #000 36px, #000 calc(100% - 36px), transparent),
+        linear-gradient(to bottom, transparent, #000 36px, #000 calc(100% - 36px), transparent);
+      -webkit-mask-composite: source-in;
+      mask-composite: intersect;
+    }
   }
 }
 
@@ -246,8 +253,10 @@ body {
     font-weight: 600;
   }
 
-  &:hover .shot img, &:hover .shot video,
   &:focus-visible .shot img, &:focus-visible .shot video { transform: translateY(-6px); }
+  @media (hover: hover) {
+    &:hover .shot img, &:hover .shot video { transform: translateY(-6px); }
+  }
 }
 
 // Skills
@@ -318,7 +327,8 @@ body {
     transition: transform .35s ease;
   }
 }
-.side-project:hover .side-shot img, .side-project:focus-visible .side-shot img { transform: scale(1.04); }
+.side-project:focus-visible .side-shot img { transform: scale(1.04); }
+@media (hover: hover) { .side-project:hover .side-shot img { transform: scale(1.04); } }
 
 // Footer
 .site-footer {
@@ -437,21 +447,28 @@ body {
 
   .shot-button {
     display: block;
+    touch-action: pan-y pinch-zoom;
     width: 100%;
     border: 0;
     cursor: zoom-in;
     font: inherit;
   }
-  .shot-button:hover img, .shot-button:hover video { transform: translateY(-6px); }
+  @media (hover: hover) {
+    .shot-button:hover img, .shot-button:hover video { transform: translateY(-6px); }
+  }
 }
 
 .thumbs {
+  position: relative;
   display: flex;
   gap: 8px;
   margin-top: 12px;
   overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
 
   .thumb {
+    scroll-snap-align: center;
     flex: 0 0 88px;
     height: 56px;
     padding: 0;
@@ -498,8 +515,9 @@ body {
   padding: 24px;
   background: rgba(23, 25, 30, .92);
 
-  .lightbox-media { margin: 0; }
+  .lightbox-media { margin: 0; touch-action: pan-y pinch-zoom; }
   .lightbox-media img, .lightbox-media video { max-width: min(1200px, 84vw); max-height: 80vh; border-radius: 6px; }
+  .lightbox-count { position: absolute; top: 32px; left: 24px; color: rgba(255, 255, 255, .7); font-size: 14px; font-variant-numeric: tabular-nums; }
   .lightbox-media figcaption { max-width: 70ch; margin: 14px auto 0; color: rgba(255, 255, 255, .8); font-size: 15px; line-height: 1.5; text-align: center; }
 }
 
@@ -521,37 +539,126 @@ body {
 
 // Small screens
 @media (max-width: 760px) {
-  :root { --gutter: 16px; }
+  :root { --gutter: 20px; }
 
-  .site-header { padding: 20px 0; }
-  .site-header .site-name { white-space: nowrap; }
-  .site-header nav { gap: 16px; flex-wrap: nowrap; }
-  // Work and Skills are one scroll away; GitHub is in the footer
-  .site-header nav a:nth-child(-n+2), .site-header nav a:nth-child(5) { display: none; }
+  // The header sticks, tucks away while scrolling down and comes back on the way up
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    align-items: center;
+    margin: 0 calc(-1 * var(--gutter));
+    padding: 12px var(--gutter);
+    border-bottom: 1px solid transparent;
+    background: color-mix(in srgb, var(--bg) 84%, transparent);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    backdrop-filter: saturate(1.4) blur(14px);
+    transition: transform .3s ease, border-color .2s;
 
-  .hero { grid-template-columns: 1fr; gap: 32px; padding: 40px 0 56px; }
+    &::before { content: none; }
+    &.scrolled { border-bottom-color: var(--rule); }
+    &.tucked:not(:focus-within) { transform: translateY(-100%); }
+
+    .site-name { white-space: nowrap; }
+    nav { gap: 4px 18px; flex-wrap: nowrap; align-items: center; }
+    nav a { padding: 8px 0; }
+    nav .wide-only { display: none; }
+    nav .nav-cta { padding: 7px 14px; border: 1px solid var(--rule); border-radius: 999px; color: var(--ink); }
+  }
+
+  .reveal > * { transform: translateY(16px); transition-duration: .5s, .6s; }
+
+  .hero { grid-template-columns: 1fr; gap: 28px; padding: 32px 0 48px; }
+  .hero .now { margin-top: 20px; font-size: 15px; }
   .hero-side {
     display: grid;
-    grid-template-columns: 112px 1fr;
+    grid-template-columns: 96px 1fr;
     gap: 16px;
     align-items: center;
 
-    p { margin: 0; }
+    p { margin: 0; font-size: 14px; }
   }
 
+  .work, .skills, .outside { scroll-margin-top: 8px; }
   .work-row, .project-block { grid-template-columns: 1fr; gap: 20px; padding: 32px 0; }
-  .work-row .shot { order: -1; }
-  .shot { padding: 16px 16px 0; }
-  .shot-hero { padding: 20px 20px 0; }
+  .work-row {
+    gap: 16px;
 
-  .skills { padding: 64px 0; }
-  .outside { padding-bottom: 64px; }
-  .outside-grid { grid-template-columns: 1fr 1fr; gap: 32px 16px; }
-  .story { grid-template-columns: 1fr; gap: 28px; padding: 40px 0; }
-  .skill-groups { grid-template-columns: 1fr 1fr; gap: 28px 16px; }
+    h2 { margin: 4px 0 8px; font-size: 26px; }
+    p { font-size: 16px; }
+    .view { margin-top: 14px; }
+    .shot { order: -1; }
+  }
+  .shot { padding: 14px 14px 0; border-radius: 8px; }
+  .shot-hero { padding: 16px 16px 0; }
 
-  .site-footer { flex-direction: column; align-items: start; }
+  // Touch gets a press state in place of hover
+  .work-row, .side-project, .next-project { transition: opacity .15s; }
+  .work-row:active, .side-project:active, .next-project:active { opacity: .7; }
 
-  .lightbox { gap: 4px; padding: 8px; }
-  .lightbox .lightbox-media img, .lightbox .lightbox-media video { max-width: 100%; }
+  .skills { padding: 56px 0; }
+  .skills > h2, .outside > h2 { margin-bottom: 24px; font-size: 26px; }
+  .skill-groups {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 16px;
+
+    h3 { font-size: 15px; }
+    ul { font-size: 15px; line-height: 1.8; }
+  }
+
+  .outside { padding-bottom: 56px; }
+  .outside-grid { grid-template-columns: 1fr 1fr; gap: 28px 14px; }
+  .outside-card {
+    h3 { font-size: 17px; }
+    p { font-size: 14px; }
+  }
+  .side-shot { border-radius: 8px; }
+
+  .site-footer {
+    flex-direction: column;
+    align-items: start;
+    gap: 24px;
+    padding: 48px 0 32px;
+
+    ul { gap: 0 24px; }
+    ul a { display: inline-block; padding: 10px 0; }
+  }
+
+  .back-link { margin-top: 16px; padding: 10px 0; }
+  .project-intro {
+    padding: 24px 0 36px;
+
+    .role { font-size: 16px; }
+    .lede { font-size: 17px; }
+  }
+  .story {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 40px 0;
+
+    p { font-size: 17px; }
+  }
+  .project-block {
+    h2 { font-size: 24px; }
+    .summary, .plain-list { font-size: 16px; }
+  }
+  .thumbs .thumb { flex-basis: 72px; height: 46px; }
+  .next-project { padding: 48px 0 24px; }
+
+  // Full-bleed media with the controls in a bar underneath, within thumb reach
+  .lightbox {
+    flex-direction: column;
+    padding: 64px 0 96px;
+    background: rgba(23, 25, 30, .97);
+
+    .lightbox-media img, .lightbox-media video { max-width: 100vw; max-height: 68vh; border-radius: 0; }
+    .lightbox-media figcaption { padding: 0 20px; font-size: 14px; }
+    .lightbox-count { top: 30px; left: 20px; }
+  }
+  .lightbox-btn {
+    &.prev, &.next { position: absolute; bottom: calc(28px + env(safe-area-inset-bottom)); }
+    &.prev { left: calc(50% - 64px); }
+    &.next { right: calc(50% - 64px); }
+    &.close { top: 16px; right: 12px; }
+  }
 }
